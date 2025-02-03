@@ -15,7 +15,7 @@ const Login = () => {
     <div>
 <SignedOut>
 <Button>
-    <Link href="/sign-in">Login</Link></Button>
+    <Link href="/sign-in" className="font-black text-black">Login</Link></Button>
 
         </SignedOut>
         <SignedIn>

@@ -6,9 +6,9 @@ const Header = () => {
 
 
   return (
-    <header className="h-10 bg-red-50 flex justify-between">
+    <header className="h-[80px] bg-blue-400  flex justify-between items-center px-7 mb-7">
         <div>
-<h1>GigLink</h1>
+<h1 className="text-white text-3xl font-bold">Gig Link</h1>
         </div>
         <div>
             <Login/>
