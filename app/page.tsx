@@ -1,8 +1,12 @@
 
-import Image from "next/image";
 import Link from "next/link";
 
+
 export default function Home() {
+
+
+
+
   return (
     <div className="space-y-8 mx-8">
     <h2 className="text-3xl font-bold">Ongaing Event</h2>
