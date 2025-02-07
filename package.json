@@ -12,6 +12,8 @@
     "@clerk/nextjs": "^5.7.5",
     "@prisma/client": "^6.3.0",
     "@radix-ui/react-slot": "^1.1.1",
+    "@react-google-maps/api": "^2.20.5",
+    "@types/googlemaps": "^3.43.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.474.0",

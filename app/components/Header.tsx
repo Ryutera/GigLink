@@ -27,7 +27,9 @@ const Header = async () => {
 
 <div className="flex gap-20">
 <div>
-    <p className="text-white text-xl font-bold">Apply</p>
+    <Link href="/host">
+    <p className="text-white text-xl font-bold">Host</p>
+    </Link>
 </div>
 <div>
     <p className="text-white text-xl font-bold">Join</p>

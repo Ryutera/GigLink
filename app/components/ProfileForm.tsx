@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { User } from '@prisma/client'
 import { ProfileUpdate } from '@/lib/action'
 import { useRouter } from 'next/navigation'
+import { instruments } from '../constants/instruments'
 
 interface ProfileFormProps {
   user: User
@@ -59,16 +60,15 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ user }) => {
             name="instruments"
             className="w-full border rounded-md p-2"
             multiple
+            size={7}
             value={selectedInstruments}
             onChange={handleInstrumentChange}
           >
-            <option value="ギター">ギター</option>
-            <option value="ベース">ベース</option>
-            <option value="ドラム">ドラム</option>
-            <option value="キーボード">キーボード</option>
-            <option value="サックス">サックス</option>
-            <option value="チェロ">チェロ</option>
-            <option value="トロンボーン">トロンボーン</option>
+            {instruments.map((instrument)=>(
+  <option value="ギター">{instrument}</option>
+            ))}
+          
+           
           </select>
         </div>
         <div>
