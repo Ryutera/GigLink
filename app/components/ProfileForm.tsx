@@ -65,7 +65,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ user }) => {
             onChange={handleInstrumentChange}
           >
             {instruments.map((instrument)=>(
-  <option value="ギター">{instrument}</option>
+  <option  key={instrument}>{instrument}</option>
             ))}
           
            

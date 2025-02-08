@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation'
 
 
 const ProfilePage = async () => {
-  const {userId} = auth()
+  const {userId} = await auth()
 
   if (!userId) {
     redirect('/sign-up')

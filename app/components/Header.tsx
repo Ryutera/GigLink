@@ -1,15 +1,18 @@
 import Link from "next/link"
 import Login from "./Login"
-import { currentUser } from "@clerk/nextjs/server"
+import { auth, currentUser } from "@clerk/nextjs/server"
 import prisma from "@/lib/prisma"
 
 
 const Header = async () => {
-    const user = await currentUser()
+    const {userId} =await  auth()
+    if (!userId) {
+        return
+    }
 
     const userInfo = await prisma.user.findFirst({
         where:{
-            id:user?.id,
+            id:userId,
         }
     })
 
