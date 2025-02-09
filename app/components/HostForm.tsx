@@ -125,7 +125,7 @@ const HostForm = () => {
           {instruments.map((instrument) => (
             <label key={instrument} className="grid-cols-4 items-center">
               <input type="checkbox" className="form-checkbox" checked={selectedInstruments.includes(instrument)}
-                  onChange={() => toggleInstrument(instrument)}/>
+                  onChange={()=>toggleInstrument(instrument)}/>
               <span className="ml-2">{instrument}</span>
             </label>
           ))}

@@ -62,8 +62,8 @@ export async function EventCreate(hostData: {
             data: {
                 title: hostData.title,
                 description: hostData.detail,
-                date: new Date(hostData.date),  
-                startTime:  new Date(`${hostData.date}T${hostData.startTime}:00Z`),
+                date: new Date(hostData.date),  //渡されたデータはstringだけどprismaschemaの値はDateTimeなので統一するためにこう書く
+                startTime:  new Date(`${hostData.date}T${hostData.startTime}:00Z`),//yyyy//mm//ddの形にするためにhost.dataをyyyyに持ってくる
                 endTime:new Date(`${hostData.date}T${hostData.endTime}:00Z`),  
                 location: hostData.place,
                 organizerId: userId,
