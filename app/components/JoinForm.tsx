@@ -12,9 +12,15 @@ setMessage(e.target.value)
 
     const hadleSubmit =async(formData: FormData)=>{
         try {
-            await applicationCreate(formData,eventId)
+            const result = await applicationCreate(formData,eventId)
+            if (result.success) {
+              alert(result.message)
+            }else{
+              alert(result.message)
+            }
         } catch (error) {
-            
+          console.error("応募申請ができません", error);
+          alert("応募申請中にエラーが発生しました");
         }
 
     }
