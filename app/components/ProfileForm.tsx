@@ -41,7 +41,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ user }) => {
       <form action={handleSubmit} className="space-y-4">
       <div>
           <label htmlFor="username" className="block mb-1 font-medium">
-            {user.name}
+           Username
           </label>
           <input
             type="text"

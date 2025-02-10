@@ -2,9 +2,12 @@
 import { applicationCreate } from '@/lib/action'
 import React, { ChangeEvent, useState } from 'react'
 import { instruments } from '../constants/instruments'
+import { useRouter } from 'next/navigation'
+
 
 const JoinForm = ({eventId}:{eventId:string}) => {
     const [message, setMessage] = useState("")
+    const router = useRouter()
 
     const onChangeMessage = (e:ChangeEvent<HTMLTextAreaElement>)=>{
 setMessage(e.target.value)
@@ -14,7 +17,11 @@ setMessage(e.target.value)
         try {
             const result = await applicationCreate(formData,eventId)
             if (result.success) {
+              
               alert(result.message)
+              router.push("/")
+            
+             
             }else{
               alert(result.message)
             }

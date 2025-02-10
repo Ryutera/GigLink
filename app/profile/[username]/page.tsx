@@ -1,7 +1,9 @@
+
 import ProfileForm from '@/app/components/ProfileForm'
 import prisma from '@/lib/prisma'
-import { auth, currentUser } from '@clerk/nextjs/server'
+import { auth } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
+
 
 
 const ProfilePage = async () => {
@@ -22,7 +24,12 @@ const ProfilePage = async () => {
   }
 
 
-  return <ProfileForm user={userInfo} />
+  return (
+  <>
+  <ProfileForm user={userInfo} />
+  
+    </>
+  )
 }
 
 export default ProfilePage
