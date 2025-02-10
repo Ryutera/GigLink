@@ -80,3 +80,34 @@ export async function EventCreate(hostData: {
         return { success: false, message: "イベントの作成中にエラーが発生しました" };
     }
 }
+
+
+export async function applicationCreate (formData: FormData, eventId: string,) :Promise<{ success: boolean; message: string }>{
+    const {userId} = await auth()
+  
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
+    
+    try {
+   
+    
+        
+        await prisma.application.create({
+            data:{
+               
+                eventId:eventId,
+                userId:userId,
+                message:formData.get("message") as string,
+                instrument:formData.get("instrument") as string,
+                
+            }
+        
+        })
+        return { success: true, message: "参加応募に成功しました" };
+
+    } catch (error) {
+        console.log("イベントの作成ができません", error);
+        return { success: false, message: "参加応募に失敗しました" };
+    }
+}

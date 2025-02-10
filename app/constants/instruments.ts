@@ -1,11 +1,9 @@
 export const instruments = [
-    "ギター", 
-    "ベース", 
-    "ドラム", 
-    "キーボード", 
-    "ボーカル",
-    "サックス",
-    "チェロ",
-    "トロンボーン"
+    "Guitar", 
+    "Bass", 
+    "Drum", 
+    "Keyboard", 
+    "Saxophone",
+    "Vocal",
   ];
   
