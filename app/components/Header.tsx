@@ -39,7 +39,7 @@ const Header = async () => {
 </div>
 <div>
     <Link href={`/profile/${username}`}>
-    <p className="text-white text-xl font-bold">Profile</p>
+    <p className="text-white text-xl font-bold">Manage Account</p>
     </Link>
 </div>
 </div>

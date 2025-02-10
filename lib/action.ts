@@ -104,6 +104,7 @@ export async function applicationCreate (formData: FormData, eventId: string,) :
             }
         
         })
+        revalidatePath(`/join/${eventId}`);
         return { success: true, message: "参加応募に成功しました" };
 
     } catch (error) {
