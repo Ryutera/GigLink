@@ -20,8 +20,16 @@ export function EventCard({ event }:any) {
           <p className="text-gray-600 mb-4">
             <span className="font-medium">募集楽器:</span> {event.instruments.join(", ")}
           </p>
+          <p className="text-gray-600 mb-4">
+            <span>参加予定者</span>
+            <br/>
+            <span>example1</span>
+            <span>example2</span>
+
+          </p>
+
           <Button
-            className="w-full text-left flex justify-between items-center"
+            className="w-full text-left flex justify-between items-center text-black"
             onClick={() => setIsApplicantsVisible(!isApplicantsVisible)}
           >
             参加希望者を表示 ({event.applications.length})

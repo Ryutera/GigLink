@@ -19,8 +19,12 @@ export default async function CreateEvent() {
     },
     include: {
       applications: {
+        where: {
+          status: 'PENDING'
+        },
         include: {
           user: true,
+     
         },
       },
     },
@@ -29,9 +33,9 @@ export default async function CreateEvent() {
   return (
     <div className="max-w-4xl mx-auto p-4">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">現在開催予定のイベント</h1>
+        <h1 className="text-3xl font-bold">あなたが主催予定のイベント</h1>
         <Button className="bg-blue-500 hover:bg-blue-600">
-          <Link href="/">+ 新規イベント作成</Link>
+          <Link href="/create_event">+ 新規イベント作成</Link>
         </Button>
       </div>
 
