@@ -1,29 +1,34 @@
 "use client"
 import { Button } from "@/components/ui/button";
-import prisma from "@/lib/prisma";
+import { applicationApprove, applicationReject } from "@/lib/action";
 import { ChevronDown, ChevronUp } from "lucide-react";
+
 import { useState } from "react";
 
 export function EventCard({ event }:any) {
     const [isApplicantsVisible, setIsApplicantsVisible] = useState(false);
-//formではなくてもserveractionを使えるらしいので明日やる
-    // const onClickApprove = async(application:any) =>{
-    //     try {
-    //         await prisma.application.update({
-    //             where:{
-    //                 eventId:application.id,
-    //                 userId:application.user.id
-                    
 
-    //             },
-    //             data:{
-    //                 status:"ACCEPTED"
-    //             }
-    //         })
-    //     } catch (error) {
+    const onClickApprove = async(application:any) =>{
+        try {
+            await applicationApprove(application)
+            alert("申請を承認しました")
+           
+        } catch (error) {
+            alert("申請の承認に失敗しました")
+        }
+       
+    }
+    const onClickReject = async(application:any) =>{
+        try {
+            await applicationReject(application)
+            alert("申請を拒否しました")
             
-    //     }
-    // }
+        } catch (error) {
+            alert("申請の拒否に失敗しました")
+        }
+        
+    }
+  
   
     return (
       <div className="border rounded-lg shadow-md overflow-hidden">
@@ -72,8 +77,8 @@ export function EventCard({ event }:any) {
                     <p className="text-gray-600 mt-2">{application.message}</p>
                     {application.status === "PENDING" && (
                       <div className="mt-4 space-x-2">
-                        <Button className="bg-green-500 hover:bg-green-600">承認</Button>
-                        <Button className="bg-red-500 hover:bg-red-600">拒否</Button>
+                        <Button onClick={()=>onClickApprove(application)} className="bg-green-500 hover:bg-green-600">承認</Button>
+                        <Button onClick={()=>onClickReject(application)} className="bg-red-500 hover:bg-red-600">拒否</Button>
                       </div>
                     )}
                   </li>

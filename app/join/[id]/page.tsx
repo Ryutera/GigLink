@@ -1,7 +1,8 @@
 import prisma from '@/lib/prisma'
 import React from 'react'
 import JoinForm  from "../../components/JoinForm";
-import { applicationAttempt } from '@/lib/action';
+
+import { auth } from '@clerk/nextjs/server';
 
 
 export default async function Join({params}: {params:{id:string}}) {
@@ -18,8 +19,24 @@ id:params.id
    
   }
 
+    const {userId} = await auth()
+    if (!userId) {
+      return
+    }
+  
+    const hasApplied = await prisma.application.findMany(
+      {
+        where:{
+          eventId:params.id,
+          userId:userId
+        }
+      }
+    )
+    
+  
+
   const eventId = params.id
-  const hasApplied = await applicationAttempt(eventId)
+
 
   return (
     <div className="max-w-2xl mx-auto">
