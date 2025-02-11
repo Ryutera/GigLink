@@ -112,3 +112,25 @@ export async function applicationCreate (formData: FormData, eventId: string,) :
         return { success: false, message: "参加応募に失敗しました" };
     }
 }
+
+export async  function applicationAttempt (params:any){
+  const {userId} = await auth()
+  if (!userId) {
+    return
+  }
+try {
+  const hasApplied = await prisma.application.findMany(
+    {
+      where:{
+        eventId:params.id,
+        userId:userId
+      }
+    }
+  )
+  return (hasApplied)
+} catch(err){
+console.log(err)
+}
+  
+}
+

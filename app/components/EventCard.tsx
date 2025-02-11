@@ -1,10 +1,29 @@
 "use client"
 import { Button } from "@/components/ui/button";
+import prisma from "@/lib/prisma";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 
 export function EventCard({ event }:any) {
     const [isApplicantsVisible, setIsApplicantsVisible] = useState(false);
+//formではなくてもserveractionを使えるらしいので明日やる
+    // const onClickApprove = async(application:any) =>{
+    //     try {
+    //         await prisma.application.update({
+    //             where:{
+    //                 eventId:application.id,
+    //                 userId:application.user.id
+                    
+
+    //             },
+    //             data:{
+    //                 status:"ACCEPTED"
+    //             }
+    //         })
+    //     } catch (error) {
+            
+    //     }
+    // }
   
     return (
       <div className="border rounded-lg shadow-md overflow-hidden">
