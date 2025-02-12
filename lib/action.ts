@@ -1,6 +1,4 @@
 "use server";
-
-
 import prisma from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
@@ -112,3 +110,43 @@ export async function applicationCreate (formData: FormData, eventId: string,) :
         return { success: false, message: "参加応募に失敗しました" };
     }
 }
+
+export async function applicationApprove (application:any){
+  try {
+    await prisma.application.updateMany({
+      where:{
+          eventId:application.eventId,
+          userId:application.userId
+      },
+      data:{
+          status:"ACCEPTED"
+      }
+  })
+  revalidatePath("/")
+  
+  } catch (error) {
+   console.log(error)
+  }
+ 
+}
+
+export async function applicationReject (application:any){
+  try {
+    await prisma.application.updateMany({
+      where:{
+          eventId:application.eventId,
+          userId:application.userId
+      },
+      data:{
+          status:"REJECTED"
+      }
+  })
+  revalidatePath("/")
+  
+  } catch (error) {
+   console.log(error)
+  }
+ 
+}
+
+

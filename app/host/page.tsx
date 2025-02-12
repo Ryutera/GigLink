@@ -30,6 +30,22 @@ export default async function CreateEvent() {
     },
   });
 
+
+
+  const eventsWithParticipants = await Promise.all(
+
+    scheduledEvents.map(async (event)=>{
+const participants =  await prisma.application.findMany({
+  where: { eventId: event.id, status: "ACCEPTED" },
+  select: { user: true },
+});
+
+return participants.map((p)=>p.user.name)
+    })
+    
+  )
+console.log(eventsWithParticipants)
+
   return (
     <div className="max-w-4xl mx-auto p-4">
       <div className="flex justify-between items-center mb-8">
@@ -42,7 +58,8 @@ export default async function CreateEvent() {
       {scheduledEvents ? (
         <div className="space-y-6">
           {scheduledEvents.map((event) => (
-            <EventCard key={event.id} event={event} />
+            
+            <EventCard key={event.id} event={event} participants={eventsWithParticipants }/>
           ))}
         </div>
       ) : (

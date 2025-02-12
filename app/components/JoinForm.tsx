@@ -5,16 +5,27 @@ import { instruments } from '../constants/instruments'
 import { useRouter } from 'next/navigation'
 
 
-const JoinForm = ({eventId}:{eventId:string}) => {
+
+interface JoinFormProps {
+  eventId: string;
+  hasApplied: any;
+}
+
+const JoinForm  = ({ eventId, hasApplied }:JoinFormProps)  => {
+  const router = useRouter()
     const [message, setMessage] = useState("")
-    const router = useRouter()
+    
+    
+
 
     const onChangeMessage = (e:ChangeEvent<HTMLTextAreaElement>)=>{
 setMessage(e.target.value)
     }
 
-    const hadleSubmit =async(formData: FormData)=>{
+
+    const handleSubmit =async(formData: FormData)=>{
         try {
+          
             const result = await applicationCreate(formData,eventId)
             if (result.success) {
               
@@ -34,7 +45,7 @@ setMessage(e.target.value)
 
 
   return (
-    <form className="space-y-4" action={hadleSubmit}>
+    <form className="space-y-4" action={handleSubmit}>
 
 <div>
           <label htmlFor="instrument" className="block mb-1 font-medium">
@@ -62,9 +73,16 @@ setMessage(e.target.value)
         onChange={onChangeMessage}
       ></textarea>
     </div>
-    <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">
+    <div>
+         {hasApplied.length>0? 
+    <button type="submit" disabled className="bg-gray-500 text-white px-4 py-2 rounded  ">
+      応募済みです
+    </button>:
+     <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">
       応募する
-    </button>
+    </button>}
+    
+    </div>
   </form>
   )
 }
