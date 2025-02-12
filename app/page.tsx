@@ -1,56 +1,47 @@
 
-import prisma from "@/lib/prisma";
-import Link from "next/link";
+import { UserCircle, Users } from "lucide-react";
+
+import NavCard from "./components/NavCard";
 
 
 export default async function Home() {
 
-// const events = await prisma.event.findMany({
-//   where: {
-//     startTime: {
-//       gt: new Date(), // 現在の日時より後のイベントのみ取得
-//     },
-//   },
-//   orderBy:[{
-//     startTime:"desc"
-//   }]
-// })
-
 
 
   return (
-  //   <div className="space-y-8 mx-8">
-  //   <h2 className="text-3xl font-bold text-center">Ongaing Event</h2>
-  //   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-  //     {/* これは募集中のライブのサンプルカードです。実際のデータで置き換えてください */}
-  //     {events.map((event) => (
-  //       <div key={event.id} className="border rounded-lg p-4 shadow-md">
-  //         <h3 className="text-xl font-semibold mb-2">{event.title}</h3>
-  //         <p className="text-gray-600 mb-2">Place:{event.location}</p>
-  //         <p className="text-gray-600 mb-2">Date: {`${event.date.getFullYear()}${event.startTime.toISOString().substring(11, 16)} - ${event.endTime.toISOString().substring(11, 16)}`}</p>
-  //         <p className="text-gray-600 mb-4">Looking for:{event.instruments}</p>
-  //         <Link
-  //           href={`/join/${event.id}`}
-  //           className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-  //         >
-  //           Join
-  //         </Link>
-  //       </div>
-  //     ))}
-  //   </div>
-  // </div>
-
-  <div className="flex flex-row gap-5 items-center justify-center ">
-    <div className="h-[70vh-80px] bg-gray-400 w-[25%]">
-
-    </div>
-    <div className="h-[70vh] bg-gray-400 w-[25%]">
-
-    </div>
-    <div className="h-[70vh] bg-gray-400 w-[25%]">
-
-    </div>
   
+
+  <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-indigo-100 to-purple-100 p-8">
+  <h1 className="text-4xl font-bold text-indigo-800 mb-12">Welcome to Our Service</h1>
+  <div className="flex flex-row gap-8 items-stretch justify-center w-full max-w-5xl">
+    <NavCard
+      title="Host an Event"
+      icon={Home}
+      description="Create and manage your own events"
+      bgColor="bg-indigo-200"
+      hoverColor="hover:bg-indigo-300"
+      link="/host"
+    />
+    <NavCard
+      title="Join an Event"
+      icon={Users}
+      description="Find and participate in exciting events"
+      bgColor="bg-purple-200"
+      hoverColor="hover:bg-purple-300"
+      link="/join"
+    />
+    <NavCard
+      title="Your Profile"
+      icon={UserCircle}
+      description="Manage your account and preferences"
+      bgColor="bg-green-200"
+      hoverColor="hover:bg-green-300"
+      link="/profile"
+    />
   </div>
+</div>
 )
 }
+
+
+
