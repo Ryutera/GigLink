@@ -117,8 +117,6 @@ export async function applicationApprove (application:any){
       where:{
           eventId:application.eventId,
           userId:application.userId
-          
-
       },
       data:{
           status:"ACCEPTED"
@@ -138,8 +136,6 @@ export async function applicationReject (application:any){
       where:{
           eventId:application.eventId,
           userId:application.userId
-          
-
       },
       data:{
           status:"REJECTED"
@@ -152,3 +148,5 @@ export async function applicationReject (application:any){
   }
  
 }
+
+
