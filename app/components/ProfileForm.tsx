@@ -1,13 +1,13 @@
 'use client'
 
 import React, { useState } from 'react'
-import { User } from '@prisma/client'
+
 import { ProfileUpdate } from '@/lib/action'
 import { useRouter } from 'next/navigation'
 import { instruments } from '../constants/instruments'
 
 interface ProfileFormProps {
-  user: User
+  user: any
 }
 
 const ProfileForm: React.FC<ProfileFormProps> = ({ user }) => {
