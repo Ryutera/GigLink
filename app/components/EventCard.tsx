@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { applicationApprove, applicationReject,  } from "@/lib/action";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { Span } from "next/dist/trace";
+
 
 import { useState } from "react";
 

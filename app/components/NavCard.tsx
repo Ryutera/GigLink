@@ -1,4 +1,5 @@
-import { Link,  LucideProps } from 'lucide-react'
+import { LucideProps } from 'lucide-react'
+import Link from 'next/link';
 import React from 'react'
 
 interface Props {

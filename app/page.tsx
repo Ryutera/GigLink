@@ -1,18 +1,33 @@
 
 import { UserCircle, Users } from "lucide-react";
-
+import { Home } from 'lucide-react';
+import { auth } from "@clerk/nextjs/server"
+import prisma from "@/lib/prisma"
 import NavCard from "./components/NavCard";
 
 
-export default async function Home() {
 
+export default async function TopPage() {
+
+  const {userId} =await  auth()
+  if (!userId) {
+      return
+  }
+
+  const userInfo = await prisma.user.findFirst({
+      where:{
+          id:userId,
+      }
+  })
+
+ const username = userInfo?.name
 
 
   return (
   
 
-  <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-indigo-100 to-purple-100 p-8">
-  <h1 className="text-4xl font-bold text-indigo-800 mb-12">Welcome to Our Service</h1>
+  <div className="flex flex-col items-center justify-center min-h-screen mt-[-50px] ">
+  <h1 className="text-4xl font-bold text-indigo-800 mb-12 ">Welcome to Our Service</h1>
   <div className="flex flex-row gap-8 items-stretch justify-center w-full max-w-5xl">
     <NavCard
       title="Host an Event"
@@ -36,7 +51,8 @@ export default async function Home() {
       description="Manage your account and preferences"
       bgColor="bg-green-200"
       hoverColor="hover:bg-green-300"
-      link="/profile"
+      link={`/profile/${username}`}
+     
     />
   </div>
 </div>
