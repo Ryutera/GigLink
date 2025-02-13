@@ -19,8 +19,8 @@ const events = await prisma.event.findMany({
     <div className="space-y-8 mx-8">
       <h2 className="text-3xl font-bold text-center">Ongaing Event</h2>
        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-         {/* これは募集中のライブのサンプルカードです。実際のデータで置き換えてください */}
-         {events.map((event) => (
+        
+         {events.map((event:any) => (
           <div key={event.id} className="border rounded-lg p-4 shadow-md">
             <h3 className="text-xl font-semibold mb-2">{event.title}</h3>
             <p className="text-gray-600 mb-2">Place:{event.location}</p>
