@@ -3,15 +3,20 @@ import prisma from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 
-export async function ProfileUpdate(formData: FormData) {
+export async function ProfileUpdate(formData: FormData,selectedInstruments:string[]) {
   const { userId } = await auth();
 
   if (!userId) {
     throw new Error("Unauthorized");
   }
 
-  const instruments = formData.getAll("instruments") as string[];
+  console.log(formData)
+
+  
   const bio = formData.get("bio") as string;
+  const instrumentsJson = formData.get("instruments") as string
+  const instruments = JSON.parse(instrumentsJson)
+
 
   try {
     await prisma.user.update({

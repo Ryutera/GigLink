@@ -30,7 +30,7 @@ setMessage(e.target.value)
             if (result.success) {
               
               alert(result.message)
-              router.push("/")
+              router.push("/join")
             
              
             }else{

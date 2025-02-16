@@ -29,9 +29,12 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ user }) => {
     setBio(e.target.value)
   }
 
-  const handleSubmit = async (formData: FormData) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const formData = new FormData(e.currentTarget)
+    formData.append("instruments", JSON.stringify(selectedInstruments))
     try {
-      await ProfileUpdate(formData)
+      await ProfileUpdate(formData,selectedInstruments)
       router.refresh()
       alert('プロフィールが更新されました')
     } catch (error) {
@@ -43,7 +46,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ user }) => {
   return (
     <div className="max-w-2xl mx-auto">
       <h2 className="text-3xl font-bold mb-6">Profile</h2>
-      <form action={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4">
       <div>
           <label htmlFor="username" className="block mb-1 font-medium">
            Username
@@ -59,11 +62,11 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ user }) => {
 
 
 <div>
-        <label className="block mb-1 font-medium">募集楽器パート</label>
+        <label className="block mb-1 font-medium">楽器パート</label>
         <div className="flex flex-wrap gap-2">
           {instruments.map((instrument) => (
-            <label key={instrument} className="grid-cols-4 items-center">
-              <input type="checkbox" className="form-checkbox" checked={selectedInstruments.includes(instrument)}
+            <label key={instrument} className="grid-cols-4 items-center" >
+              <input type="checkbox" className="form-checkbox"  checked={selectedInstruments.includes(instrument)}
                   onChange={()=>handleInstrumentChange(instrument)}/>
               <span className="ml-2">{instrument}</span>
             </label>
