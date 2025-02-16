@@ -3,6 +3,7 @@ import prisma from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 
+
 export async function ProfileUpdate(formData: FormData) {
   const { userId } = await auth();
 
@@ -77,7 +78,9 @@ export async function EventCreate(hostData: {
         });
         
         revalidatePath("/host");
-        return { success: true, message: "イベントが作成されました" };
+        
+        return { success: true, message: "イベントが作成されました" }
+       
     } catch (error) {
         console.log("イベントの作成ができません", error);
         return { success: false, message: "イベントの作成中にエラーが発生しました" };

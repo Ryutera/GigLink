@@ -52,7 +52,7 @@ export async function POST(req: Request) {
 
   // Do something with payload
   // For this guide, log payload to console
-  const { id } = evt.data
+
   const eventType = evt.type
   if (eventType==="user.created") {
     try{
@@ -61,7 +61,8 @@ export async function POST(req: Request) {
             data:{
                 id:evt.data.id,
                 name:evt.data.username as string,
-                email:evt.data.email_addresses[0].email_address
+                email:evt.data.email_addresses[0].email_address,
+                image:evt.data.image_url,
             }
         })
     }catch{

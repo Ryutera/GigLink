@@ -10,7 +10,7 @@ import { useState } from "react";
 
 
 
-export function EventCard({ event,participants }:{ event: any; participants: string[][]}) {
+export function EventCard({ event,participants }:{ event: any; participants:any}) {
     const [isApplicantsVisible, setIsApplicantsVisible] = useState(false);
 
     const onClickApprove = async(application:any) =>{
@@ -54,8 +54,8 @@ export function EventCard({ event,participants }:{ event: any; participants: str
           <p key={event.id} className="text-gray-600 mb-4">
             <span>参加予定者</span>
             <br/>
-            {/* あっているかわからん誰でも編集できる状態とかになっちゃうかも */}
-            {participants.map((p)=><span className="hover:text-blue-400"><Link href={`/profile/${p}`}>{p}</Link></span>)}
+          
+            {participants.map((p:any)=><span className="hover:text-blue-400"><Link href={`/profile/${p.id}`}>{p.name}</Link></span>)}
           </p>
 
           <Button

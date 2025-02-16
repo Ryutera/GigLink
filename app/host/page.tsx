@@ -41,10 +41,12 @@ const participants =  await prisma.application.findMany({
   select: { user: true },
 });
 
-return participants.map((p)=>p.user.name)
+return participants.map((p)=>p.user)
     })
     
   )
+
+  
 console.log(eventsWithParticipants)
 
   return (
