@@ -15,9 +15,14 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ user }) => {
   const [bio, setBio] = useState<string>(user.bio || '')
   const router = useRouter()
   
-  const handleInstrumentChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const options = Array.from(event.target.selectedOptions, (option) => option.value)
-    setSelectedInstruments(options)
+  const handleInstrumentChange = (instrument: string) => {
+   setSelectedInstruments((prev)=>
+    prev.includes(instrument)? 
+   prev.filter((i)=>i!==instrument)
+   : [...prev,instrument]
+  
+  )
+
   }
 
   const handleBioChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -51,26 +56,21 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ user }) => {
             disabled
           />
         </div>
-        <div>
-          <label htmlFor="instruments" className="block mb-1 font-medium">
-            担当楽器
-          </label>
-          <select
-            id="instruments"
-            name="instruments"
-            className="w-full border rounded-md p-2"
-            multiple
-            size={7}
-            value={selectedInstruments}
-            onChange={handleInstrumentChange}
-          >
-            {instruments.map((instrument)=>(
-  <option  key={instrument}>{instrument}</option>
-            ))}
-          
-           
-          </select>
+
+
+<div>
+        <label className="block mb-1 font-medium">募集楽器パート</label>
+        <div className="flex flex-wrap gap-2">
+          {instruments.map((instrument) => (
+            <label key={instrument} className="grid-cols-4 items-center">
+              <input type="checkbox" className="form-checkbox" checked={selectedInstruments.includes(instrument)}
+                  onChange={()=>handleInstrumentChange(instrument)}/>
+              <span className="ml-2">{instrument}</span>
+            </label>
+          ))}
         </div>
+      </div>
+
         <div>
           <label htmlFor="bio" className="block mb-1 font-medium">
             自己紹介

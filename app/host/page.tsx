@@ -32,6 +32,7 @@ export default async function CreateEvent() {
 
 
 
+
   const eventsWithParticipants = await Promise.all(
 
     scheduledEvents.map(async (event)=>{
@@ -55,7 +56,7 @@ console.log(eventsWithParticipants)
         </Button>
       </div>
 
-      {scheduledEvents ? (
+      {scheduledEvents.length ? (
         <div className="space-y-6">
           {scheduledEvents.map((event) => (
             
@@ -63,7 +64,7 @@ console.log(eventsWithParticipants)
           ))}
         </div>
       ) : (
-        <div className="text-center py-8 bg-gray-100 rounded-lg">
+        <div className="text-center py-8 bg-gray-100 rounded-lg mt-5 flex ">
           <h2 className="text-xl font-semibold text-gray-600">現在開催予定のイベントはありません</h2>
         </div>
       )}

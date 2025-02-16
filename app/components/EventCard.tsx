@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { applicationApprove, applicationReject,  } from "@/lib/action";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import Link from "next/link";
 
 
 import { useState } from "react";
@@ -53,7 +54,8 @@ export function EventCard({ event,participants }:{ event: any; participants: str
           <p key={event.id} className="text-gray-600 mb-4">
             <span>参加予定者</span>
             <br/>
-            {participants.map((p)=><span >{p}</span>)}
+            {/* あっているかわからん誰でも編集できる状態とかになっちゃうかも */}
+            {participants.map((p)=><span className="hover:text-blue-400"><Link href={`/profile/${p}`}>{p}</Link></span>)}
           </p>
 
           <Button

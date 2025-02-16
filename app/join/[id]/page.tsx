@@ -4,10 +4,11 @@ import JoinForm  from "../../components/JoinForm";
 
 import { auth } from '@clerk/nextjs/server';
 
+import { SignUp } from '@clerk/nextjs';
+
 
 export default async function Join({params}: {params:{id:string}}) {
 
-  
 
   const event = await prisma.event.findFirst({
     where:{
@@ -21,7 +22,7 @@ id:params.id
 
     const {userId} = await auth()
     if (!userId) {
-      return
+      return <div>ユーザーが見つかりません</div>
     }
   
     const hasApplied = await prisma.application.findMany(
