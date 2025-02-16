@@ -3,7 +3,7 @@ import prisma from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 
-export async function ProfileUpdate(formData: FormData,selectedInstruments:string[]) {
+export async function ProfileUpdate(formData: FormData) {
   const { userId } = await auth();
 
   if (!userId) {
