@@ -1,7 +1,8 @@
 "use client"
 import { Button } from "@/components/ui/button";
 import { applicationApprove, applicationReject,  } from "@/lib/action";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp} from "lucide-react";
+import Image from "next/image"
 import Link from "next/link";
 
 
@@ -10,7 +11,7 @@ import { useState } from "react";
 
 
 
-export function EventCard({ event,participants }:{ event: any; participants:any}) {
+export function EventCard({ event}:{ event: any}) {
     const [isApplicantsVisible, setIsApplicantsVisible] = useState(false);
 
     const onClickApprove = async(application:any) =>{
@@ -54,24 +55,26 @@ export function EventCard({ event,participants }:{ event: any; participants:any}
           <p key={event.id} className="text-gray-600 mb-4">
             <span>参加予定者</span>
             <br/>
-          
-            {participants.map((p:any)=><span className="hover:text-blue-400"><Link href={`/profile/${p.id}`}>{p.name}</Link></span>)}
+            {/* あとで参加希望者のとこと合わせて絶対リファクタリングしたほうがいい、コードキモい */}
+            { event.applications.filter((application:any)=>application.status==="ACCEPTED").map((p:any)=><span className="hover:text-blue-400">{p.user.name}<Link href={`/profile/${p.user.id}`}>
+            </Link></span>)}
+            
           </p>
 
           <Button
             className="w-full text-left flex justify-between items-center text-black"
             onClick={() => setIsApplicantsVisible(!isApplicantsVisible)}
           >
-            参加希望者を表示 ({event.applications.length})
+            参加希望者を表示 ({event.applications.filter((application:any)=>application.status==="PENDING").length})
             {isApplicantsVisible ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
           </Button>
         </div>
         {isApplicantsVisible && (
           <div className="bg-gray-50 p-6 border-t">
             <h4 className="text-lg font-semibold mb-4">参加希望者一覧</h4>
-            {event.applications.length > 0 ? (
+            {event.applications.filter((application:any)=>application.status==="PENDING").length > 0 ? (
               <ul className="space-y-4">
-                {event.applications.map((application:any) => (
+                {event.applications.filter((application:any)=>application.status==="PENDING").map((application:any) => (
                   <li key={application.id} className="bg-white p-4 rounded-lg shadow">
                     <p className="font-medium">{application.user.name}</p>
                     <p className="text-gray-600">

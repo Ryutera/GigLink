@@ -10,6 +10,7 @@ export default async function CreateEvent() {
     return <div>ユーザーが見つかりません</div>;
   }
 
+  //ログイン中のアカウントが開催予定のイベント
   const scheduledEvents = await prisma.event.findMany({
     where: {
       organizerId: userId as string,
@@ -18,36 +19,38 @@ export default async function CreateEvent() {
       },
     },
     include: {
-      applications: {
-        where: {
-          status: 'PENDING'
-        },
-        include: {
-          user: true,
+      applications:{
+        include:{
+          user:true
+        }
+      }
+      
      
-        },
-      },
     },
+
   });
 
 
+console.log(scheduledEvents)
+console.log(scheduledEvents.map((e)=>e.applications))
 
 
-  const eventsWithParticipants = await Promise.all(
 
-    scheduledEvents.map(async (event)=>{
-const participants =  await prisma.application.findMany({
-  where: { eventId: event.id, status: "ACCEPTED" },
-  select: { user: true },
-});
+// const eventsWithParticipants = await Promise.all(
 
-return participants.map((p)=>p.user)
-    })
-    
-  )
+//   scheduledEvents.map(async (event)=>{
+// const participants =  await prisma.application.findMany({
+// where: { eventId: event.id, status: "ACCEPTED" },
+// select: { user: true },
+// });
+
+// return participants.map((p)=>p.user.name)
+//   })
+  
+// )
 
   
-console.log(eventsWithParticipants)
+// console.log(eventsWithParticipants)
 
   return (
     <div className="max-w-4xl mx-auto p-4">
@@ -62,7 +65,8 @@ console.log(eventsWithParticipants)
         <div className="space-y-6">
           {scheduledEvents.map((event) => (
             
-            <EventCard key={event.id} event={event} participants={eventsWithParticipants }/>
+            <EventCard key={event.id} event={event}/>
+          
           ))}
         </div>
       ) : (
