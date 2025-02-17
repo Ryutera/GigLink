@@ -6,8 +6,12 @@ import { redirect } from 'next/navigation'
 
 
 
-const ProfilePage = async () => {
+const ProfilePage = async ({params}:{params:{id:string}}) => {
   const {userId} = await auth()
+
+  const {id} = await params
+  const paramsUserID = id
+
 
   if (!userId) {
     redirect('/sign-up')
@@ -15,18 +19,19 @@ const ProfilePage = async () => {
 
   const userInfo = await prisma.user.findUnique({
     where: {
-      id: userId,
+      id: paramsUserID
     },
   })
 
   if (!userInfo) {
     return
   }
+  console.log( paramsUserID, userId)
 
 
   return (
   <>
-  <ProfileForm user={userInfo} />
+  <ProfileForm user={userInfo} userId={userId} />
   
     </>
   )

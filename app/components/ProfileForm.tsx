@@ -1,19 +1,30 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { ProfileUpdate } from '@/lib/action'
 import { useRouter } from 'next/navigation'
 import { instruments } from '../constants/instruments'
 
-interface ProfileFormProps {
-  user: any
-}
 
-const ProfileForm: React.FC<ProfileFormProps> = ({ user }) => {
+
+
+const ProfileForm = ({user, userId}:any) => {
   const [selectedInstruments, setSelectedInstruments] = useState<string[]>(user.instruments)
   const [bio, setBio] = useState<string>(user.bio || '')
+  const [editable, setEditable] = useState(true)
   const router = useRouter()
+
+
+
+ useEffect(()=>{
+if (user.id===userId) {
+ setEditable(false)
+}else{
+  setEditable(true)
+}
+ },[user,userId])
+
   
   const handleInstrumentChange = (instrument: string) => {
    setSelectedInstruments((prev)=>
@@ -29,12 +40,13 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ user }) => {
     setBio(e.target.value)
   }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    console.log(e.currentTarget)
     const formData = new FormData(e.currentTarget)
     formData.append("instruments", JSON.stringify(selectedInstruments))
     try {
-      await ProfileUpdate(formData,selectedInstruments)
+      await ProfileUpdate(formData)
       router.refresh()
       alert('プロフィールが更新されました')
     } catch (error) {
@@ -56,7 +68,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ user }) => {
             id="username"
             className="w-full border rounded-md p-2"
             defaultValue={user.name}
-            disabled
+            disabled={editable}
           />
         </div>
 
@@ -67,7 +79,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ user }) => {
           {instruments.map((instrument) => (
             <label key={instrument} className="grid-cols-4 items-center" >
               <input type="checkbox" className="form-checkbox"  checked={selectedInstruments.includes(instrument)}
-                  onChange={()=>handleInstrumentChange(instrument)}/>
+                  onChange={()=>handleInstrumentChange(instrument)}  disabled={editable}/>
               <span className="ml-2">{instrument}</span>
             </label>
           ))}
@@ -86,6 +98,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ user }) => {
             placeholder="自己紹介を入力してください"
             value={bio}
             onChange={handleBioChange}
+            disabled={editable}
           ></textarea>
         </div>
         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">

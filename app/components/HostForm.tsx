@@ -6,6 +6,7 @@ import { EventCreate } from '@/lib/action'
 
 
 
+
 const HostForm = () => {
     const [title, setTitle] = useState("")
      const [place, setPlace] = useState("")
@@ -14,6 +15,7 @@ const HostForm = () => {
     const [startTime, setStartTime] = useState("")
     const [endTime, setEndTime] = useState("")
     const [selectedInstruments, setSelectedInstruments] = useState<string[]>([])
+  
 
     
 
@@ -75,6 +77,7 @@ const HostForm = () => {
                 
             } else {
                 alert(result.message);
+                
             }
         } catch (error) {
             console.error("イベントの作成ができません", error);
