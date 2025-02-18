@@ -69,6 +69,7 @@ if (user.id===userId) {
             className="w-full border rounded-md p-2"
             defaultValue={user.name}
             disabled={editable}
+            
           />
         </div>
 
@@ -78,8 +79,8 @@ if (user.id===userId) {
         <div className="flex flex-wrap gap-2">
           {instruments.map((instrument) => (
             <label key={instrument} className="grid-cols-4 items-center" >
-              <input type="checkbox" className="form-checkbox"  checked={selectedInstruments.includes(instrument)}
-                  onChange={()=>handleInstrumentChange(instrument)}  disabled={editable}/>
+              <input  type="checkbox" className="form-checkbox"  checked={selectedInstruments.includes(instrument)}
+                  onChange={()=>handleInstrumentChange(instrument)}   disabled={editable} />
               <span className="ml-2">{instrument}</span>
             </label>
           ))}
@@ -101,7 +102,7 @@ if (user.id===userId) {
             disabled={editable}
           ></textarea>
         </div>
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
+        <button type="submit"   disabled={editable} className={`bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition ${editable&&"cursor-not-allowed  hover:bg-blue-500 "} `}>
           Update Profile
         </button>
       </form>

@@ -56,8 +56,8 @@ export function EventCard({ event}:{ event: any}) {
             <span>参加予定者</span>
             <br/>
             {/* あとで参加希望者のとこと合わせて絶対リファクタリングしたほうがいい、コードキモい */}
-            { event.applications.filter((application:any)=>application.status==="ACCEPTED").map((p:any)=><span className="hover:text-blue-400">{p.user.name}<Link href={`/profile/${p.user.id}`}>
-            </Link></span>)}
+            { event.applications.filter((application:any)=>application.status==="ACCEPTED").map((p:any)=><span className="hover:text-blue-400"><Link href={`/profile/${p.user.id}`}>
+            {p.user.name}</Link></span>)}
             
           </p>
 
