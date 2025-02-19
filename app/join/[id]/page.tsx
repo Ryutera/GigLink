@@ -49,7 +49,7 @@ id:params.id
       </p>
       <p className="mb-1">
         {/* リファクタリングすべきだと思う 同じコードがjoin>page.tsxにもある*/}
-        <strong>日時:</strong> {`${event?.date.getFullYear()}-0${event?.date.getMonth()as number+1}-${event?.date.getDate()} : ${event?.startTime.toISOString().substring(11, 16)} - ${event?.endTime.toISOString().substring(11, 16)}`}
+        <strong>日時:</strong>{`${event?.date.getFullYear()}-${String(event?.date.getMonth()as number+1).padStart(2,"0")}-${event?.date.getDate()} : ${event?.startTime.toISOString().substring(11, 16)} - ${event?.endTime.toISOString().substring(11, 16)}`}
       </p>
       <p className="mb-1">
         <strong>募集:</strong> {event?.instruments}
