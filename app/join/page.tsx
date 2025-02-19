@@ -15,6 +15,8 @@ startTime:"asc"
 }]
 })
 
+
+
 return (
 <div className="space-y-8 mx-8">
 <h2 className="text-3xl font-bold text-center">Ongaing Event</h2>
@@ -23,7 +25,7 @@ return (
 <div key={event.id} className="border rounded-lg p-4 shadow-md">
 <h3 className="text-xl font-semibold mb-2">{event.title}</h3>
 <p className="text-gray-600 mb-2">Place:{event.location}</p>
-<p className="text-gray-600 mb-2">Date: {`${event?.date.getFullYear()}-0${event?.date.getMonth()as number+1}-${event?.date.getDate()} : ${event?.startTime.toISOString().substring(11, 16)} - ${event?.endTime.toISOString().substring(11, 16)}`}</p>
+<p className="text-gray-600 mb-2">Date: {`${event?.date.getFullYear()}-${String(event?.date.getMonth()as number+1).padStart(2,"0")}-${event?.date.getDate()} : ${event?.startTime.toISOString().substring(11, 16)} - ${event?.endTime.toISOString().substring(11, 16)}`}</p>
 <p className="text-gray-600 mb-4">Looking for:{event.instruments}</p>
 <Link
 href={`/join/${event.id}`}
