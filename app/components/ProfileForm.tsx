@@ -9,6 +9,8 @@ import { instruments } from '../constants/instruments'
 
 
 
+
+
 const ProfileForm = ({user, userId}:any) => {
   const [selectedInstruments, setSelectedInstruments] = useState<string[]>(user.instruments)
   const [bio, setBio] = useState<string>(user.bio || '')
@@ -56,9 +58,11 @@ if (user.id===userId) {
   }
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <h2 className="text-3xl font-bold mb-6">Profile</h2>
+    
+      <div className="space-y-6">
+      <h2 className="text-3xl font-bold mb-6 ">Profile</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
+        
       <div>
           <label htmlFor="username" className="block mb-1 font-medium">
            Username
@@ -69,6 +73,7 @@ if (user.id===userId) {
             className="w-full border rounded-md p-2"
             defaultValue={user.name}
             disabled={editable}
+            
           />
         </div>
 
@@ -76,13 +81,20 @@ if (user.id===userId) {
 <div>
         <label className="block mb-1 font-medium">楽器パート</label>
         <div className="flex flex-wrap gap-2">
-          {instruments.map((instrument) => (
+          {editable?
+            selectedInstruments.map((instrument)=><div key={instrument}>
+              <span>{instrument}</span>
+            </div>)
+           : 
+          
+          instruments.map((instrument) => (
             <label key={instrument} className="grid-cols-4 items-center" >
-              <input type="checkbox" className="form-checkbox"  checked={selectedInstruments.includes(instrument)}
-                  onChange={()=>handleInstrumentChange(instrument)}  disabled={editable}/>
+              <input  type="checkbox" className="form-checkbox"  checked={selectedInstruments.includes(instrument)}
+                  onChange={()=>handleInstrumentChange(instrument)}    />
               <span className="ml-2">{instrument}</span>
             </label>
           ))}
+          
         </div>
       </div>
 
@@ -94,18 +106,22 @@ if (user.id===userId) {
             id="bio"
             name="bio"
             rows={4}
-            className="w-full border rounded-md p-2"
+            className={`w-full border rounded-md p-2 ${editable&&"cursor-not-allowed"}`}
             placeholder="自己紹介を入力してください"
             value={bio}
             onChange={handleBioChange}
             disabled={editable}
           ></textarea>
         </div>
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
+        <button type="submit"   disabled={editable} className={`${editable&&"cursor-not-allowed  hover:bg-blue-500"} bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition `}>
           Update Profile
         </button>
+       
       </form>
-    </div>
+
+      
+      </div>
+    
   )
 }
 
