@@ -115,12 +115,12 @@ if (user.id===userId) {
           ></textarea>
         </div>
         {editable ? 
-        <button className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition'><Link href='/'>戻る</Link></button> :
+        <button type="button" className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition'><Link href='/'>戻る</Link></button> :
         <div className='flex place-content-between'>
         <button type="submit"  className={`  hover:bg-blue-500"} bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition `}>
           Update Profile
         </button>
-        <button className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition'><Link href='/'>戻る</Link></button> 
+        <button type="button"  className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition'><Link href='/'>戻る</Link></button> 
         </div>
 }
        
