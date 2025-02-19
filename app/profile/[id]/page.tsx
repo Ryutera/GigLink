@@ -35,9 +35,15 @@ const ProfilePage = async ({params}:{params:{id:string}}) => {
    {
     where:{
       userId:userId,
+      event: {
+        startTime: {
+          gt: new Date()
+        },
+      },
      
     },include:{
       event:true
+      
     }
    }
   )
@@ -48,10 +54,10 @@ const ProfilePage = async ({params}:{params:{id:string}}) => {
   <Tabs defaultValue="account" className="w-full max-w-2xl">
     {userId===paramsUserID&&
     <TabsList className="mb-4">
-     
+    
     <TabsTrigger value="account">Account</TabsTrigger>
     <TabsTrigger value="appStatus">Application Status</TabsTrigger>
-   
+    
   </TabsList>}
   
   <TabsContent value="account" ><ProfileForm user={userInfo} userId={userId} /></TabsContent>

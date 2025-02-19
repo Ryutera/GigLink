@@ -28,7 +28,7 @@ return (
 <p className="text-gray-600 mb-2">Date: {`${event?.date.getFullYear()}-${String(event?.date.getMonth()as number+1).padStart(2,"0")}-${event?.date.getDate()} : ${event?.startTime.toISOString().substring(11, 16)} - ${event?.endTime.toISOString().substring(11, 16)}`}</p>
 <p className="text-gray-600 mb-4">Looking for:{event.instruments}</p>
 <Link
-href={`/join/${event.id}`}
+href={`/event_detail/${event.id}`}
 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
 >
 Join

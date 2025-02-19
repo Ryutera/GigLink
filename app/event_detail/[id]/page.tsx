@@ -1,18 +1,23 @@
 import prisma from '@/lib/prisma'
 import React from 'react'
 import JoinForm  from "../../components/JoinForm";
-
 import { auth } from '@clerk/nextjs/server';
+import Link from 'next/link';
 
-import { SignUp } from '@clerk/nextjs';
 
-
-export default async function Join({params}: {params:{id:string}}) {
+export default async function eventDetail({params}: {params:{id:string}}) {
 
 
   const event = await prisma.event.findFirst({
     where:{
 id:params.id
+    },include:{
+      organizer:{
+        select:{
+          name:true,
+          id:true
+        }
+      }
     }
   })
   if (!event) {
@@ -44,6 +49,9 @@ id:params.id
     <h2 className="text-3xl font-bold mb-6">ライブイベント {event?.title} に応募</h2>
     <div className="mb-6 p-4 bg-gray-100 rounded-md">
       <h3 className="text-xl font-semibold mb-2">イベント詳細</h3>
+      <p className="mb-1">
+        <strong>主催者:</strong> <Link className="hover:text-blue-400" href={`/profile/${event?.organizer.id}`}>{event?.organizer.name}</Link>
+      </p>
       <p className="mb-1">
         <strong>場所:</strong> {event?.location}
       </p>
