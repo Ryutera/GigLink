@@ -5,13 +5,15 @@ import React from 'react'
 
 const Join = async() => {
 
-
+const {userId} = await auth()
 
 const events = await prisma.event.findMany({
 where: {
 startTime: {
 gt: new Date(), // 現在の日時より後のイベントのみ取得
 },
+},include:{
+    organizer :true
 },
 orderBy:[{
 startTime:"asc"
@@ -31,12 +33,28 @@ return (
 <p className="text-gray-600 mb-2">Place:{event.location}</p>
 <p className="text-gray-600 mb-2">Date: {`${event?.date.getFullYear()}-${String(event?.date.getMonth()as number+1).padStart(2,"0")}-${event?.date.getDate()} : ${event?.startTime.toISOString().substring(11, 16)} - ${event?.endTime.toISOString().substring(11, 16)}`}</p>
 <p className="text-gray-600 mb-4">Looking for:{event.instruments}</p>
-<Link
+{/* イベントの開催者が自分ならeditそうでないならjoinと表示 */}
+{
+ event.organizer.id===userId? 
+//  後で開催予定のイベントの内容の編集または削除を行うページあるいは機能を追加する
+ <Link
+ href={`/`}
+ className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+ >
+ Edit
+ </Link>
+ : 
+ <Link
 href={`/event_detail/${event.id}`}
 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
 >
 Join
 </Link>
+
+}
+
+
+
 </div>
 ))}
 
