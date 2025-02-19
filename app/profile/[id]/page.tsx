@@ -44,15 +44,18 @@ const ProfilePage = async ({params}:{params:{id:string}}) => {
 
 
   return (
-  <div className="flex  justify-center w-full">
-  <Tabs defaultValue="account">
-    {userId===paramsUserID&&<TabsList>
+  <div className="flex  justify-center w-full ">
+  <Tabs defaultValue="account" className="w-full max-w-2xl">
+    {userId===paramsUserID&&
+    <TabsList className="mb-4">
+     
     <TabsTrigger value="account">Account</TabsTrigger>
     <TabsTrigger value="appStatus">Application Status</TabsTrigger>
+   
   </TabsList>}
   
-  <TabsContent value="account"><ProfileForm user={userInfo} userId={userId} /></TabsContent>
-  <ApplicationStatus schedules={schedules}/>
+  <TabsContent value="account" ><ProfileForm user={userInfo} userId={userId} /></TabsContent>
+  <TabsContent value="appStatus" ><ApplicationStatus schedules={schedules}/></TabsContent>
 </Tabs>
 </div>
   
