@@ -9,6 +9,8 @@ import { instruments } from '../constants/instruments'
 
 
 
+
+
 const ProfileForm = ({user, userId}:any) => {
   const [selectedInstruments, setSelectedInstruments] = useState<string[]>(user.instruments)
   const [bio, setBio] = useState<string>(user.bio || '')
@@ -56,8 +58,8 @@ if (user.id===userId) {
   }
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <h2 className="text-3xl font-bold mb-6">Profile</h2>
+    <div className="max-w-2xl mx-auto w-full">
+      <h2 className="text-3xl font-bold mb-6 mt-5">Profile</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
       <div>
           <label htmlFor="username" className="block mb-1 font-medium">
@@ -113,7 +115,10 @@ if (user.id===userId) {
           Update Profile
         </button>
       </form>
+
+      
     </div>
+    
   )
 }
 
