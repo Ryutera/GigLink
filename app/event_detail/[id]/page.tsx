@@ -4,6 +4,7 @@ import JoinForm  from "../../components/JoinForm";
 import { auth } from '@clerk/nextjs/server';
 import Link from 'next/link';
 import EventInfo from '@/app/components/EventInfo';
+import EventEditForm from '@/app/components/EventEditForm';
 
 
 export default async function eventDetail({params}: {params:{id:string}}) {
@@ -49,7 +50,7 @@ id:params.id
     <div className="max-w-2xl mx-auto">
     <EventInfo event={event} userId={userId}/>
     {event?.organizer.id===userId?
-    <>a</> :
+    <EventEditForm/> :
      <JoinForm eventId={eventId} hasApplied={hasApplied} />}
     
   </div>

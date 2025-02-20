@@ -66,7 +66,7 @@ setMessage(e.target.value)
       <textarea
         id="pr"
         name="message"
-        rows={4}
+        rows={2}
         className="w-full border rounded-md p-2"
         placeholder="簡単な自己PRを入力してください"
         value={message}

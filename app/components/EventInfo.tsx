@@ -27,32 +27,24 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
   const isOrganizer = event?.organizer.id === userId
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    const formData = new FormData()
-    formData.append("title", title)
-    formData.append("description", description)
-    formData.append("requiredInstrument", requiredInstrument)
-    formData.append("date", date?.toISOString() || "")
-    formData.append("startTime", startTime)
-    formData.append("endTime", endTime)
-    formData.append("location", location)
-    onSubmit(formData)
+    
   }
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="space-y-5 w-full mb-8">
       <h2 className="text-3xl font-bold">
-        {isOrganizer ? `ライブイベント "${title}" を編集` : `ライブイベント "${title}" の詳細`}
+        {isOrganizer ? `ライブイベント ${event.title} を編集` : `ライブイベント ${event.title} の詳細`}
       </h2>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
             <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
               イベントタイトル
             </label>
             <Input id="title" value={title} onChange={(e) => setTitle(e.target.value)} disabled={!isOrganizer} />
           </div>
+
           <div>
             <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-1">
               場所
@@ -64,6 +56,7 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
               disabled={!isOrganizer}
             />
           </div>
+          
           <div>
             <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-1">
               日付
@@ -131,16 +124,17 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
         </div>
 
         <div>
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="description" className="block text-sm font-medium text-gray-700 ">
             イベント詳細
           </label>
           <Textarea
-            id="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="min-h-[100px]"
-            disabled={!isOrganizer}
-          />
+  id="description"
+  value={description}
+  onChange={(e) => setDescription(e.target.value)}
+  className="min-h-[70px]"  // もともとの100pxから60pxに変更
+  disabled={!isOrganizer}
+/>
+
         </div>
 
     
