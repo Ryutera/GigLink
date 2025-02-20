@@ -39,7 +39,7 @@ return (
 //  後で開催予定のイベントの内容の編集または削除を行うページあるいは機能を追加する
  <Link
  href={`/`}
- className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+ className="bg-green-400 text-white px-4 py-2 rounded hover:bg-green-500 transition"
  >
  Edit
  </Link>
