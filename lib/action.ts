@@ -77,7 +77,7 @@ export async function EventCreate(hostData: {
             },
         });
         
-        revalidatePath("/host");
+       
         
         return { success: true, message: "イベントが作成されました" }
        
@@ -178,20 +178,16 @@ export async function eventEditAction ({ eventId, editData }:EventEditParams):Pr
   success: boolean;
 }> {
 
- console.log(editData)
- console.log(eventId)
- console.log("editData.date:", editData.date);
- console.log("Converted date:", new Date(editData.date));
 
 
 
   try {
-    console.log("Start Time String:", `${editData.date}T${editData.startTime}:00`);
-console.log("End Time String:", `${editData.date}T${editData.endTime}:00`);
-console.log("Parsed Start Time:", new Date(`${editData.date}T${editData.startTime}:00`));
-console.log("Parsed End Time:", new Date(`${editData.date}T${editData.endTime}:00`));
 
-    console.log("try中")
+// なんかここでtを取らないとinvalidっstartとendがinvalidっていう値になっちゃってた
+//supabaseにあるdataがyyyy-mm-dd 00:00:00というIOSの値、そこにstartやeditのデータをそのままくっつけようとしたから形式が合わずにエラーになってた
+//split（T)でTの前後を分割して配列にしている、その上で配列の一難最初のみを取得
+//00:00の部分を切り取って日付の間にTと最後に表中ん日時を表すZを加える。
+//最後にtoISOstringを使うのはnew Dateを使うとデータがオブジェクトになりprismaについかできなくなるから。尚dateでそれをしないのは既にeventformのページでやってあるから
 
     const datePart = editData.date.split("T")[0];
     await prisma.event.update({
@@ -207,8 +203,9 @@ console.log("Parsed End Time:", new Date(`${editData.date}T${editData.endTime}:0
         updatedAt: new Date(),
       }
 
-    })
-    revalidatePath("/")
+    }
+  )
+ 
     return {message:"イベント内容を編集しました", success:true}
     
 
@@ -219,6 +216,17 @@ console.log("Parsed End Time:", new Date(`${editData.date}T${editData.endTime}:0
   }
 }
 
-export async function eventDeleteAction (formData:FormData) {
-  return {message:"aaa", success:false}
+export async function eventDeleteAction (eventId:string) {
+  try {
+ await prisma.event.delete({
+  where:{id:eventId}
+ })
+    
+    return {message:"イベントを削除しました", success:true}
+
+  } catch (error) {
+    
+    return {message:"イベントの削除に失敗しました", success:false}
+  }
+  
 }

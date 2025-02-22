@@ -23,7 +23,7 @@ id:id
     }
   })
   if (!event) {
-    alert("there is no event")
+  return <div className=''>イベントがありません</div>
    
   }
 

@@ -16,6 +16,9 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import ProfileForm from "./ProfileForm"
 
 import { eventDeleteAction, eventEditAction } from "@/lib/action"
+import { revalidatePath } from "next/cache"
+import { useRouter } from "next/navigation"
+
 
 
 const EventInfo = ({ event, userId, onSubmit }: any) => {
@@ -27,8 +30,11 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
   const [endTime, setEndTime] = useState(event?.endTime.toISOString().substring(11, 16))
   const [location, setLocation] = useState(event?.location)
 
+
+  const route = useRouter()
   const isOrganizer = event?.organizer.id === userId
 const eventId = event.id
+
 
 
   const handleSubmit = async (formData: FormData) => {
@@ -47,9 +53,10 @@ const eventId = event.id
 
     if (action === "delete") {
       if (window.confirm("本当にこのイベントを削除しますか？")) {
-        const result = await eventDeleteAction(formData)
+        const result = await eventDeleteAction(eventId)
         if (result.success) {
-          alert(result.message)
+         route.push("/host")
+        
           // ここで削除後の処理（例：ページ遷移）を行う
         } else {
           alert(result.message)
@@ -61,6 +68,7 @@ const eventId = event.id
       const result = await eventEditAction({eventId,editData})
       if (result.success) {
         alert(result.message)
+      
       } else {
         alert(result.message)
       }
