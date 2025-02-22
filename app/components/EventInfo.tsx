@@ -18,6 +18,7 @@ import ProfileForm from "./ProfileForm"
 import { eventDeleteAction, eventEditAction } from "@/lib/action"
 import { revalidatePath } from "next/cache"
 import { useRouter } from "next/navigation"
+import { Span } from "next/dist/trace"
 
 
 
@@ -157,8 +158,10 @@ const eventId = event.id
         </div>
 
         <div className="flex flex-row ">
-         
-          {instruments.map((instrument) => (
+          
+          {isOrganizer? 
+          <>
+           {instruments.map((instrument) => (
              
             <label key={instrument} htmlFor="instrument" className="mr-3 block text-sm font-medium text-gray-700 mb-1">
            {instrument}
@@ -169,6 +172,20 @@ const eventId = event.id
               <span className="ml-2"></span>
               </label>
           ))}
+         </>
+           :
+<>
+<span>募集楽器:</span>
+{requiredInstrument.map((i:string)=>
+
+<span key={i}>
+  {i}
+</span>)}
+</>
+
+           
+           }
+         
          
           {/* <Select value={requiredInstrument} onValueChange={setRequiredInstrument} disabled={!isOrganizer}>
             <SelectTrigger className="w-full">
