@@ -21,7 +21,7 @@ import { eventDeleteAction, eventEditAction } from "@/lib/action"
 const EventInfo = ({ event, userId, onSubmit }: any) => {
   const [title, setTitle] = useState(event?.title)
   const [description, setDescription] = useState(event?.description)
-  const [requiredInstrument, setRequiredInstrument] = useState(event?.instruments.map((i:any)=>i) || [])
+  const [requiredInstrument, setRequiredInstrument] = useState(event?.instruments || [])
   const [date, setDate] = useState(event?.date.toISOString())
   const [startTime, setStartTime] = useState(event?.startTime.toISOString().substring(11, 16))
   const [endTime, setEndTime] = useState(event?.endTime.toISOString().substring(11, 16))
@@ -42,7 +42,7 @@ const eventId = event.id
         startTime,
         endTime,
         location,
-        instruments:[requiredInstrument]
+        instruments:requiredInstrument
     }
 
     if (action === "delete") {
@@ -69,7 +69,7 @@ const eventId = event.id
 
 
   const toggleInstrument =(instrument:string) =>{
-    setRequiredInstrument((prev:any)=>prev.includes(instrument)? requiredInstrument.filter((i:string)=>i!==instrument):[...prev,instrument])
+    setRequiredInstrument((prev:any)=>prev.includes(instrument)? prev.filter((i:string)=>i!==instrument):[...prev,instrument])
   }
 
 
@@ -148,14 +148,14 @@ const eventId = event.id
           </div>
         </div>
 
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-row ">
          
           {instruments.map((instrument) => (
              
             <label key={instrument} htmlFor="instrument" className="mr-3 block text-sm font-medium text-gray-700 mb-1">
            {instrument}
             
-              <input  type="checkbox" className="form-checkbox" checked={requiredInstrument.includes(instrument)}
+              <input  type="checkbox" className="ml-1 form-checkbox" checked={requiredInstrument.includes(instrument)}
                   onChange={()=>toggleInstrument(instrument)}/>
                   
               <span className="ml-2"></span>

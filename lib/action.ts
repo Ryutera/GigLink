@@ -180,29 +180,40 @@ export async function eventEditAction ({ eventId, editData }:EventEditParams):Pr
 
  console.log(editData)
  console.log(eventId)
+ console.log("editData.date:", editData.date);
+ console.log("Converted date:", new Date(editData.date));
+
+
 
   try {
+    console.log("Start Time String:", `${editData.date}T${editData.startTime}:00`);
+console.log("End Time String:", `${editData.date}T${editData.endTime}:00`);
+console.log("Parsed Start Time:", new Date(`${editData.date}T${editData.startTime}:00`));
+console.log("Parsed End Time:", new Date(`${editData.date}T${editData.endTime}:00`));
+
     console.log("try中")
+
+    const datePart = editData.date.split("T")[0];
     await prisma.event.update({
       where: { id: eventId },
       data: {
         title: editData.title,
         description: editData.description,
         date:  new Date(editData.date),
-        startTime:  new Date(`${editData.date}T${editData.startTime}:00Z`),
-        endTime: new Date(`${editData.date}T${editData.endTime}:00Z`),
+        startTime:  new Date(`${datePart}T${editData.startTime}:00Z`).toISOString(),
+        endTime: new Date(`${datePart}T${editData.endTime}:00Z`).toISOString(),
         location: editData.location,
         instruments: editData.instruments,
         updatedAt: new Date(),
       }
 
     })
-    // revalidatePath("/")
+    revalidatePath("/")
     return {message:"イベント内容を編集しました", success:true}
     
 
   } catch (error) {
-    
+    console.error("エラー:", error)
     return {message:"イベント内容の編集ができませんでした", success:false}
     
   }
