@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import { instruments } from '../constants/instruments'
 import { EventCreate } from '@/lib/action'
+import { useRouter } from 'next/navigation'
 
 
 
@@ -16,7 +17,7 @@ const HostForm = () => {
     const [endTime, setEndTime] = useState("")
     const [selectedInstruments, setSelectedInstruments] = useState<string[]>([])
   
-
+const router = useRouter()
     
 
     const  onChangeTitle = (e: { target: { value: React.SetStateAction<string> } } )=>{
@@ -75,6 +76,7 @@ const HostForm = () => {
                 setEndTime(""); 
                 setSelectedInstruments([]);
                 
+                router.push("/host")
             } else {
                 alert(result.message);
                 

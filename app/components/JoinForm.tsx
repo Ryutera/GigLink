@@ -66,7 +66,7 @@ setMessage(e.target.value)
       <textarea
         id="pr"
         name="message"
-        rows={4}
+        rows={2}
         className="w-full border rounded-md p-2"
         placeholder="簡単な自己PRを入力してください"
         value={message}
@@ -75,7 +75,7 @@ setMessage(e.target.value)
     </div>
     <div>
          {hasApplied.length>0? 
-    <button type="submit" disabled className="bg-gray-500 text-white px-4 py-2 rounded  ">
+    <button type="submit" disabled className="bg-gray-500 text-white px-4 py-2 rounded cursor-not-allowed ">
       応募済みです
     </button>:
      <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">

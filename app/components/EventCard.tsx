@@ -41,7 +41,7 @@ export function EventCard({ event}:{ event: any}) {
     return (
       <div className="border rounded-lg shadow-md overflow-hidden">
         <div className="p-6 bg-white">
-          <h3 className="text-2xl font-semibold mb-2">{event.title}</h3>
+          <h3 className="text-2xl font-semibold mb-2"><Link className="hover:text-blue-500" href={`/event_detail/${event.id}`}>{event.title}</Link></h3>
           <p className="text-gray-600 mb-1">
             <span className="font-medium">場所:</span> {event.location}
           </p>

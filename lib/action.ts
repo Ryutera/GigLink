@@ -77,7 +77,7 @@ export async function EventCreate(hostData: {
             },
         });
         
-        revalidatePath("/host");
+       
         
         return { success: true, message: "イベントが作成されました" }
        
@@ -158,3 +158,75 @@ export async function applicationReject (application:any){
 }
 
 
+
+interface EventEditParams {
+  eventId: string;
+  editData: {
+    title: string;
+    description: string;
+    instruments: string[];
+    date?: any;// `undefined` の可能性があるので `?` をつける
+    startTime: string;
+    endTime: string;
+    location: string;
+  };
+}
+
+
+export async function eventEditAction ({ eventId, editData }:EventEditParams):Promise<{
+  message: string;
+  success: boolean;
+}> {
+
+
+
+
+  try {
+
+// なんかここでtを取らないとinvalidっstartとendがinvalidっていう値になっちゃってた
+//supabaseにあるdataがyyyy-mm-dd 00:00:00というIOSの値、そこにstartやeditのデータをそのままくっつけようとしたから形式が合わずにエラーになってた
+//split（T)でTの前後を分割して配列にしている、その上で配列の一難最初のみを取得
+//00:00の部分を切り取って日付の間にTと最後に表中ん日時を表すZを加える。
+//最後にtoISOstringを使うのはnew Dateを使うとデータがオブジェクトになりprismaについかできなくなるから。尚dateでそれをしないのは既にeventformのページでやってあるから
+
+    const datePart = editData.date.split("T")[0];
+    await prisma.event.update({
+      where: { id: eventId },
+      data: {
+        title: editData.title,
+        description: editData.description,
+        date:  new Date(editData.date),
+        startTime:  new Date(`${datePart}T${editData.startTime}:00Z`).toISOString(),
+        endTime: new Date(`${datePart}T${editData.endTime}:00Z`).toISOString(),
+        location: editData.location,
+        instruments: editData.instruments,
+        updatedAt: new Date(),
+      }
+
+    }
+  )
+ 
+    return {message:"イベント内容を編集しました", success:true}
+    
+
+  } catch (error) {
+    console.error("エラー:", error)
+    return {message:"イベント内容の編集ができませんでした", success:false}
+    
+  }
+}
+
+export async function eventDeleteAction (eventId:string) {
+  try {
+ await prisma.event.delete({
+  where:{id:eventId}
+ })
+    
+    return {message:"イベントを削除しました", success:true}
+
+  } catch (error) {
+    
+    return {message:"イベントの削除に失敗しました", success:false}
+  }
+  
+}
