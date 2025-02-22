@@ -38,7 +38,7 @@ return (
  event.organizer.id===userId? 
 //  後で開催予定のイベントの内容の編集または削除を行うページあるいは機能を追加する
  <Link
- href={`/`}
+ href={`/event_detail/${event.id}`}
  className="bg-green-400 text-white px-4 py-2 rounded hover:bg-green-500 transition"
  >
  Edit
