@@ -15,20 +15,63 @@ import { cn } from "@/lib/utils"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import ProfileForm from "./ProfileForm"
 
+import { eventDeleteAction, eventEditAction } from "@/lib/action"
+
+
 const EventInfo = ({ event, userId, onSubmit }: any) => {
   const [title, setTitle] = useState(event?.title)
   const [description, setDescription] = useState(event?.description)
-  const [requiredInstrument, setRequiredInstrument] = useState(event?.instruments[0] || "")
-  const [date, setDate] = useState<Date | undefined>(event?.date)
+  const [requiredInstrument, setRequiredInstrument] = useState(event?.instruments.map((i:any)=>i) || [])
+  const [date, setDate] = useState(event?.date.toISOString())
   const [startTime, setStartTime] = useState(event?.startTime.toISOString().substring(11, 16))
   const [endTime, setEndTime] = useState(event?.endTime.toISOString().substring(11, 16))
   const [location, setLocation] = useState(event?.location)
 
   const isOrganizer = event?.organizer.id === userId
+const eventId = event.id
 
-  const handleSubmit = (e: React.FormEvent) => {
-    
+
+  const handleSubmit = async (formData: FormData) => {
+  
+    const action = formData.get("action")
+
+    const editData = {
+        title,
+        description,
+        date, // YYYY-MM-DD 形式
+        startTime,
+        endTime,
+        location,
+        instruments:[requiredInstrument]
+    }
+
+    if (action === "delete") {
+      if (window.confirm("本当にこのイベントを削除しますか？")) {
+        const result = await eventDeleteAction(formData)
+        if (result.success) {
+          alert(result.message)
+          // ここで削除後の処理（例：ページ遷移）を行う
+        } else {
+          alert(result.message)
+        }
+      }
+    } else {
+      // 編集の処理
+     
+      const result = await eventEditAction({eventId,editData})
+      if (result.success) {
+        alert(result.message)
+      } else {
+        alert(result.message)
+      }
+    }
   }
+
+
+  const toggleInstrument =(instrument:string) =>{
+    setRequiredInstrument((prev:any)=>prev.includes(instrument)? requiredInstrument.filter((i:string)=>i!==instrument):[...prev,instrument])
+  }
+
 
   return (
     <div className="space-y-5 w-full mb-8">
@@ -36,7 +79,7 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
         {isOrganizer ? `ライブイベント ${event.title} を編集` : `ライブイベント ${event.title} の詳細`}
       </h2>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form action={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
             <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
@@ -105,11 +148,21 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
           </div>
         </div>
 
-        <div>
-          <label htmlFor="instrument" className="block text-sm font-medium text-gray-700 mb-1">
-            募集楽器
-          </label>
-          <Select value={requiredInstrument} onValueChange={setRequiredInstrument} disabled={!isOrganizer}>
+        <div className="flex flex-row gap-2">
+         
+          {instruments.map((instrument) => (
+             
+            <label key={instrument} htmlFor="instrument" className="mr-3 block text-sm font-medium text-gray-700 mb-1">
+           {instrument}
+            
+              <input  type="checkbox" className="form-checkbox" checked={requiredInstrument.includes(instrument)}
+                  onChange={()=>toggleInstrument(instrument)}/>
+                  
+              <span className="ml-2"></span>
+              </label>
+          ))}
+         
+          {/* <Select value={requiredInstrument} onValueChange={setRequiredInstrument} disabled={!isOrganizer}>
             <SelectTrigger className="w-full">
               <SelectValue placeholder="楽器を選択" />
             </SelectTrigger>
@@ -120,7 +173,7 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
                 </SelectItem>
               ))}
             </SelectContent>
-          </Select>
+          </Select> */}
         </div>
 
         <div>
@@ -136,9 +189,20 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
 />
 
         </div>
+        {isOrganizer &&   <div className='flex gap-20 items-center justify-center'>
 
+{/* ここをonclickにするのかsubmitにするのか直接actionにするのかわからん */}
+<button type="submit" name="action" value="edit"  className="bg-green-400 hover:bg-green-500  text-white px-4 py-2 rounded  ">
+編集する
+</button>
+<button type="submit" name="action" value="delete"   className="bg-red-500 text-white px-4 py-2 rounded  ">
+削除する
+</button>
+</div>}
     
       </form>
+    
+     
     </div>
   )
 }

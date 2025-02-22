@@ -158,3 +158,56 @@ export async function applicationReject (application:any){
 }
 
 
+
+interface EventEditParams {
+  eventId: string;
+  editData: {
+    title: string;
+    description: string;
+    instruments: string[];
+    date?: any;// `undefined` の可能性があるので `?` をつける
+    startTime: string;
+    endTime: string;
+    location: string;
+  };
+}
+
+
+export async function eventEditAction ({ eventId, editData }:EventEditParams):Promise<{
+  message: string;
+  success: boolean;
+}> {
+
+ console.log(editData)
+ console.log(eventId)
+
+  try {
+    console.log("try中")
+    await prisma.event.update({
+      where: { id: eventId },
+      data: {
+        title: editData.title,
+        description: editData.description,
+        date:  new Date(editData.date),
+        startTime:  new Date(`${editData.date}T${editData.startTime}:00Z`),
+        endTime: new Date(`${editData.date}T${editData.endTime}:00Z`),
+        location: editData.location,
+        instruments: editData.instruments,
+        updatedAt: new Date(),
+      }
+
+    })
+    // revalidatePath("/")
+    return {message:"イベント内容を編集しました", success:true}
+    
+
+  } catch (error) {
+    
+    return {message:"イベント内容の編集ができませんでした", success:false}
+    
+  }
+}
+
+export async function eventDeleteAction (formData:FormData) {
+  return {message:"aaa", success:false}
+}
