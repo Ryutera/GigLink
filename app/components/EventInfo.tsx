@@ -19,6 +19,7 @@ import { eventDeleteAction, eventEditAction } from "@/lib/action"
 import { revalidatePath } from "next/cache"
 import { useRouter } from "next/navigation"
 import { Span } from "next/dist/trace"
+import EventEditForm from "./EventEditForm"
 
 
 
@@ -32,15 +33,19 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
   const [location, setLocation] = useState(event?.location)
 
 
-  const route = useRouter()
+  const router = useRouter()
   const isOrganizer = event?.organizer.id === userId
 const eventId = event.id
 
 
 
   const handleSubmit = async (formData: FormData) => {
+
+
   
     const action = formData.get("action")
+
+
 
     const editData = {
         title,
@@ -56,7 +61,7 @@ const eventId = event.id
       if (window.confirm("本当にこのイベントを削除しますか？")) {
         const result = await eventDeleteAction(eventId)
         if (result.success) {
-         route.push("/host")
+         router.push("/host")
         
           // ここで削除後の処理（例：ページ遷移）を行う
         } else {
@@ -69,6 +74,7 @@ const eventId = event.id
       const result = await eventEditAction({eventId,editData})
       if (result.success) {
         alert(result.message)
+        router.refresh();
       
       } else {
         alert(result.message)
@@ -213,17 +219,11 @@ const eventId = event.id
   disabled={!isOrganizer}
 />
 
-        </div>
-        {isOrganizer &&   <div className='flex gap-20 items-center justify-center'>
+{isOrganizer&&<EventEditForm/>}
+       
 
-{/* ここをonclickにするのかsubmitにするのか直接actionにするのかわからん */}
-<button type="submit" name="action" value="edit"  className="bg-green-400 hover:bg-green-500  text-white px-4 py-2 rounded  ">
-編集する
-</button>
-<button type="submit" name="action" value="delete"   className="bg-red-500 text-white px-4 py-2 rounded  ">
-削除する
-</button>
-</div>}
+
+       </div>
     
       </form>
     

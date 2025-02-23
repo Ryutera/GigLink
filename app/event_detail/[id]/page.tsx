@@ -9,7 +9,7 @@ import EventEditForm from '@/app/components/EventEditForm';
 
 export default async function eventDetail({params}: {params:{id:string}}) {
 
-  const { id } =  await params
+  const { id } = await Promise.resolve(params)
   const event = await prisma.event.findFirst({
     where:{
 id:id
@@ -35,22 +35,19 @@ id:id
     const hasApplied = await prisma.application.findMany(
       {
         where:{
-          eventId:params.id,
+          eventId:id,
           userId:userId
         }
       }
     )
-    
+     
 
-
-  const eventId = id
-  console.log(eventId)
 
 
   return (
     <div className="max-w-2xl mx-auto">
     <EventInfo event={event} userId={userId}/>
-    {event?.organizer.id===userId || <JoinForm eventId={eventId} hasApplied={hasApplied} />}
+    {event?.organizer.id===userId || <JoinForm eventId={id} hasApplied={hasApplied} />}
     
   </div>
   )

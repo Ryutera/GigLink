@@ -178,9 +178,6 @@ export async function eventEditAction ({ eventId, editData }:EventEditParams):Pr
   success: boolean;
 }> {
 
-
-
-
   try {
 
 // なんかここでtを取らないとinvalidっstartとendがinvalidっていう値になっちゃってた
@@ -205,6 +202,12 @@ export async function eventEditAction ({ eventId, editData }:EventEditParams):Pr
 
     }
   )
+  // なんか動かない
+  revalidatePath(`/event_detail/${eventId}`);
+  revalidatePath("/event_detail");
+
+  console.log("✅ revalidatePath 実行後");
+ 
  
     return {message:"イベント内容を編集しました", success:true}
     
@@ -214,6 +217,7 @@ export async function eventEditAction ({ eventId, editData }:EventEditParams):Pr
     return {message:"イベント内容の編集ができませんでした", success:false}
     
   }
+  
 }
 
 export async function eventDeleteAction (eventId:string) {
