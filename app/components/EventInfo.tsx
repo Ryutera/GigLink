@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import type React from "react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { instruments } from "../constants/instruments"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -37,6 +37,11 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
   const isOrganizer = event?.organizer.id === userId
 const eventId = event.id
 
+useEffect(() => {
+  console.log("🔄 useEffect: router.refresh() 実行");
+  router.refresh(); // 強制的にデータを更新
+}, [event])
+
 
 
   const handleSubmit = async (formData: FormData) => {
@@ -61,9 +66,7 @@ const eventId = event.id
       if (window.confirm("本当にこのイベントを削除しますか？")) {
         const result = await eventDeleteAction(eventId)
         if (result.success) {
-         router.push("/host")
-        
-          // ここで削除後の処理（例：ページ遷移）を行う
+       
         } else {
           alert(result.message)
         }
@@ -73,8 +76,9 @@ const eventId = event.id
      
       const result = await eventEditAction({eventId,editData})
       if (result.success) {
-        alert(result.message)
         router.refresh();
+        alert(result.message)
+        
       
       } else {
         alert(result.message)

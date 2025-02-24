@@ -203,8 +203,7 @@ export async function eventEditAction ({ eventId, editData }:EventEditParams):Pr
     }
   )
   // なんか動かない
-  revalidatePath(`/event_detail/${eventId}`);
-  revalidatePath("/event_detail");
+
 
   console.log("✅ revalidatePath 実行後");
  
