@@ -1,3 +1,4 @@
+
 import prisma from '@/lib/prisma'
 import React from 'react'
 import JoinForm  from "../../components/JoinForm";
@@ -5,12 +6,15 @@ import { auth } from '@clerk/nextjs/server';
 import Link from 'next/link';
 import EventInfo from '@/app/components/EventInfo';
 import EventEditForm from '@/app/components/EventEditForm';
-
+import { cache } from "react";
 
 export default async function eventDetail({params}: {params:{id:string}}) {
 
   const { id } = await Promise.resolve(params)
-  const event = await prisma.event.findFirst({
+
+
+  
+   const event = await prisma.event.findFirst({
     where:{
 id:id
     },include:{
@@ -22,6 +26,8 @@ id:id
       }
     }
   })
+  
+ 
   if (!event) {
   return <div className=''>イベントがありません</div>
    
@@ -42,12 +48,14 @@ id:id
     )
      
 
+console.log(hasApplied)
 
+console.log("あああ")
 
   return (
     <div className="max-w-2xl mx-auto">
     <EventInfo event={event} userId={userId}/>
-    {event?.organizer.id===userId || <JoinForm eventId={id} hasApplied={hasApplied} />}
+    {event?.organizer.id===userId || <JoinForm eventId={id}  hasApplied={hasApplied}/>}
     
   </div>
   )

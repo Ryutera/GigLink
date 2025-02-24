@@ -8,10 +8,11 @@ import { useRouter } from 'next/navigation'
 
 interface JoinFormProps {
   eventId: string;
-  hasApplied: any;
+  hasApplied:any
+  
 }
 
-const JoinForm  = ({ eventId, hasApplied }:JoinFormProps)  => {
+const JoinForm  = ({ eventId,hasApplied}:JoinFormProps)  => {
   const router = useRouter()
     const [message, setMessage] = useState("")
     
@@ -30,7 +31,7 @@ setMessage(e.target.value)
             if (result.success) {
               
               alert(result.message)
-              router.push("/join")
+               router.push("/join")
             
              
             }else{
@@ -48,22 +49,42 @@ setMessage(e.target.value)
     <form className="space-y-4" action={handleSubmit}>
 
 <div>
-          <label htmlFor="instrument" className="block mb-1 font-medium">
+          <label htmlFor="instrument" className=" mb-1 font-medium">
             応募楽器
           </label>
-          <select id="instrument" name="instrument"  className="w-full border rounded-md p-2">
-            {instruments.map((instrument)=>(
-                <option key={instrument}>{instrument}</option>
-               
-            ))}
-          </select>
+         
+        {hasApplied.length ?  
+         <span>: {hasApplied[0].instrument}</span>
+        : 
+        
+        <select id="instrument" name="instrument"  className="w-full border rounded-md p-2">
+           
+        {instruments.map((instrument)=>(
+            <option key={instrument}>{instrument}</option>
+           
+        ))}
+      </select>
+        
+   
+        
+        }
+           
+        
+         
         </div>
     
     <div>
       <label htmlFor="pr" className="block mb-1 font-medium">
         自己PR
       </label>
+      {hasApplied ?
       <textarea
+      disabled={true}
+       className="w-full border rounded-md p-2"
+      >
+        {hasApplied[0].message}
+      </textarea>
+      :  <textarea
         id="pr"
         name="message"
         rows={2}
@@ -71,7 +92,11 @@ setMessage(e.target.value)
         placeholder="簡単な自己PRを入力してください"
         value={message}
         onChange={onChangeMessage}
-      ></textarea>
+        
+      ></textarea>}
+     
+
+
     </div>
     <div>
          {hasApplied.length>0? 

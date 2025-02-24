@@ -31,15 +31,19 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
   const [startTime, setStartTime] = useState(event?.startTime.toISOString().substring(11, 16))
   const [endTime, setEndTime] = useState(event?.endTime.toISOString().substring(11, 16))
   const [location, setLocation] = useState(event?.location)
+ 
+
 
 
   const router = useRouter()
   const isOrganizer = event?.organizer.id === userId
 const eventId = event.id
 
+
+//一瞬値がちらつく
 useEffect(() => {
   console.log("🔄 useEffect: router.refresh() 実行");
-  router.refresh(); // 強制的にデータを更新
+  // router.refresh(); // 強制的にデータを更新
 }, [event])
 
 
@@ -62,6 +66,10 @@ useEffect(() => {
         instruments:requiredInstrument
     }
 
+
+
+
+
     if (action === "delete") {
       if (window.confirm("本当にこのイベントを削除しますか？")) {
         const result = await eventDeleteAction(eventId)
@@ -73,10 +81,11 @@ useEffect(() => {
       }
     } else {
       // 編集の処理
-     
+    
       const result = await eventEditAction({eventId,editData})
       if (result.success) {
-        router.refresh();
+      
+        // router.refresh();
         alert(result.message)
         
       
@@ -223,7 +232,7 @@ useEffect(() => {
   disabled={!isOrganizer}
 />
 
-{isOrganizer&&<EventEditForm/>}
+{isOrganizer&&<EventEditForm />}
        
 
 

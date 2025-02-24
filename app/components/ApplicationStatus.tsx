@@ -33,7 +33,7 @@ const ApplicationStatus = ({schedules}:{schedules:any}) => {
  
     <TableRow>
     {schedules.map((s:any)=>
-    <>
+    <div key={s}>
      <TableCell className={`text-center font-medium ${s.status==="ACCEPTED"?"text-green-500":s.status==="REJECTED"? "text-red-500": "text-gray-500"}`}>{s.status}</TableCell>
      <TableCell className="text-center">
         <Link href={`/event_detail/${s.event.id}`} className='hover:text-blue-300'>
@@ -42,7 +42,7 @@ const ApplicationStatus = ({schedules}:{schedules:any}) => {
         
         </TableCell>
      <TableCell className="text-center"> {String(s.event.startTime.toISOString().substring(0,10))}</TableCell>
-     </>
+     </div>
     )}
      
     </TableRow>
