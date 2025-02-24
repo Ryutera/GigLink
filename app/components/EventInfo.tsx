@@ -41,10 +41,11 @@ const eventId = event.id
 
 
 //一瞬値がちらつく
+
 useEffect(() => {
   console.log("🔄 useEffect: router.refresh() 実行");
   // router.refresh(); // 強制的にデータを更新
-}, [event])
+}, [requiredInstrument])
 
 
 
