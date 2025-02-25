@@ -81,8 +81,9 @@ setMessage(e.target.value)
       <textarea
       disabled={true}
        className="w-full border rounded-md p-2"
+       value={hasApplied[0].message}
       >
-        {hasApplied[0].message}
+       
       </textarea>
       :  <textarea
         id="pr"
