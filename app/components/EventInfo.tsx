@@ -140,8 +140,9 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
                 <Button
                   variant={"outline"}
                   className={cn(
-                    "w-full justify-start text-left font-normal",
-                    !date && "text-muted-foreground"
+                    "w-full justify-start text-left font-normal px-3 py-2 rounded-md shadow-sm border-gray-400 h-10",
+                    !date && "text-muted-foreground",
+                    
                   )}
                   disabled={!isOrganizer}
                 >
@@ -159,6 +160,7 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
               </PopoverContent>
             </Popover>
           </div>
+         
 
           <div className="grid grid-cols-2 gap-4">
             <CustomInput
