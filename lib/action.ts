@@ -233,3 +233,19 @@ export async function eventDeleteAction (eventId:string) {
   }
   
 }
+
+export async function deleteApplication  (eventId:string, userId:string) {
+try {
+  await prisma.application.deleteMany({
+    where:{
+      eventId:eventId,
+      userId:userId}
+  })
+  revalidatePath("/")
+  return {message:"応募申請の取り消しに成功しました",success:true}
+ 
+} catch (error) {
+  return {message:"応募申請の取り消しに失敗しました", success:false}
+}
+
+}

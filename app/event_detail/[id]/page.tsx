@@ -46,16 +46,13 @@ id:id
         }
       }
     )
-     
+    
 
-console.log(hasApplied)
-
-console.log("あああ")
 
   return (
     <div className="max-w-2xl mx-auto">
     <EventInfo event={event} userId={userId}/>
-    {event?.organizer.id===userId || <JoinForm eventId={id}  hasApplied={hasApplied}/>}
+    {event?.organizer.id===userId || <JoinForm eventId={id}  hasApplied={hasApplied} userId={userId}/>}
     
   </div>
   )

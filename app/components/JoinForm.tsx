@@ -1,36 +1,63 @@
 "use client";
-import { applicationCreate } from "@/lib/action";
+import { applicationCreate, deleteApplication } from "@/lib/action";
 import React, { ChangeEvent, useState } from "react";
 import { instruments } from "../constants/instruments";
 import { useRouter } from "next/navigation";
+import prisma from "@/lib/prisma";
 
 interface JoinFormProps {
   eventId: string;
   hasApplied: any;
+  userId:string;
 }
 
-const JoinForm = ({ eventId, hasApplied }: JoinFormProps) => {
+const JoinForm = ({ eventId, hasApplied,userId }: JoinFormProps) => {
   const router = useRouter();
   const [message, setMessage] = useState("");
+  
 
   const onChangeMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value);
   };
 
   const handleSubmit = async (formData: FormData) => {
-    try {
-      const result = await applicationCreate(formData, eventId);
-      if (result.success) {
-        alert(result.message);
-        router.push("/join");
-      } else {
-        alert(result.message);
+    const action = formData.get("action")
+    if (action ==="apply") {
+      try {
+        const result = await applicationCreate(formData, eventId);
+        if (result.success) {
+          alert(result.message);
+          router.push("/join");
+        } else {
+          alert(result.message);
+        }
+      } catch (error) {
+        console.error("応募申請ができません", error);
+        alert("応募申請中にエラーが発生しました");
       }
-    } catch (error) {
-      console.error("応募申請ができません", error);
-      alert("応募申請中にエラーが発生しました");
+    }else{
+      try{
+        console.log("削除")
+        if(window.confirm("本当に申請を取り消しますか")){
+          const result = await deleteApplication(eventId, userId)
+          if (result.success) {
+          alert(result.message)
+          }else{
+            alert(result.message)
+          }
+        }
+      
+      }catch {
+      alert("応募申請の削除中にエラーが発生しました")
+      }
+
     }
+    
   };
+
+
+  
+
 
   return (
     <form className="space-y-4" action={handleSubmit}>
@@ -88,8 +115,10 @@ const JoinForm = ({ eventId, hasApplied }: JoinFormProps) => {
           </button>
           <button
             type="submit"
-            disabled
+            
             className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+           
+            name="action" value="delete"
           >
             削除する
           </button>
@@ -99,6 +128,7 @@ const JoinForm = ({ eventId, hasApplied }: JoinFormProps) => {
           <button
             type="submit"
             className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition"
+            name="action" value="apply"
           >
             応募する
           </button>
