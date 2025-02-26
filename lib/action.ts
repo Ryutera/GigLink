@@ -245,6 +245,7 @@ try {
   return {message:"応募申請の取り消しに成功しました",success:true}
  
 } catch (error) {
+  console.log(error)
   return {message:"応募申請の取り消しに失敗しました", success:false}
 }
 

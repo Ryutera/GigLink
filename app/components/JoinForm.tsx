@@ -21,8 +21,7 @@ const JoinForm = ({ eventId, hasApplied,userId }: JoinFormProps) => {
   };
 
   const handleSubmit = async (formData: FormData) => {
-    const action = formData.get("action")
-    if (action ==="apply") {
+   
       try {
         const result = await applicationCreate(formData, eventId);
         if (result.success) {
@@ -35,27 +34,28 @@ const JoinForm = ({ eventId, hasApplied,userId }: JoinFormProps) => {
         console.error("応募申請ができません", error);
         alert("応募申請中にエラーが発生しました");
       }
-    }else{
-      try{
-        console.log("削除")
-        if(window.confirm("本当に申請を取り消しますか")){
-          const result = await deleteApplication(eventId, userId)
-          if (result.success) {
-          alert(result.message)
-          }else{
-            alert(result.message)
-          }
-        }
       
-      }catch {
-      alert("応募申請の削除中にエラーが発生しました")
-      }
-
-    }
     
   };
 
+const onClickDelete = async() =>{
+try {
+  if (window.confirm("本当に申請を取り消しますか")) {
+    const result = await deleteApplication(eventId,userId)
+    if (result.success) {
+      alert(result.message)
+    }else{
+      alert(result.message)
+    }
+  }
+ 
+} catch (error) {
+  alert("申請の取り消し中にエラーが発生しました")
+}
 
+
+  
+}
   
 
 
@@ -114,11 +114,10 @@ const JoinForm = ({ eventId, hasApplied,userId }: JoinFormProps) => {
             応募済みです
           </button>
           <button
-            type="submit"
-            
+            type="button"
             className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+           onClick={onClickDelete}
            
-            name="action" value="delete"
           >
             削除する
           </button>
@@ -128,7 +127,7 @@ const JoinForm = ({ eventId, hasApplied,userId }: JoinFormProps) => {
           <button
             type="submit"
             className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition"
-            name="action" value="apply"
+           
           >
             応募する
           </button>
