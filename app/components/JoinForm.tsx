@@ -78,13 +78,23 @@ const JoinForm = ({ eventId, hasApplied }: JoinFormProps) => {
       </div>
       <div>
         {hasApplied.length > 0 ? (
-          <button
-            type="submit"
+          <div className="flex justify-between">
+             <button
+            
             disabled
             className="bg-gray-500 text-white px-4 py-2 rounded cursor-not-allowed "
           >
             応募済みです
           </button>
+          <button
+            type="submit"
+            disabled
+            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+          >
+            削除する
+          </button>
+          </div>
+         
         ) : (
           <button
             type="submit"
