@@ -9,6 +9,7 @@ interface JoinFormProps {
   eventId: string;
   hasApplied: any;
   userId:string;
+
 }
 
 const JoinForm = ({ eventId, hasApplied,userId }: JoinFormProps) => {
@@ -104,7 +105,12 @@ try {
         )}
       </div>
       <div>
-        {hasApplied.length > 0 ? (
+
+
+
+
+        { hasApplied.length > 0?  
+
           <div className="flex justify-between">
              <button
             
@@ -123,15 +129,18 @@ try {
           </button>
           </div>
          
-        ) : (
+         : (
           <button
             type="submit"
             className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition"
-           
+
           >
             応募する
           </button>
         )}
+
+
+
       </div>
     </form>
   );

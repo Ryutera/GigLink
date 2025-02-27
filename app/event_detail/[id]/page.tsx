@@ -12,12 +12,17 @@ export default async function eventDetail({params}: {params:{id:string}}) {
 
   const { id } = await Promise.resolve(params)
 
-
+  const {userId} = await auth()
+  if (!userId) {
+    return <div>ユーザーが見つかりません</div>
+  }
   
    const event = await prisma.event.findFirst({
     where:{
 id:id
-    },include:{
+    },
+    include:{
+
       organizer:{
         select:{
           name:true,
@@ -33,10 +38,7 @@ id:id
    
   }
 
-    const {userId} = await auth()
-    if (!userId) {
-      return <div>ユーザーが見つかりません</div>
-    }
+    
   
     const hasApplied = await prisma.application.findMany(
       {
@@ -47,7 +49,6 @@ id:id
       }
     )
     
-
 
   return (
     <div className="max-w-2xl mx-auto">

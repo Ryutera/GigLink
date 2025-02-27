@@ -11,7 +11,7 @@ const EventEditForm = () => {
 編集する
 </button> 
 
-<button type="submit" name="action" value="delete"   className="bg-red-500 text-white px-4 py-2 rounded  ">
+<button type="submit" name="action" value="delete"   className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 ">
 削除する
 </button>
 </div>

@@ -13,14 +13,17 @@ startTime: {
 gt: new Date(), // 現在の日時より後のイベントのみ取得
 },
 },include:{
-    organizer :true
+    organizer :true,
+    applications:true,
+    
+   
 },
 orderBy:[{
 startTime:"asc"
 }]
 })
 
-
+console.log(events[0].applications.map((a)=>a))
 
 return (
 <div className="space-y-8 mx-8">
@@ -43,14 +46,22 @@ return (
  >
  Edit
  </Link>
- : 
- <Link
+ //someは配列内の少なくとも 1つの要素が条件を満たすか を判定するメソッドです。
+ : event.applications.some((app:any)=>app.userId===userId)?
+ 
+
+<Link
+href={`/event_detail/${event.id}`}
+className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition"
+>
+Applied
+</Link> :
+<Link
 href={`/event_detail/${event.id}`}
 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
 >
 Join
-</Link>
-
+</Link> 
 }
 
 
