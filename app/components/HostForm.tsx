@@ -99,12 +99,16 @@ const router = useRouter()
         </label>
         <input value={title} type="text" id="place" className="w-full border rounded-md p-2" placeholder="タイトルを入力" onChange={onChangeTitle}/>
       </div>
+
       <div>
         <label htmlFor="place" className="block mb-1 font-medium">
           場所
         </label>
+        <LocationInput setPlace={setPlace}>
         <input value={place} type="text" id="place" className="w-full border rounded-md p-2" placeholder="住所を入力" onChange={onChangePlace}/>
+        </LocationInput>
       </div>
+
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label htmlFor="date" className="block mb-1 font-medium">

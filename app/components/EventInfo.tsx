@@ -31,6 +31,7 @@ import { useRouter } from "next/navigation";
 import { Span } from "next/dist/trace";
 import EventEditForm from "./EventEditForm";
 import CustomInput from "./CustomInput";
+import LocationInput from "./LocationInput";
 
 const EventInfo = ({ event, userId, onSubmit }: any) => {
   const [title, setTitle] = useState(event?.title);
@@ -100,6 +101,8 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
     );
   };
 
+
+
   return (
     <div className="space-y-5 w-full mb-8">
       <h2 className="text-3xl font-bold">
@@ -119,14 +122,26 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
             isEditable={isOrganizer}
           />
 
-          <CustomInput
-            label="場所"
-            id="location"
-            name="location"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            isEditable={isOrganizer}
-          />
+         
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              場所
+            </label>
+           
+            <LocationInput setPlace={setLocation}>
+            <input
+             value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              disabled={!isOrganizer}
+              className={`
+                "grid grid-cols-1 md:grid-cols-2 gap-8 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500",
+                ${!isOrganizer && "bg-white cursor-default"}
+              )`}
+            />
+            </LocationInput>
+            
+          </div>
+          
 
           <div>
             <label
@@ -141,8 +156,7 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
                   variant={"outline"}
                   className={cn(
                     "w-full justify-start text-left font-normal px-3 py-2 rounded-md shadow-sm border-gray-400 h-10",
-                    !date && "text-muted-foreground",
-                    
+                    !date && "text-muted-foreground"
                   )}
                   disabled={!isOrganizer}
                 >
@@ -160,7 +174,6 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
               </PopoverContent>
             </Popover>
           </div>
-         
 
           <div className="grid grid-cols-2 gap-4">
             <CustomInput
@@ -184,7 +197,6 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
             />
           </div>
         </div>
-
 
         <div className="flex flex-row ">
           {isOrganizer ? (
@@ -211,8 +223,11 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
           ) : (
             <>
               <span>募集楽器: </span>
-               {requiredInstrument.map((i: string) => (
-                <span key={i} className="ml-2"> {i}</span>
+              {requiredInstrument.map((i: string) => (
+                <span key={i} className="ml-2">
+                  {" "}
+                  {i}
+                </span>
               ))}
             </>
           )}
@@ -231,15 +246,14 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
           </Select> */}
         </div>
 
-     
-        <CustomInput 
-         label="イベント詳細"
-         id="description"
-         name="description"
-         value={description}
-         onChange={(e) => setDescription(e.target.value)}
-         type="text"
-         isEditable={isOrganizer}
+        <CustomInput
+          label="イベント詳細"
+          id="description"
+          name="description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          type="text"
+          isEditable={isOrganizer}
         />
 
         {isOrganizer && <EventEditForm />}
