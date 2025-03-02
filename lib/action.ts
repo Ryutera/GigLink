@@ -224,7 +224,7 @@ export async function eventDeleteAction (eventId:string) {
  await prisma.event.delete({
   where:{id:eventId}
  })
-    
+
     return {message:"イベントを削除しました", success:true}
 
   } catch (error) {
