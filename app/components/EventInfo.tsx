@@ -59,7 +59,7 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
       if (window.confirm("本当にこのイベントを削除しますか？")) {
         const result = await eventDeleteAction(eventId)
         if (result.success) {
-          // 削除成功時の処理
+          alert(result.message)
         } else {
           alert(result.message)
         }
@@ -159,13 +159,15 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
             <>
               {instruments.map((instrument) => (
                 <label
-                  key={`${instrument}-${requiredInstrument.includes(instrument)}`}
-                  htmlFor={`instrument-${instrument}`}
+                  // key={`${instrument}-${requiredInstrument.includes(instrument)}`}
+                  // htmlFor={`instrument-${instrument}`}
+                  key={instrument}
+htmlFor="instrument"
                   className="mr-3 block text-sm font-medium text-gray-700 mb-1"
                 >
                   {instrument}
                   <input
-                    id={`instrument-${instrument}`}
+                    // id={`instrument-${instrument}`}
                     type="checkbox"
                     className="ml-1 form-checkbox"
                     checked={requiredInstrument.includes(instrument)}

@@ -12,10 +12,12 @@ const LocationInput:React.FC<LocationInputProps> = ({children,setPlace}) => {
         googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string,
         libraries:["places"]
       })
-
+    
 
       const handleOnPlacesChanged = () =>{
         let places = inputref.current?.getPlaces()
+
+
         
        
         if (places && places.length > 0) {
@@ -24,6 +26,7 @@ const LocationInput:React.FC<LocationInputProps> = ({children,setPlace}) => {
         
        
       }
+      
   return (
     <div>
         {isLoaded &&
