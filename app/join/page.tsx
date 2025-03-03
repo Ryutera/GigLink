@@ -2,8 +2,10 @@ import prisma from '@/lib/prisma'
 import { auth } from '@clerk/nextjs/server'
 import Link from 'next/link'
 import React from 'react'
-import OnGoingEventList from '../components/OnGoingEventList'
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import OngoingEventList from '../components/OngoingEventList'
+import OngoingEventMap from '../components/OngoingEventMap'
 
 const Join = async() => {
 
@@ -40,8 +42,10 @@ return (
     
   </TabsList>
 
-  <TabsContent value="posts" ><OnGoingEventList events={events} userId={userId}/></TabsContent>
-  <TabsContent value="map" ></TabsContent>
+  <TabsContent value="posts" ><OngoingEventList events={events} userId={userId}/></TabsContent>
+  <TabsContent value="map" >
+    
+    <OngoingEventMap/></TabsContent>
 
 
 </Tabs>

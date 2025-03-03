@@ -6,7 +6,7 @@ interface Props {
     userId:string | null
 }
 
-const OnGoingEventList = ({events,userId}:Props) => {
+const OngoingEventList = ({events,userId}:Props) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
   
@@ -15,7 +15,7 @@ const OnGoingEventList = ({events,userId}:Props) => {
 <h3 className="text-xl font-semibold mb-2">{event.title}</h3>
 <p className="text-gray-600 mb-2">Place:{event.location}</p>
 <p className="text-gray-600 mb-2">Date: {`${event?.date.getFullYear()}-${String(event?.date.getMonth()as number+1).padStart(2,"0")}-${event?.date.getDate()} : ${event?.startTime.toISOString().substring(11, 16)} - ${event?.endTime.toISOString().substring(11, 16)}`}</p>
-<p className="text-gray-600 mb-4">Looking for:{event.instruments}</p>
+<p className="text-gray-600 mb-4">Looking for: {event.instruments.join(", ")}</p>
 {/* イベントの開催者が自分ならeditそうでないならjoinと表示 */}
 {
  event.organizer.id===userId? 
@@ -53,4 +53,4 @@ Join
   )
 }
 
-export default OnGoingEventList
+export default OngoingEventList
