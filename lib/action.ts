@@ -169,6 +169,8 @@ interface EventEditParams {
     startTime: string;
     endTime: string;
     location: string;
+    latitude:number | null;
+    longitude:number | null;
   };
 }
 
@@ -198,6 +200,8 @@ export async function eventEditAction ({ eventId, editData }:EventEditParams):Pr
         location: editData.location,
         instruments: editData.instruments,
         updatedAt: new Date(),
+        latitude :   editData.latitude ?? 0,  
+  longitude:  editData.longitude ?? 0,  
       }
 
     }

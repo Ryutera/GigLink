@@ -27,7 +27,7 @@ startTime:"asc"
 }]
 })
 
-console.log(events[0].applications.map((a)=>a))
+// console.log(events[0].applications.map((a)=>a))
 
 return (
 <div className="space-y-8 mx-auto w-full max-w-screen-lg">
@@ -45,7 +45,9 @@ return (
   <TabsContent value="posts" ><OngoingEventList events={events} userId={userId}/></TabsContent>
   <TabsContent value="map" >
     
-    <OngoingEventMap/></TabsContent>
+    <OngoingEventMap
+    events={events}
+    /></TabsContent>
 
 
 </Tabs>

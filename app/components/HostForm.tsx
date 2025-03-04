@@ -17,8 +17,15 @@ const HostForm = () => {
     const [startTime, setStartTime] = useState("")
     const [endTime, setEndTime] = useState("")
     const [selectedInstruments, setSelectedInstruments] = useState<string[]>([])
+    const [latitude, setLatitude] = useState<number | null>(null);
+    const [longitude, setLongitude] = useState<number | null>(null);
   
 const router = useRouter()
+
+const setCoordinates = (lat:number, lng:number)=>{
+  setLatitude(lat)
+  setLongitude(lng)
+}
     
 
     const  onChangeTitle = (e: { target: { value: React.SetStateAction<string> } } )=>{
@@ -104,7 +111,7 @@ const router = useRouter()
         <label htmlFor="place" className="block mb-1 font-medium">
           場所
         </label>
-        <LocationInput setPlace={setPlace}>
+        <LocationInput setPlace={setPlace} setCoordinates={setCoordinates}>
         <input value={place} type="text" id="place" className="w-full border rounded-md p-2" placeholder="住所を入力" onChange={onChangePlace}/>
         </LocationInput>
       </div>

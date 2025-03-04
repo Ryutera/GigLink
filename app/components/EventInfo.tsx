@@ -23,10 +23,18 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
   const [location, setLocation] = useState(event?.location)
   const [requiredInstrument, setRequiredInstrument] = useState(event?.instruments || [])
   const [updateKey, setUpdateKey] = useState(0) // 強制再レンダリングのためのキー
+  const [latitude, setLatitude] = useState<number | null>(null);
+  const [longitude, setLongitude] = useState<number | null>(null);
 
   const router = useRouter()
   const isOrganizer = event?.organizer.id === userId
   const eventId = event.id
+
+  const setCoordinates = (lat:number, lng:number)=>{
+   
+    setLatitude(lat)
+    setLongitude(lng)
+  }
 
 
   //このようにprevKeyを設定して強制レンダリングを起こさないとなぜかcheckbocの値が即時更新されない(以前の値にチェックが入ってページを読みこまないと正常に表示されない)
@@ -53,6 +61,8 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
       endTime,
       location,
       instruments: requiredInstrument,
+      latitude,
+      longitude,
     }
 
     if (action === "delete") {
@@ -94,7 +104,7 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">場所</label>
-            <LocationInput setPlace={setLocation}>
+            <LocationInput setPlace={setLocation} setCoordinates={setCoordinates}>
               <input
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}

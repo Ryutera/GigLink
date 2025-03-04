@@ -3,29 +3,43 @@ import { GoogleMap, useJsApiLoader,StandaloneSearchBox } from '@react-google-map
 
 interface LocationInputProps {
   setPlace: (location: string) => void; // 追加
+  setCoordinates :(lat:number, lng:number) => void; 
   children: React.ReactNode;
 }
-const LocationInput:React.FC<LocationInputProps> = ({children,setPlace}) => {
+const LocationInput:React.FC<LocationInputProps> = ({children,setPlace,setCoordinates }) => {
     const inputref = useRef<google.maps.places.SearchBox | null>(null)
+
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string,
-        libraries:["places"]
+        libraries: ["places"],
       })
     
-
       const handleOnPlacesChanged = () =>{
+        //選択された場所の情報、複数形であとで[0]で取得しているからわかりずらいけど場合によって複数入る場合があるらしい、基本は1つ
         let places = inputref.current?.getPlaces()
-
-
+       
         
        
         if (places && places.length > 0) {
-          setPlace(places[0].formatted_address || ""); // 取得した住所を保存
+          const place = places[0]
+          setPlace(place.formatted_address || ""); // 取得した住所を保存
+
+          
+          if (place.geometry?.location) {
+            const lat = place.geometry.location.lat();
+            const lng = place.geometry.location.lng();
+            // 多分ここでは値取れてるけど保存されてない、明日やる
+             console.log(lat,lng,"hello")
+            setCoordinates(lat, lng);
+          }
+          
         }
         
+      
        
       }
+    
       
   return (
     <div>
