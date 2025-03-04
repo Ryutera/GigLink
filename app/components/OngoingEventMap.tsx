@@ -1,11 +1,16 @@
 "use client"
 import {AdvancedMarker, APIProvider, Map, MapCameraChangedEvent, Pin} from '@vis.gl/react-google-maps';
+import { useRouter } from 'next/navigation';
 const OngoingEventMap = ({events}:any) => {
- 
+ const router = useRouter()
   //ロケーションのサンプル
 
   console.log(events,"これがイベント配列")
   const locations = events.map((event:any)=> ({key:event.id , location:{lat:event.latitude,lng:event.latitude}}))
+
+  const onClickEventDetail =  (eventId:string) =>{
+    router.push(`event_detail/${eventId}`)
+  }
 
 
   return (
@@ -24,7 +29,8 @@ const OngoingEventMap = ({events}:any) => {
         {locations.map((location:any)=>(
 <AdvancedMarker
 key={location.key}
-position={location.location}>
+position={location.location}
+onClick={()=>onClickEventDetail(location.key)}>
 <Pin  background={'red'} glyphColor={'#000'} borderColor={'#000'} />
 </AdvancedMarker>
         ))}
