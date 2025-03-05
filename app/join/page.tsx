@@ -45,8 +45,7 @@ return (
   <TabsContent value="posts" ><OngoingEventList events={events} userId={userId}/></TabsContent>
   <TabsContent value="map" >
     
-    <OngoingEventMap
-    events={events}
+    <OngoingEventMap events={events} userId={userId}
     /></TabsContent>
 
 

@@ -1,18 +1,21 @@
 import React, { useRef } from 'react'
-import { GoogleMap, useJsApiLoader,StandaloneSearchBox } from '@react-google-maps/api'
+import { GoogleMap, useJsApiLoader,StandaloneSearchBox, Libraries } from '@react-google-maps/api'
 
 interface LocationInputProps {
   setPlace: (location: string) => void; // 追加
   setCoordinates :(lat:number, lng:number) => void; 
   children: React.ReactNode;
 }
+
+const libraries: "places"[] = ["places"]
+
 const LocationInput:React.FC<LocationInputProps> = ({children,setPlace,setCoordinates }) => {
     const inputref = useRef<google.maps.places.SearchBox | null>(null)
 
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string,
-        libraries: ["places"],
+        libraries, 
       })
     
       const handleOnPlacesChanged = () =>{

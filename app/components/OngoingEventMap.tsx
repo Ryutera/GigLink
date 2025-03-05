@@ -1,12 +1,17 @@
 "use client"
 import {AdvancedMarker, APIProvider, Map, MapCameraChangedEvent, Pin} from '@vis.gl/react-google-maps';
 import { useRouter } from 'next/navigation';
-const OngoingEventMap = ({events}:any) => {
+
+interface Props{
+events:any;
+userId:string|null
+}
+const OngoingEventMap = ({events,userId}:Props) => {
  const router = useRouter()
   //ロケーションのサンプル
 
   console.log(events,"これがイベント配列")
-  const locations = events.map((event:any)=> ({key:event.id , location:{lat:event.latitude,lng:event.latitude}}))
+  const locations = events.map((event:any)=> ({key:event.id , location:{lat:event.latitude,lng:event.latitude} , isOrganizer:event.organizerId===userId ,hasApplied:event.applications.some((app:any)=>app.userId===userId) }))
 
   const onClickEventDetail =  (eventId:string) =>{
     router.push(`event_detail/${eventId}`)
@@ -31,7 +36,17 @@ const OngoingEventMap = ({events}:any) => {
 key={location.key}
 position={location.location}
 onClick={()=>onClickEventDetail(location.key)}>
-<Pin  background={'red'} glyphColor={'#000'} borderColor={'#000'} />
+  {/* //条件分は緯度経度無いやつが赤道に表示されるのを防ぐため */}
+  {(location.location.lat === 0 && location.location.lng===0)? <></>:
+  location.isOrganizer?
+  <Pin  background={'green'} glyphColor={'#000'} borderColor={'#000'} /> : 
+    location.hasApplied? 
+    <Pin  background={'gray'} glyphColor={'#000'} borderColor={'#000'} /> : 
+    
+    <Pin  background={'blue'} glyphColor={'#000'} borderColor={'#000'} /> 
+
+  }
+
 </AdvancedMarker>
         ))}
         
