@@ -73,7 +73,7 @@ try {
           <select
             id="instrument"
             name="instrument"
-            className="w-full border rounded-md p-2"
+            className="w-full border rounded-md p-2  border-indigo-500"
           >
             {instruments.map((instrument) => (
               <option key={instrument}>{instrument}</option>
@@ -97,7 +97,7 @@ try {
             id="pr"
             name="message"
             rows={2}
-            className="w-full border rounded-md p-2"
+            className="w-full border rounded-md p-2 border-indigo-500"
             placeholder="簡単な自己PRを入力してください"
             value={message}
             onChange={onChangeMessage}
@@ -132,7 +132,7 @@ try {
          : (
           <button
             type="submit"
-            className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition"
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
 
           >
             応募する

@@ -100,6 +100,8 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             isEditable={isOrganizer}
+           
+          
           />
 
           <div>
@@ -110,9 +112,9 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
                 onChange={(e) => setLocation(e.target.value)}
                 disabled={!isOrganizer}
                 className={`
-                "grid grid-cols-1 md:grid-cols-2 gap-8 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500",
-                ${!isOrganizer && "bg-white cursor-default"}
-              `}
+                  w-full px-3 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500
+                  ${isOrganizer ? "border border-gray-300" : "bg-white cursor-default"}
+                `}
               />
             </LocationInput>
           </div>
@@ -121,14 +123,17 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
             <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-1">
               日付
             </label>
-            <Popover>
+            {isOrganizer ? <Popover>
               <PopoverTrigger asChild>
                 <Button
                   variant={"outline"}
                   className={cn(
-                    "w-full justify-start text-left font-normal px-3 py-2 rounded-md shadow-sm border-gray-400 h-10",
-                    !date && "text-muted-foreground",
-                  )}
+                    "w-full justify-start text-left font-normal px-3 py-2  h-10 rounded-md shadow-sm border-gray-400",
+                    !date && "text-muted-foreground" 
+                  )
+                    
+                  }
+
                   disabled={!isOrganizer}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
@@ -138,7 +143,14 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
               <PopoverContent className="w-auto p-0">
                 <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
               </PopoverContent>
-            </Popover>
+            </Popover>: 
+            <div className="flex items-center mt-4">
+              <span>
+                {date.slice(0,10)}
+              </span>
+            </div>
+            }
+            
           </div>
 
           <div className="grid grid-cols-2 gap-4">
@@ -208,6 +220,7 @@ htmlFor="instrument"
           onChange={(e) => setDescription(e.target.value)}
           type="text"
           isEditable={isOrganizer}
+        
         />
 
         {isOrganizer && <EventEditForm />}

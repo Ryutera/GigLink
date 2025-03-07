@@ -6,7 +6,7 @@ interface CustomInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   isEditable: boolean
 }
 
-const CustomInput: React.FC<CustomInputProps> = ({ label, type, isEditable,  ...props }) => {
+const CustomInput: React.FC<CustomInputProps> = ({ label, type, isEditable, className, ...props }) => {
   return (
     <div>
       <label htmlFor={props.id} className="block text-sm font-medium text-gray-700 mb-1">
@@ -17,9 +17,11 @@ const CustomInput: React.FC<CustomInputProps> = ({ label, type, isEditable,  ...
         disabled={!isEditable}
         type={type}
         className={cn(
-          "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500",
-          !isEditable && "bg-white cursor-default",
-          
+          "w-full px-3 py-2 ",
+          isEditable
+            ? "border shadow-sm rounded-md  border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            : "bg-white cursor-default ",
+
         )}
       />
     </div>

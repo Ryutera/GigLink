@@ -24,7 +24,7 @@ const OngoingEventMap = ({events,userId}:Props) => {
       <div className='flex w-screen h-screen '>
    <Map
    
-      defaultZoom={13}
+      defaultZoom={11}
       defaultCenter={  { lat: 51.5074, lng: -0.1278 } }
        mapId='EVENTS_MAP'
       onCameraChanged={ (ev: MapCameraChangedEvent) =>
