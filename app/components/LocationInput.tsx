@@ -1,70 +1,49 @@
 import React, { useRef } from 'react'
-import { GoogleMap, useJsApiLoader,StandaloneSearchBox, Libraries } from '@react-google-maps/api'
+import { useJsApiLoader, Autocomplete, Libraries } from '@react-google-maps/api'
 
 interface LocationInputProps {
-  setPlace: (location: string) => void; // 追加
-  setCoordinates :(lat:number, lng:number) => void; 
+  setPlace: (location: string) => void;
+  setCoordinates: (lat: number, lng: number) => void;
   children: React.ReactNode;
 }
 
-const libraries: "places"[] = ["places"]
+const libraries: "places"[] = ["places"];
 
-const LocationInput:React.FC<LocationInputProps> = ({children,setPlace,setCoordinates }) => {
-    const inputref = useRef<google.maps.places.SearchBox | null>(null)
+const LocationInput: React.FC<LocationInputProps> = ({ children, setPlace, setCoordinates }) => {
+  const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
 
-    const { isLoaded } = useJsApiLoader({
-        id: 'google-map-script',
-        googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string,
-        libraries, 
-      })
-    
-      const handleOnPlacesChanged = () =>{
-        //選択された場所の情報、複数形であとで[0]で取得しているからわかりずらいけど場合によって複数入る場合があるらしい、基本は1つ
-        let places = inputref.current?.getPlaces()
-       
-        
-       
-        if (places && places.length > 0) {
-          const place = places[0]
-          setPlace(place.formatted_address || ""); // 取得した住所を保存
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string,
+    libraries,
+  });
 
-          
-          if (place.geometry?.location) {
-            const lat = place.geometry.location.lat();
-            const lng = place.geometry.location.lng();
-            // 多分ここでは値取れてるけど保存されてない、明日やる
-             console.log(lat,lng,"hello")
-            setCoordinates(lat, lng);
-          }
-          
-        }
-        
-      
-       
+  const handleOnPlacesChanged = () => {
+    const place = autocompleteRef.current?.getPlace();
+    if (place) {
+      setPlace(place.formatted_address || "");
+
+      if (place.geometry?.location) {
+        setCoordinates(place.geometry.location.lat(), place.geometry.location.lng());
       }
-    
-      
+    }
+  };
+
   return (
     <div>
-        {isLoaded &&
-<StandaloneSearchBox
-onLoad={(ref)=>inputref.current=ref}
-onPlacesChanged={handleOnPlacesChanged}
->
-{children}
-</StandaloneSearchBox>
-}
+      {isLoaded && (
+        <Autocomplete
+          onLoad={(ref) => {
+            autocompleteRef.current = ref;
+          }}
+          onPlaceChanged={handleOnPlacesChanged}
+          options={{ componentRestrictions: { country: "uk" } }} // UKに制限
+        >
+          {children}
+        </Autocomplete>
+      )}
     </div>
-        
-  )
-}
+  );
+};
 
-export default LocationInput
-
-// まず、コンポーネントが呼ばれたら useRef で null を設定し、SearchBox インスタンスを保存する準備をする。useJsApiLoader を使って Google Maps API の places ライブラリをロードし、その状態を isLoaded で管理する。
-
-// isLoaded が true になると <StandaloneSearchBox> を表示し、これが初めてレンダリングされたときに onLoad が実行される。
-
-// onLoad で SearchBox インスタンスが ref.current に保存され、後で getPlaces() などのメソッドを使って検索結果を取得できるようになる。
-
-// ユーザーが検索ボックスに住所を入力し、候補リストの中から場所を選択すると、onPlacesChanged が発火し、選択された住所情報が setPlace に保存される。
+export default LocationInput;

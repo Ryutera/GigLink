@@ -27,7 +27,7 @@ const JoinForm = ({ eventId, hasApplied,userId }: JoinFormProps) => {
         const result = await applicationCreate(formData, eventId);
         if (result.success) {
           alert(result.message);
-          router.push("/join");
+          // router.push("/join");
         } else {
           alert(result.message);
         }

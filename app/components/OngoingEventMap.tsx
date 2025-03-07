@@ -11,7 +11,7 @@ const OngoingEventMap = ({events,userId}:Props) => {
   //ロケーションのサンプル
 
   console.log(events,"これがイベント配列")
-  const locations = events.map((event:any)=> ({key:event.id , location:{lat:event.latitude,lng:event.latitude} , isOrganizer:event.organizerId===userId ,hasApplied:event.applications.some((app:any)=>app.userId===userId) }))
+  const locations = events.map((event:any)=> ({key:event.id , location:{lat:event.latitude,lng:event.longitude} , isOrganizer:event.organizerId===userId ,hasApplied:event.applications.some((app:any)=>app.userId===userId) }))
 
   const onClickEventDetail =  (eventId:string) =>{
     router.push(`event_detail/${eventId}`)
@@ -36,7 +36,7 @@ const OngoingEventMap = ({events,userId}:Props) => {
 key={location.key}
 position={location.location}
 onClick={()=>onClickEventDetail(location.key)}>
-  {/* //条件分は緯度経度無いやつが赤道に表示されるのを防ぐため */}
+  {/* //ここの条件文は緯度経度無いやつが赤道に表示されるのを防ぐため */}
   {(location.location.lat === 0 && location.location.lng===0)? <></>:
   location.isOrganizer?
   <Pin  background={'green'} glyphColor={'#000'} borderColor={'#000'} /> : 
