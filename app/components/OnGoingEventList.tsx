@@ -1,5 +1,9 @@
+"use client"
 import Link from 'next/link'
-import React from 'react'
+
+import EventsTarget from './EventsFilter'
+import { useEffect, useState } from 'react'
+
 
 interface Props {
     events:any,
@@ -7,10 +11,17 @@ interface Props {
 }
 
 const OngoingEventList = ({events,userId}:Props) => {
+
+const [filterredEvents, setFilterredEvents] = useState(events)
+
+
   return (
+    <>
+    <EventsTarget events={events} userId={userId}  setFilterredEvents={ setFilterredEvents}/>
+
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
   
-{events.map((event:any) => (
+{filterredEvents.map((event:any) => (
 <div key={event.id} className="border rounded-lg p-4 shadow-md">
 <h3 className="text-xl font-semibold mb-2">{event.title}</h3>
 <p className="text-gray-600 mb-2">Place:{event.location}</p>
@@ -50,6 +61,7 @@ Join
 ))}
 
 </div>
+</>
   )
 }
 
