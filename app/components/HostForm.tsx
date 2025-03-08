@@ -97,7 +97,7 @@ const setCoordinates = (lat:number, lng:number)=>{
 
 
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="max-w-2xl mx-auto p-7">
     <h2 className="text-3xl font-bold mb-6">ライブイベントを作成</h2>
     <form className="space-y-4" action={handleSubmit}>
     <div>
@@ -116,25 +116,30 @@ const setCoordinates = (lat:number, lng:number)=>{
         </LocationInput>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid  gap-4">
         <div>
           <label htmlFor="date" className="block mb-1 font-medium">
             日付
           </label>
           <input value={date}  type="date" id="date" className="w-full border rounded-md p-2" onChange={onChangeDate}/>
         </div>
+
+<div className='grid md:grid-cols-2 gap-3'>
         <div>
-          <label htmlFor="time" className="block mb-1 font-medium">
+          {/* stepが動かない、ブラウザによって挙動が変わる場合があるらしい */}
+          <label htmlFor="startTime" className="block mb-1 font-medium">
             開始時間
           </label>
-          <input value={startTime}  type="time" id="startTime" className="w-full border rounded-md p-2" onChange={onChangesetStartTime }/>
+          <input value={startTime}  type="time"  step="1800" id="startTime" className="w-full border rounded-md p-2" onChange={onChangesetStartTime }/>
         </div>
         <div>
-          <label htmlFor="time" className="block mb-1 font-medium">
+          <label htmlFor="endTime" className="block mb-1 font-medium">
             終了時間
           </label>
-          <input value={endTime}  type="time" id="startTime" className="w-full border rounded-md p-2" onChange={onChangesetEndTime}/>
+          <input value={endTime} step="1800"  type="time"  id="endTime" className="w-full border rounded-md p-2" onChange={onChangesetEndTime}/>
         </div>
+        </div>
+
       </div>
       <div>
         <label className="block mb-1 font-medium">募集楽器パート</label>

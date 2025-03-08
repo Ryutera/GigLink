@@ -7,7 +7,33 @@ import { EventCard } from "../components/EventCard";
 export default async function CreateEvent() {
   const { userId } = await auth();
   if (!userId) {
-    return <div>ユーザーが見つかりません</div>;
+    return <div>
+      <div className="md:flex justify-between align-items items-center mb-8 block">
+        <h1 className="text-3xl font-bold ">主催予定のイベントはありません</h1>
+        <Button className="bg-blue-500 hover:bg-blue-600 md:block hidden">
+          <Link href="/create_event">+ 新規イベント作成</Link>
+        </Button>
+      </div>
+
+<Button className="fixed 
+    bottom-6 
+    left-1/2 
+    -translate-x-1/2 
+    bg-blue-500 
+    hover:bg-blue-600 
+    md:hidden 
+    rounded-full 
+    w-12 
+    h-12 
+    flex 
+    items-center 
+    justify-center 
+    shadow-lg 
+    z-50">
+          <Link href="/create_event">+</Link>
+        </Button>
+
+    </div>;
   }
 
   //ログイン中のアカウントが開催予定のイベント
@@ -54,9 +80,9 @@ console.log(scheduledEvents.map((e)=>e.applications))
 
   return (
     <div className="max-w-4xl mx-auto p-4">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">あなたが主催予定のイベント</h1>
-        <Button className="bg-blue-500 hover:bg-blue-600">
+      <div className="md:flex justify-between items-center mb-8 block">
+        <h1 className="text-3xl font-bold ">あなたが主催予定のイベント</h1>
+        <Button className="bg-blue-500 hover:bg-blue-600 md:block hidden">
           <Link href="/create_event">+ 新規イベント作成</Link>
         </Button>
       </div>
@@ -74,6 +100,24 @@ console.log(scheduledEvents.map((e)=>e.applications))
           <h2 className="text-xl font-semibold text-gray-600">現在開催予定のイベントはありません</h2>
         </div>
       )}
+
+<Button className="fixed 
+    bottom-6 
+    left-1/2 
+    -translate-x-1/2 
+    bg-blue-500 
+    hover:bg-blue-600 
+    md:hidden 
+    rounded-full 
+    w-12 
+    h-12 
+    flex 
+    items-center 
+    justify-center 
+    shadow-lg 
+    z-50">
+          <Link href="/create_event">+</Link>
+        </Button>
     </div>
   );
 }
