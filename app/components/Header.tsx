@@ -9,9 +9,9 @@ const Header = async () => {
 
 
   return (
-    <header className='h-[80px] bg-blue-400  flex justify-between items-center px-7 mb-7'>
+    <header className='h-[80px] h-60px bg-blue-400  flex justify-between items-center px-7 mb-7'>
         <div>
-<h1 className="text-white text-3xl font-bold">
+<h1 className="text-white md:text-3xl text-2xl font-bold">
     <Link href="/"> Gig Link</Link>
    
     </h1>

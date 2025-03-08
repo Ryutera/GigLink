@@ -24,8 +24,8 @@ export default async function TopPage() {
   
 
   <div className="flex flex-col items-center justify-center min-h-screen mt-[-50px] ">
-  <h1 className="text-4xl font-bold text-indigo-800 mb-12 ">Welcome to Our Service</h1>
-  <div className="flex flex-row gap-8 items-stretch justify-center w-full max-w-5xl">
+  <h1 className="md:text-4xl text-3xl font-bold text-indigo-800 mb-12 ">Welcome to Our Service</h1>
+  <div className="flex flex-col md:flex-row gap-8 items-stretch justify-center w-full max-w-5xl">
     <NavCard
       title="Host an Event"
       icon={Home}

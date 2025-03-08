@@ -15,13 +15,13 @@ const NavCard = ({ title, icon: Icon, description, bgColor, hoverColor, link }:P
   return (
    
      
-    <Link href={link} className="w-full">
+    <Link href={link} className="md:w-full">
     <div
-      className={`h-[calc(70vh-2rem)] ${bgColor} ${hoverColor} rounded-lg shadow-lg flex flex-col items-center justify-center p-6 transition-all duration-300 ease-in-out transform hover:scale-105`}
+      className={`md:h-[calc(70vh-2rem)] h-60px ${bgColor} ${hoverColor} rounded-lg shadow-lg  md:flex  md:flex-col items-center  justify-center p-6 transition-all duration-300 ease-in-out transform hover:scale-105`}
     >
       <Icon className="w-12 h-12" />
       <h2 className="text-2xl font-semibold mt-4 mb-2">{title}</h2>
-      <p className="text-center text-gray-700">{description}</p>
+      <p className="md:flex text-center text-gray-700 hidden">{description}</p>
     </div>
   </Link>
         )
