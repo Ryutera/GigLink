@@ -50,7 +50,7 @@ const ProfilePage = async ({params}:{params:{id:string}}) => {
 
 
   return (
-  <div className="flex  justify-center w-full ">
+  <div className="flex  justify-center w-full p-7">
   <Tabs defaultValue="account" className="w-full max-w-2xl">
     {userId===paramsUserID&&
     <TabsList className="mb-4">
