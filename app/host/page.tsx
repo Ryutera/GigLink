@@ -8,9 +8,9 @@ export default async function CreateEvent() {
   const { userId } = await auth();
   if (!userId) {
     return <div>
-      <div className="md:flex justify-between align-items items-center mb-8 block">
+      <div className="md:flex justify-between flex-col align-items items-center mb-8 block p-7">
         <h1 className="text-3xl font-bold ">主催予定のイベントはありません</h1>
-        <Button className="bg-blue-500 hover:bg-blue-600 md:block hidden">
+        <Button className="bg-blue-500 hover:bg-blue-600 md:block hidden  md:mt-20">
           <Link href="/create_event">+ 新規イベント作成</Link>
         </Button>
       </div>
@@ -101,7 +101,8 @@ console.log(scheduledEvents.map((e)=>e.applications))
         </div>
       )}
 
-<Button className="fixed 
+<Button className="
+fixed 
     bottom-6 
     left-1/2 
     -translate-x-1/2 

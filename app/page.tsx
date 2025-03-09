@@ -8,20 +8,13 @@ import NavCard from "./components/NavCard";
 
 
 export default async function TopPage() {
-  const { userId } = await auth()
-  let userid = null
 
-  if (userId) {
-    const userInfo = await prisma.user.findFirst({
-      where: {
-        id: userId,
-      },
-    })
-    userid = userInfo?.id
-  }
+    
+      const { userId } = await auth()
 
-  return (
   
+  return (
+ 
 
   <div className="flex flex-col items-center justify-center min-h-screen mt-[-50px] ">
   <h1 className="md:text-4xl text-3xl font-bold text-indigo-800 mb-12 ">Welcome to Our Service</h1>
@@ -48,12 +41,14 @@ export default async function TopPage() {
       description="Manage your account and preferences"
       bgColor="bg-green-200"
       hoverColor="hover:bg-green-300"
-      link={userid ? `/profile/${userid}` : "/sign-in"}
+      link={userId ? `/profile/${userId}` : "/sign-in"}
      
     />
   </div>
 </div>
 )
+  
+   
 }
 
 
