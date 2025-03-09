@@ -11,14 +11,14 @@ interface NavCardProps {
   link: string;
 }
 // propsとして受け取る`icon`は小文字ですが、それをコンポーネントとして使用するために`Icon`という大文字の変数名に変更しています。
-const NavCard:React.FC<NavCardProps> = ({
+const NavCard = ({
   title,
   icon: Icon,
   description,
   bgColor,
   hoverColor,
   link,
-}) => {
+}:NavCardProps) => {
   return (
     <Link href={link} className="w-full">
       <div
