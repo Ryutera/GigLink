@@ -1,16 +1,23 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { applicationApprove, applicationReject } from "@/lib/action";
+import { Application, Event } from "@/types/events";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 
 import { useState } from "react";
 
-export function EventCard({ event }: { event: any }) {
+export function EventCard({ event }: { event: Event}) {
   const [isApplicantsVisible, setIsApplicantsVisible] = useState(false);
 
-  const onClickApprove = async (application: any) => {
+  const filterApplicationByStatus = (status: "PENDING" | "ACCEPTED" | "REJECTED") =>{
+    return event.applications.filter((app)=>app.status===status)
+  }
+
+  const pendingApplications = filterApplicationByStatus("PENDING")
+  const acceptedApplications = filterApplicationByStatus("ACCEPTED")
+
+  const onClickApprove = async (application: Application) => {
     try {
       await applicationApprove(application);
       alert("申請を承認しました");
@@ -18,7 +25,7 @@ export function EventCard({ event }: { event: any }) {
       alert("申請の承認に失敗しました");
     }
   };
-  const onClickReject = async (application: any) => {
+  const onClickReject = async (application: Application) => {
     try {
       await applicationReject(application);
       alert("申請を拒否しました");
@@ -58,12 +65,13 @@ export function EventCard({ event }: { event: any }) {
         <p key={event.id} className="text-gray-600 mb-4">
           <span>参加予定者</span>
           <br />
-          {/* あとで参加希望者のとこと合わせて絶対リファクタリングしたほうがいい気がする、コードキモい */}
-          {event.applications
-            .filter((application: any) => application.status === "ACCEPTED")
-            .map((p: any) => (
+         
+         {/* indexのとこは参加者の間に,を入れる処理 */}
+          { acceptedApplications
+            .map((p: Application,index) => (
               <span className="hover:text-blue-400">
                 <Link href={`/profile/${p.user.id}`}>{p.user.name}</Link>
+                {index < acceptedApplications.length - 1 ? ", " : ""}
               </span>
             ))}
         </p>
@@ -74,9 +82,7 @@ export function EventCard({ event }: { event: any }) {
         >
           参加希望者を表示 (
           {
-            event.applications.filter(
-              (application: any) => application.status === "PENDING"
-            ).length
+            pendingApplications.length
           }
           )
           {isApplicantsVisible ? (
@@ -89,14 +95,11 @@ export function EventCard({ event }: { event: any }) {
       {isApplicantsVisible && (
         <div className="bg-gray-50 p-6 border-t">
           <h4 className="text-lg font-semibold mb-4">参加希望者一覧</h4>
-          {event.applications.filter(
-            (application: any) => application.status === "PENDING"
-          ).length > 0 ? 
+          {pendingApplications.length > 0 ? 
           (
             <ul className="space-y-4">
-              {event.applications
-                .filter((application: any) => application.status === "PENDING")
-                .map((application: any) => (
+              {pendingApplications
+                .map((application: Application) => (
                   <li
                     key={application.id}
                     className="bg-white p-4 rounded-lg shadow"
