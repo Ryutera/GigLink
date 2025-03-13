@@ -1,5 +1,5 @@
 
-import ProfileForm from '@/app/components/ProfileForm'
+import ProfileForm from '@/app/components/profile/ProfileForm'
 import prisma from '@/lib/prisma'
 import { auth } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
