@@ -70,6 +70,7 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
         const result = await eventDeleteAction(eventId)
         if (result.success) {
           alert(result.message)
+          router.push("/host")
         } else {
           alert(result.message)
         }

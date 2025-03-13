@@ -16,7 +16,7 @@ export default async function TopPage() {
   return (
  
 
-  <div className="flex flex-col items-center justify-center min-h-screen mt-[-50px] ">
+  <div className="flex flex-col items-center justify-center min-h-screen">
   <h1 className="md:text-4xl text-3xl font-bold text-indigo-800 mb-12 ">Welcome to Our Service</h1>
   <div className="flex flex-col md:flex-row gap-2 md:gap-8 items-stretch justify-center w-full max-w-5xl">
     <NavCard
