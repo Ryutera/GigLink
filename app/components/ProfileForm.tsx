@@ -6,13 +6,19 @@ import { ProfileUpdate } from '@/lib/action'
 import { useRouter } from 'next/navigation'
 import { instruments } from '../constants/instruments'
 import Link from 'next/link'
+import { User } from '@prisma/client'
 
 
 
 
+interface ProfileFormProps {
+user:User
+  userId: string;
+}
 
 
-const ProfileForm = ({user, userId}:any) => {
+
+const ProfileForm = ({user, userId}:ProfileFormProps) => {
   const [selectedInstruments, setSelectedInstruments] = useState<string[]>(user.instruments)
   const [bio, setBio] = useState<string>(user.bio || '')
   const [editable, setEditable] = useState(true)
@@ -22,9 +28,9 @@ const ProfileForm = ({user, userId}:any) => {
 
  useEffect(()=>{
 if (user.id===userId) {
- setEditable(false)
+ setEditable(true)
 }else{
-  setEditable(true)
+  setEditable(false)
 }
  },[user,userId])
 
@@ -58,6 +64,10 @@ if (user.id===userId) {
     }
   }
 
+  const onClickBack =()=>{
+    router.back()
+  }
+
   return (
     
       <div className="space-y-6">
@@ -65,17 +75,26 @@ if (user.id===userId) {
       <form onSubmit={handleSubmit} className="space-y-4">
         
       <div>
-          <label htmlFor="username" className="block mb-1 font-medium">
-           Username
-          </label>
-          <input
-            type="text"
-            id="username"
-            className="w-full border rounded-md p-2"
-            defaultValue={user.name}
-            disabled={editable}
-            
-          />
+        {editable? 
+       
+       <>
+        <label htmlFor="username" className="block mb-1 font-medium">
+        Username
+       </label>
+       <input
+         type="text"
+         id="username"
+         className="w-full border rounded-md p-2"
+         defaultValue={user.name}
+         disabled={!editable}
+         
+       /></>:
+       <>
+       <span>Username</span>
+       <p className="text-xl">{user.name}</p>
+       </>
+       }
+          
         </div>
 
 
@@ -83,10 +102,8 @@ if (user.id===userId) {
         <label className="block mb-1 font-medium">楽器パート</label>
         <div className="flex flex-wrap gap-2">
           {editable?
-            selectedInstruments.map((instrument)=><div key={instrument}>
-              <span>{instrument}</span>
-            </div>)
-           : 
+            
+           
           
           instruments.map((instrument) => (
             <label key={instrument} className="grid-cols-4 items-center" >
@@ -94,12 +111,18 @@ if (user.id===userId) {
                   onChange={()=>handleInstrumentChange(instrument)}    />
               <span className="ml-2">{instrument}</span>
             </label>
-          ))}
+          ))
+        
+        :
+        selectedInstruments.map((instrument)=><div key={instrument}>
+              <span>{instrument}</span>
+            </div>)
+        }
           
         </div>
       </div>
 
-        <div>
+{editable ?<div>
           <label htmlFor="bio" className="block mb-1 font-medium">
             自己紹介
           </label>
@@ -107,21 +130,33 @@ if (user.id===userId) {
             id="bio"
             name="bio"
             rows={4}
-            className={`w-full border rounded-md p-2 ${editable&&"cursor-not-allowed"}`}
+            className="w-full border rounded-md p-2"
             placeholder="自己紹介を入力してください"
             value={bio}
             onChange={handleBioChange}
-            disabled={editable}
+           
           ></textarea>
-        </div>
+        </div> :
+        <div>
+        <label htmlFor="bio" className="block mb-1 font-medium">
+          自己紹介
+        </label>
+        <div
+          className="w-full bg-gray-50 rounded-md p-2 mb-7"
+        >  {bio}</div>
+      </div> }
+        
+
+
         {editable ? 
-        <button type="button" className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition'><Link href='/'>戻る</Link></button> :
+      
         <div className='flex place-content-between'>
         <button type="submit"  className={`  hover:bg-blue-500"} bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition `}>
           Update Profile
         </button>
-        <button type="button"  className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition'><Link href='/'>戻る</Link></button> 
-        </div>
+        <button type="button" onClick={onClickBack}  className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition'>戻る</button> 
+        </div>:
+          <button type="button" onClick={onClickBack}  className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition'>戻る</button> 
 }
        
       </form>

@@ -28,6 +28,7 @@ const HostForm: React.FC = () => {
   })
 
   // 汎用的な入力ハンドラー
+  //idがplaceだったらplaceに
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target
     setFormData((prev) => ({

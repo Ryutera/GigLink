@@ -15,11 +15,10 @@ const ProfilePage = async ({params}:{params:{id:string}}) => {
   const {id} = await params
   const paramsUserID = id
 
-
+    
   if (!userId) {
     redirect('/sign-up')
   }
-
   const userInfo = await prisma.user.findUnique({
     where: {
       id: paramsUserID
@@ -52,7 +51,10 @@ const ProfilePage = async ({params}:{params:{id:string}}) => {
   return (
   <div className="flex  justify-center w-full p-7">
   <Tabs defaultValue="account" className="w-full max-w-2xl">
-    {userId===paramsUserID&&
+    {
+  
+    userId===paramsUserID&&
+    
     <TabsList className="mb-4">
     
     <TabsTrigger value="account">Account</TabsTrigger>
