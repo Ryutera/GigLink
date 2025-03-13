@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { applicationApprove, applicationReject } from "@/lib/action";
 import { Application, Event } from "@/types/events";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Link from "next/link";
 
 import { useState } from "react";
@@ -62,19 +63,25 @@ export function EventCard({ event }: { event: Event}) {
           <span className="font-medium">募集楽器:</span>{" "}
           {event.instruments.join(", ")}
         </p>
-        <p key={event.id} className="text-gray-600 mb-4">
-          <span>参加予定者</span>
+        <div  className="text-gray-600 mb-4">
+          <span>参加予定者:</span>
           <br />
          
          {/* indexのとこは参加者の間に,を入れる処理 */}
-          { acceptedApplications
-            .map((p: Application,index) => (
-              <span className="hover:text-blue-400">
-                <Link href={`/profile/${p.user.id}`}>{p.user.name}</Link>
+          { acceptedApplications.length > 0?
+            acceptedApplications.map((p: Application,index) => (
+              <div className="flex items-center py-2" key={event.id}>
+                <Link href={`/profile/${p.user.id}`}>
+                <Avatar className="h-8 w-8 border-2 border-gray-200 flex">
+              <AvatarImage src={p.user.image || undefined} alt={p.user.name} />
+              <AvatarFallback className="text-lg">{p.user.name?.substring(0, 2).toUpperCase() || "UN"}</AvatarFallback>
+            </Avatar>
+            <span className="hover:text-blue-400"> {p.user.name}</span>
+                </Link>
                 {index < acceptedApplications.length - 1 ? ", " : ""}
-              </span>
-            ))}
-        </p>
+              </div>
+            )):<span >参加者はいません</span>}
+        </div>
 
         <Button
           className="w-full text-left flex justify-between items-center text-black"

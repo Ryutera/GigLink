@@ -107,34 +107,6 @@ const ProfileFormView = ({
         </CardContent>
       </Card>
 
-      {/* 参加予定のイベント
-      {upcomingEvents.length > 0 && (
-        <Card>
-          <CardHeader className="pb-2">
-            <h3 className="text-lg font-semibold flex items-center">
-              <Clock className="h-5 w-5 mr-2" />
-              参加予定のイベント
-            </h3>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {upcomingEvents.map((event) => (
-                <div key={event.id} className="border rounded-md p-3 hover:bg-gray-50">
-                  <h4 className="font-medium">{event.title}</h4>
-                  <div className="flex items-center text-gray-500 mt-1 text-sm">
-                    <CalendarDays className="h-3 w-3 mr-1" />
-                    <span>{event.date.toLocaleDateString()}</span>
-                  </div>
-                  <div className="flex items-center text-gray-500 mt-1 text-sm">
-                    <MapPin className="h-3 w-3 mr-1" />
-                    <span>{event.location}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      )} */}
 
       {/* 戻るボタン */}
       <div className="flex justify-end">
