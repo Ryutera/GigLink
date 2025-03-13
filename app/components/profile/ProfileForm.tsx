@@ -5,20 +5,20 @@ import React, { useEffect, useState } from "react";
 import { ProfileUpdate } from "@/lib/action";
 import { useRouter } from "next/navigation";
 import { instruments } from "../../constants/instruments";
-import { User } from "@prisma/client";
+import { Application, Event, User } from "@prisma/client";
 
-import ProfileFormEdit from "./ProfileFormEdit";
-import ProfileFormView from "./ProfileFormView";
-
-
-
+import ProfileFormEdit from "./EditableProfile";
+import ProfileFormView from "./ReadOnlyProfile";
 
 interface ProfileFormProps {
   user: User;
   userId: string;
+  organizedEvents:Event[];
+  applications:Application[]
+
 }
 
-const ProfileForm = ({ user, userId }: ProfileFormProps) => {
+const ProfileForm = ({ user, userId,organizedEvents,applications}: ProfileFormProps) => {
   const [selectedInstruments, setSelectedInstruments] = useState<string[]>(
     user.instruments
   );
@@ -68,11 +68,25 @@ const ProfileForm = ({ user, userId }: ProfileFormProps) => {
     <div className="space-y-6">
       <h2 className="text-3xl font-bold mb-6 ">Profile</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-        
-       {editable? 
-       <ProfileFormEdit user={user} selectedInstruments={selectedInstruments} handleInstrumentChange={handleInstrumentChange} bio={bio} handleBioChange={handleBioChange} onClickBack={onClickBack}/>
-       : <ProfileFormView user={user} selectedInstruments={selectedInstruments}  bio={bio}  onClickBack={onClickBack}/>}
-
+        {editable ? (
+          <ProfileFormEdit
+            user={user}
+            selectedInstruments={selectedInstruments}
+            handleInstrumentChange={handleInstrumentChange}
+            bio={bio}
+            handleBioChange={handleBioChange}
+            onClickBack={onClickBack}
+          />
+        ) : (
+          <ProfileFormView
+            user={user}
+            selectedInstruments={selectedInstruments}
+            bio={bio}
+            onClickBack={onClickBack}
+            organizedEvents={organizedEvents}
+            applications={applications}
+          />
+        )}
       </form>
     </div>
   );

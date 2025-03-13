@@ -41,11 +41,19 @@ const ProfilePage = async ({params}:{params:{id:string}}) => {
       },
      
     },include:{
-      event:true
-      
-    }
+      event:true ,     
+    },
    }
   )
+
+  const organizedEvents = await prisma.event.findMany({
+    where:{organizerId:userInfo.id}
+  })
+
+  const applications = await prisma.application.findMany({
+    where:{userId:userInfo.id}
+  })
+
 
 
   return (
@@ -62,7 +70,7 @@ const ProfilePage = async ({params}:{params:{id:string}}) => {
     
   </TabsList>}
   
-  <TabsContent value="account" ><ProfileForm user={userInfo} userId={userId} /></TabsContent>
+  <TabsContent value="account" ><ProfileForm user={userInfo} userId={userId} organizedEvents={organizedEvents}  applications={ applications }/></TabsContent>
   <TabsContent value="appStatus" ><ApplicationStatus schedules={schedules}/></TabsContent>
 </Tabs>
 </div>
