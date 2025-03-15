@@ -11,7 +11,6 @@ import {
 } from "@vis.gl/react-google-maps";
 import Link from "next/link";
 
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface Props {

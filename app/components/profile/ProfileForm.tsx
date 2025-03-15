@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 
 import { ProfileUpdate } from "@/lib/action";
 import { useRouter } from "next/navigation";
-import { instruments } from "../../constants/instruments";
 import { Application, Event, User } from "@prisma/client";
 
 import ProfileFormEdit from "./EditableProfile";
