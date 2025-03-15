@@ -6,11 +6,11 @@ import { auth } from '@clerk/nextjs/server';
 import EventInfo from '@/app/components/EventInfo';
 import BackButton from '@/app/components/BackButton';
 
-type PageParams = { id: string };
-export default async function eventDetail({params}:{params:PageParams}) {
+
+export default async function eventDetail ({ params }: { params: Promise<{ id: string }> }) {
 
 
-  const { id } = params;
+  const { id } = await params;
 
   const {userId} = await auth()
   if (!userId) {
