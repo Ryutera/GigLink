@@ -7,9 +7,9 @@ import EventInfo from '@/app/components/EventInfo';
 import BackButton from '@/app/components/BackButton';
 
 
-export default async function eventDetail({params}: {params:{id:string}}) {
+export default async function eventDetail({params}: {params: Promise<{ id: string }>}) {
 
-  const { id } = params
+  const { id } = await params
 
   const {userId} = await auth()
   if (!userId) {
