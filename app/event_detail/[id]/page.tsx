@@ -9,7 +9,8 @@ import BackButton from '@/app/components/BackButton';
 type PageParams = Promise<{ id: string }>;
 export default async function eventDetail({params}:{params:PageParams}) {
 
-  const { id } = await params
+  const id = (await params).id;
+ 
 
   const {userId} = await auth()
   if (!userId) {
