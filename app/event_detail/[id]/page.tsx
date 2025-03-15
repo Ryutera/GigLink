@@ -7,7 +7,7 @@ import EventInfo from '@/app/components/EventInfo';
 import BackButton from '@/app/components/BackButton';
 
 
-export default async function eventDetail ({ params }: { params: Promise<{ id: string }> }) {
+export default async function EventDetail ({ params }: { params: Promise<{ id: string }> }) {
 
 
   const { id } = await params;
