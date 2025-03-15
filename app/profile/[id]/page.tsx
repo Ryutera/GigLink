@@ -6,10 +6,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ApplicationStatus from "@/app/components/ApplicationStatus";
 import BackButton from "@/app/components/BackButton";
 
-const ProfilePage = async ({ params }: { params: Promise<{id:string}>}) => {
+export default async function ProfilePage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } =  await params;
   const { userId } = await auth();
 
-  const { id } =  await params;
+
   const paramsUserID = id;
 
   if (!userId) {
@@ -77,4 +78,4 @@ const ProfilePage = async ({ params }: { params: Promise<{id:string}>}) => {
   );
 };
 
-export default ProfilePage;
+
