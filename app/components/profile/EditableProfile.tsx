@@ -1,6 +1,7 @@
 import React from "react";
 import { instruments } from "@/app/constants/instruments";
 import { User } from "@prisma/client";
+import BackButton from "../BackButton";
 
 interface Props {
   user: User;
@@ -8,7 +9,7 @@ interface Props {
   handleInstrumentChange: (instrument: string) => void;
   bio: string;
   handleBioChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  onClickBack: () => void;
+  
 }
 
 const ProfileFormEdit = ({
@@ -17,7 +18,7 @@ const ProfileFormEdit = ({
   handleInstrumentChange,
   bio,
   handleBioChange,
-  onClickBack,
+ 
 }: Props) => {
   return (
     <div className="flex flex-col md:gap-8 gap-7">
@@ -66,21 +67,17 @@ const ProfileFormEdit = ({
         ></textarea>
       </div>
 
-      <div className="flex place-content-between">
+      <div className="flex justify-center">
         <button
           type="submit"
 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
         >
           Update Profile
         </button>
-        <button
-          type="button"
-          onClick={onClickBack}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-        >
-          戻る
-        </button>
+       
+       
       </div>
+     
     </div>
   );
 };

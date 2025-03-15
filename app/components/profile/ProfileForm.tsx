@@ -60,9 +60,6 @@ const ProfileForm = ({ user, userId,organizedEvents,applications}: ProfileFormPr
     }
   };
 
-  const onClickBack = () => {
-    router.back();
-  };
 
   return (
     <div className="space-y-6">
@@ -75,14 +72,14 @@ const ProfileForm = ({ user, userId,organizedEvents,applications}: ProfileFormPr
             handleInstrumentChange={handleInstrumentChange}
             bio={bio}
             handleBioChange={handleBioChange}
-            onClickBack={onClickBack}
+            
           />
         ) : (
           <ProfileFormView
             user={user}
             selectedInstruments={selectedInstruments}
             bio={bio}
-            onClickBack={onClickBack}
+           
             organizedEvents={organizedEvents}
             applications={applications}
           />

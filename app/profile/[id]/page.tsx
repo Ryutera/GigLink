@@ -4,6 +4,7 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ApplicationStatus from "@/app/components/ApplicationStatus";
+import BackButton from "@/app/components/BackButton";
 
 const ProfilePage = async ({ params }: { params: { id: string } }) => {
   const { userId } = await auth();
@@ -52,11 +53,11 @@ const ProfilePage = async ({ params }: { params: { id: string } }) => {
       <Tabs defaultValue="account" className="w-full max-w-2xl">
         {userId === paramsUserID && (
           <div className="flex justify-center w-full mb-8">
-          <TabsList>
-            <TabsTrigger value="account">Account</TabsTrigger>
-            <TabsTrigger value="appStatus">Application Status</TabsTrigger>
-          </TabsList>
-        </div>
+            <TabsList>
+              <TabsTrigger value="account">Account</TabsTrigger>
+              <TabsTrigger value="appStatus">Application Status</TabsTrigger>
+            </TabsList>
+          </div>
         )}
 
         <TabsContent value="account">
@@ -70,6 +71,7 @@ const ProfilePage = async ({ params }: { params: { id: string } }) => {
         <TabsContent value="appStatus">
           <ApplicationStatus schedules={schedules} />
         </TabsContent>
+        <BackButton />
       </Tabs>
     </div>
   );

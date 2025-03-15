@@ -7,12 +7,13 @@ import { Button } from "@/components/ui/button"
 import { CalendarDays, Music, MapPin, Mail, Clock } from "lucide-react"
 import { formatDistanceToNow } from "date-fns"
 import { ja } from "date-fns/locale"
+import BackButton from "../BackButton"
 
 interface Props {
   user: User
   selectedInstruments: string[]
   bio: string
-  onClickBack: () => void
+  
   organizedEvents:Event[]
   applications:Application[]
 }
@@ -21,7 +22,7 @@ const ProfileFormView = ({
   user,
   selectedInstruments,
   bio,
-  onClickBack,
+  
   organizedEvents,
   applications
 }: Props) => {
@@ -109,11 +110,7 @@ const ProfileFormView = ({
 
 
       {/* 戻るボタン */}
-      <div className="flex justify-end">
-        <Button type="button" onClick={onClickBack} className="bg-blue-500 hover:bg-blue-600">
-          戻る
-        </Button>
-      </div>
+    <BackButton/>
     </div>
   )
 }
