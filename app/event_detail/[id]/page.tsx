@@ -6,8 +6,8 @@ import { auth } from '@clerk/nextjs/server';
 import EventInfo from '@/app/components/EventInfo';
 import BackButton from '@/app/components/BackButton';
 
-
-export default async function eventDetail({params}: {params: Promise<{ id: string }>}) {
+type PageParams = Promise<{ id: string }>;
+export default async function eventDetail({params}:{params:PageParams}) {
 
   const { id } = await params
 
