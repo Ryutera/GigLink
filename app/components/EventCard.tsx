@@ -80,7 +80,9 @@ export function EventCard({ event }: { event: Event}) {
                 </Link>
                 {index < acceptedApplications.length - 1 ? ", " : ""}
               </div>
-            )):<span >参加者はいません</span>}
+            ))
+            :<span >参加者はいません</span>}
+            
         </div>
 
         <Button

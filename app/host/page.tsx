@@ -59,7 +59,7 @@ export default async function CreateEvent() {
 
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
+    <div className="max-w-4xl mx-auto p-7">
       <div className="md:flex justify-between items-center mb-8 block">
         <h1 className="text-3xl font-bold ">あなたが主催予定のイベント</h1>
         <Button className="bg-blue-500 hover:bg-blue-600 md:block hidden">

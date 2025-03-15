@@ -1,7 +1,8 @@
 export interface User {
-  image:string | null
   id: string
   name: string
+  email?: string
+  image?: string | null
 }
 
 export interface Application {
@@ -10,19 +11,27 @@ export interface Application {
   eventId: string
   status: "PENDING" | "ACCEPTED" | "REJECTED"
   instrument: string
-  message: string
-  user: User
+  message?: string
+  createdAt: Date
+  updatedAt: Date
+  user?: User
 }
 
-export interface Event {
+export interface MusicEvent {
   id: string
   title: string
-  location: string
+  description?: string
   date: Date
   startTime: Date
   endTime: Date
+  location: string
+  latitude: number
+  longitude: number
   instruments: string[]
   organizerId: string
+  createdAt?: Date
+  updatedAt?: Date
+  organizer: User
   applications: Application[]
 }
 

@@ -2,18 +2,20 @@
 import { useEffect, useState } from "react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { revalidatePath } from "next/cache";
+import { MusicEvent } from "@/types/events";
 
-interface Props{
-    events:any;
-    userId:string|null
-     setFilterredEvents:any
+
+export interface EventFilterProps {
+  events: MusicEvent[]
+  userId: string | null
+  setFilterredEvents: React.Dispatch<React.SetStateAction<MusicEvent[]>>
 }
 
-const EventFilter = ({events,userId, setFilterredEvents}:Props) => {
+const EventFilter = ({events,userId, setFilterredEvents}:EventFilterProps) => {
   const [selectedValue, setSelectedValue] = useState<string>("")
 
 
-  const toJoinEvent = events.filter((event:any)=>event.organizerId!==userId)
+  const toJoinEvent = events.filter((event)=>event.organizerId!==userId)
 
   const handleSelectChange = (value: string) => {
     setSelectedValue(value)
@@ -25,23 +27,23 @@ const EventFilter = ({events,userId, setFilterredEvents}:Props) => {
     else if (value === "join") {
        // まだ応募していないイベントを抽出
 
-    setFilterredEvents(toJoinEvent.filter((event:any)=>!event.applications.some((event:any)=>event.userId===userId)))
+    setFilterredEvents(toJoinEvent.filter((event)=>!event.applications.some((event)=>event.userId===userId)))
   
          
    
     } else if (value === "Edit") {
-         setFilterredEvents( events.filter((event:any)=>event.organizerId===userId)) 
+         setFilterredEvents( events.filter((event)=>event.organizerId===userId)) 
    
    
     } else if (value === "Applied") {
-      setFilterredEvents(toJoinEvent.filter((event:any)=>event.applications.some((event:any)=>event.userId===userId)))
+      setFilterredEvents(toJoinEvent.filter((event)=>event.applications.some((event)=>event.userId===userId)))
 
     }
   }
 
   return (
-    <div className="flex flex-row-reverse mb-4">
-      <div className="flex items-center gap-2">
+    <div className="flex flex-row-reverse mb-4 ">
+      
         
         <Select onValueChange={handleSelectChange} value={selectedValue}>
           <SelectTrigger className="w-[180px]">
@@ -54,7 +56,7 @@ const EventFilter = ({events,userId, setFilterredEvents}:Props) => {
             <SelectItem value="Applied">Applied</SelectItem>
           </SelectContent>
         </Select>
-      </div>
+      
     </div>
   )
 }
