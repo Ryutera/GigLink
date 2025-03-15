@@ -57,7 +57,7 @@ export default async function CreateEvent() {
 
   });
 
-  console.log(scheduledEvents, "aaa")
+
 
 
   return (

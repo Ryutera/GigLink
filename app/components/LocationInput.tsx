@@ -18,12 +18,16 @@ const LocationInput: React.FC<LocationInputProps> = ({ children, setPlace, setCo
     libraries,
   });
 
+  
+
   const handleOnPlacesChanged = () => {
     const place = autocompleteRef.current?.getPlace();
+     console.log(place);
     if (place) {
       setPlace(place.formatted_address || "");
 
       if (place.geometry?.location) {
+        console.log(place.geometry.location.lat())
         setCoordinates(place.geometry.location.lat(), place.geometry.location.lng());
       }
     }

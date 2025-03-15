@@ -1,6 +1,6 @@
 "use client"
 import type React from "react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { instruments } from "../constants/instruments"
 import { EventCreate } from "@/lib/action"
@@ -39,12 +39,15 @@ const HostForm: React.FC = () => {
 
   // 位置情報の更新
   const setCoordinates = (lat: number, lng: number) => {
+    
     setFormData((prev) => ({
       ...prev,
       latitude: lat,
       longitude: lng,
     }))
+   
   }
+
 
   // 場所の更新（LocationInputコンポーネントから）
   const setPlace = (place: string) => {
@@ -74,6 +77,7 @@ const HostForm: React.FC = () => {
 
       if (result.success) {
         alert(result.message)
+        console.log("formdataです",FormData)
         // フォームをリセット
         setFormData({
           title: "",

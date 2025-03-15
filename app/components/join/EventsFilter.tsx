@@ -18,7 +18,7 @@ const EventFilter = ({events,userId, setFilterredEvents}:EventFilterProps) => {
 
   const handleSelectChange = (value: string) => {
     setSelectedValue(value)
-    console.log("選択された値:", value)
+    
     if (value==="All") {
       setFilterredEvents(events)
     }

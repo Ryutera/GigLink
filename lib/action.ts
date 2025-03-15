@@ -35,6 +35,8 @@ export async function ProfileUpdate(formData: FormData) {
 }
 
 
+
+
 export async function EventCreate(hostData: {
     title: string
     place: string
@@ -43,6 +45,8 @@ export async function EventCreate(hostData: {
     startTime: string
     endTime: string
     selectedInstruments: string[]
+    latitude: number | null
+longitude: number | null
   }): Promise<{ success: boolean; message: string }>{
 
    
@@ -72,8 +76,8 @@ export async function EventCreate(hostData: {
                 location: hostData.place,
                 organizerId: userId,
                 instruments: hostData.selectedInstruments,
-                latitude: 0.0, // 仮の値
-                longitude: 0.0, // 仮の値
+                latitude:  hostData.latitude || 0,
+                longitude: hostData.longitude || 0
             },
         });
         
