@@ -9,7 +9,7 @@ import BackButton from "@/app/components/BackButton";
 const ProfilePage = async ({ params }: { params: { id: string } }) => {
   const { userId } = await auth();
 
-  const { id } = await params;
+  const { id } =  params;
   const paramsUserID = id;
 
   if (!userId) {
