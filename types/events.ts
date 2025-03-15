@@ -15,6 +15,7 @@ export interface Application {
   createdAt: Date
   updatedAt: Date
   user?: User
+  
 }
 
 export interface MusicEvent {
@@ -35,3 +36,34 @@ export interface MusicEvent {
   applications: Application[]
 }
 
+
+export interface scheduledProps{
+  
+  
+    id: string
+    eventId:string
+    userId: string
+    instrument: string
+    message: string
+   status: "PENDING" | "ACCEPTED" | "REJECTED"
+    createdAt: Date
+    updatedAt: Date
+    event: {
+      id: string
+      title: string
+      description: string
+      date: Date
+      startTime:Date
+      endTime: Date
+      location: string
+      latitude: number
+      longitude: number
+      organizerId: string
+      createdAt: Date
+      updatedAt: Date
+      instruments: string[]
+   
+    }
+  
+
+  }
