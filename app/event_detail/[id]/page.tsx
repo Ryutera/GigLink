@@ -4,6 +4,7 @@ import React from 'react'
 import JoinForm  from "../../components/JoinForm";
 import { auth } from '@clerk/nextjs/server';
 import EventInfo from '@/app/components/EventInfo';
+import BackButton from '@/app/components/BackButton';
 
 
 export default async function eventDetail({params}: {params:{id:string}}) {
@@ -52,6 +53,9 @@ id:id
     <div className="max-w-2xl mx-auto p-7">
     <EventInfo event={event} userId={userId}/>
     {event?.organizer.id===userId || <JoinForm eventId={id}  hasApplied={hasApplied} userId={userId}/>}
+   
+        <BackButton />
+      
     
   </div>
   )
