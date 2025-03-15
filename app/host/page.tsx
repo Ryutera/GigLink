@@ -57,6 +57,8 @@ export default async function CreateEvent() {
 
   });
 
+  console.log(scheduledEvents, "aaa")
+
 
   return (
     <div className="max-w-4xl mx-auto p-7">

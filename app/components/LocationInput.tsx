@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { useJsApiLoader, Autocomplete, Libraries } from '@react-google-maps/api'
+import { useJsApiLoader, Autocomplete } from '@react-google-maps/api'
 
 interface LocationInputProps {
   setPlace: (location: string) => void;

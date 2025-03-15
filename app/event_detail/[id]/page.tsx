@@ -3,10 +3,8 @@ import prisma from '@/lib/prisma'
 import React from 'react'
 import JoinForm  from "../../components/JoinForm";
 import { auth } from '@clerk/nextjs/server';
-import Link from 'next/link';
 import EventInfo from '@/app/components/EventInfo';
-import EventEditForm from '@/app/components/EventEditForm';
-import { cache } from "react";
+
 
 export default async function eventDetail({params}: {params:{id:string}}) {
 

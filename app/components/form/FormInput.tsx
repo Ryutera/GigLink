@@ -12,6 +12,8 @@ interface FormInputProps {
   className?: string
   step?: string
   required?: boolean
+  mintime?: string 
+  
 }
 
 const FormInput: React.FC<FormInputProps> = ({
@@ -24,6 +26,8 @@ const FormInput: React.FC<FormInputProps> = ({
   className = "",
   step,
   required = false,
+  mintime
+ 
 }) => {
   return (
     <div className={className}>
@@ -39,6 +43,7 @@ const FormInput: React.FC<FormInputProps> = ({
         className="w-full border rounded-md p-2"
         step={step}
         required={required}
+        min={mintime}
       />
     </div>
   )

@@ -1,14 +1,14 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { applicationApprove, applicationReject } from "@/lib/action";
-import { Application, Event } from "@/types/events";
+import { Application,  MusicEvent } from "@/types/events";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Link from "next/link";
 
 import { useState } from "react";
 
-export function EventCard({ event }: { event: Event}) {
+export function EventCard({ event }: { event: MusicEvent}) {
   const [isApplicantsVisible, setIsApplicantsVisible] = useState(false);
 
   const filterApplicationByStatus = (status: "PENDING" | "ACCEPTED" | "REJECTED") =>{
@@ -71,12 +71,12 @@ export function EventCard({ event }: { event: Event}) {
           { acceptedApplications.length > 0?
             acceptedApplications.map((p: Application,index) => (
               <div className="flex items-center py-2" key={event.id}>
-                <Link href={`/profile/${p.user.id}`}>
+                <Link href={`/profile/${p.user?.id}`}>
                 <Avatar className="h-8 w-8 border-2 border-gray-200 flex">
-              <AvatarImage src={p.user.image || undefined} alt={p.user.name} />
-              <AvatarFallback className="text-lg">{p.user.name?.substring(0, 2).toUpperCase() || "UN"}</AvatarFallback>
+              <AvatarImage src={p.user?.image || undefined} alt={p.user?.name} />
+              <AvatarFallback className="text-lg">{p.user?.name?.substring(0, 2).toUpperCase() || "UN"}</AvatarFallback>
             </Avatar>
-            <span className="hover:text-blue-400"> {p.user.name}</span>
+            <span className="hover:text-blue-400"> {p.user?.name}</span>
                 </Link>
                 {index < acceptedApplications.length - 1 ? ", " : ""}
               </div>
@@ -113,7 +113,7 @@ export function EventCard({ event }: { event: Event}) {
                     key={application.id}
                     className="bg-white p-4 rounded-lg shadow"
                   >
-                    <p className="font-medium">{application.user.name}</p>
+                    <p className="font-medium">{application.user?.name}</p>
                     <p className="text-gray-600">
                       <span className="font-medium">楽器:</span>{" "}
                       {application.instrument}

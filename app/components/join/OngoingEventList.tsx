@@ -39,7 +39,7 @@ const OngoingEventList = ({ events, userId }: EventListProps ) => {
               </p>
 
               {/* イベントの開催者が自分なら Edit、そうでないなら Join を表示 */}
-              {event.organizer.id === userId ? (
+              {event.organizer?.id === userId ? (
                 <Link
                   href={`/event_detail/${event.id}`}
                   className="bg-green-400 text-white px-4 py-2 rounded hover:bg-green-500 transition"

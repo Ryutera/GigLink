@@ -96,6 +96,8 @@ const HostForm: React.FC = () => {
     }
   }
 
+  const today = new Date().toISOString().split("T")[0]
+
   return (
     <div className="max-w-2xl mx-auto p-7">
       <h2 className="text-3xl font-bold mb-6">ライブイベントを作成</h2>
@@ -127,7 +129,7 @@ const HostForm: React.FC = () => {
         </div>
 
         <div className="grid gap-4">
-          <FormInput id="date" label="日付" value={formData.date} onChange={handleInputChange} type="date" required />
+          <FormInput id="date" label="日付" value={formData.date} onChange={handleInputChange} type="date" required mintime={today} />
 
           <div className="grid md:grid-cols-2 gap-3">
             <FormInput

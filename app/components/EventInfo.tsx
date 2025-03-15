@@ -154,7 +154,7 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
             
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid md:grid-cols-2  gap-4">
             <CustomInput
               label="開始時間"
               id="startTime"

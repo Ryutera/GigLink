@@ -32,7 +32,7 @@ export interface MusicEvent {
   organizerId: string
   createdAt?: Date
   updatedAt?: Date
-  organizer: User
+  organizer?: User
   applications: Application[]
 }
 
