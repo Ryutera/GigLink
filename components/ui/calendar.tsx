@@ -59,7 +59,7 @@ function Calendar({
         day_hidden: "invisible",
         ...classNames,
       }}
-      components={
+     components={
         {
           // @ts-ignore - 型定義の問題を回避
           IconLeft: ({ className, ...props }) => <ChevronLeft className={cn("h-4 w-4", className)} {...props} />,
@@ -70,8 +70,8 @@ function Calendar({
       {...props}
     />
   )
-}
 
+}
 Calendar.displayName = "Calendar"
 
 export { Calendar }

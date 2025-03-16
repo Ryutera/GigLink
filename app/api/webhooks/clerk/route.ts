@@ -1,8 +1,9 @@
+"use client"
 import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
 import prisma from '@/lib/prisma'
-import { env } from 'process'
+
 
 
 
