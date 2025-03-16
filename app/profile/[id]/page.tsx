@@ -1,31 +1,35 @@
-import ProfileForm from "@/app/components/profile/ProfileForm";
-import prisma from "@/lib/prisma";
-import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import ApplicationStatus from "@/app/components/ApplicationStatus";
-import BackButton from "@/app/components/BackButton";
+import ProfileForm from "@/app/components/profile/ProfileForm"
+import prisma from "@/lib/prisma"
+import { auth } from "@clerk/nextjs/server"
+import { redirect } from "next/navigation"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import ApplicationStatus from "@/app/components/ApplicationStatus"
+import BackButton from "@/app/components/BackButton"
 
-export default async function ProfilePage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } =  await params;
-  const { userId } = await auth();
+export default async function ProfilePage({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
+  const { id } = await params
+  const { userId } = await auth()
 
-
-  const paramsUserID = id;
+  const paramsUserID = id
 
   if (!userId) {
-    redirect("/sign-up");
+    redirect("/sign-up")
   }
+
   const userInfo = await prisma.user.findUnique({
     where: {
       id: paramsUserID,
     },
-  });
+  })
 
   if (!userInfo) {
-    return;
+    return
   }
-  console.log(paramsUserID, userId);
+  console.log(paramsUserID, userId)
 
   const schedules = await prisma.application.findMany({
     where: {
@@ -39,15 +43,15 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
     include: {
       event: true,
     },
-  });
+  })
 
   const organizedEvents = await prisma.event.findMany({
     where: { organizerId: userInfo.id },
-  });
+  })
 
   const applications = await prisma.application.findMany({
     where: { userId: userInfo.id },
-  });
+  })
 
   return (
     <div className="flex items-center justify-center w-full p-7 ">
@@ -62,12 +66,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
         )}
 
         <TabsContent value="account">
-          <ProfileForm
-            user={userInfo}
-            userId={userId}
-            organizedEvents={organizedEvents}
-            applications={applications}
-          />
+          <ProfileForm user={userInfo} userId={userId} organizedEvents={organizedEvents} applications={applications} />
         </TabsContent>
         <TabsContent value="appStatus">
           <ApplicationStatus schedules={schedules} />
@@ -75,7 +74,6 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
         <BackButton />
       </Tabs>
     </div>
-  );
-};
-
+  )
+}
 
