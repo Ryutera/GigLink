@@ -2,12 +2,27 @@
 import { applicationCreate, deleteApplication } from "@/lib/action";
 import React, { ChangeEvent, useState } from "react";
 import { instruments } from "../constants/instruments";
+import { useFormStatus } from "react-dom";
 
 
 interface JoinFormProps {
   eventId: string;
   hasApplied: any;
   userId: string;
+}
+
+function FormJoinButton() {
+  const{pending}=useFormStatus()
+  return (
+    <button
+    type="submit"
+    className={`${pending? "bg-gray-500":"bg-blue-500 hover:bg-blue-600"} text-white px-4 py-2 rounded  transition`}
+    disabled={pending}
+
+  >
+    {pending? "申請中です..." : "応募する"}
+  </button>
+  )
 }
 
 const JoinForm = ({ eventId, hasApplied, userId }: JoinFormProps) => {
@@ -109,13 +124,7 @@ const JoinForm = ({ eventId, hasApplied, userId }: JoinFormProps) => {
             </button>
           </div>
         ) : (
-          <button
-            type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-            
-          >
-            応募する
-          </button>
+         <FormJoinButton/>
         )}
       </div>
     </form>
