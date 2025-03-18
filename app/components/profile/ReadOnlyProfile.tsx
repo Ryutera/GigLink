@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { CalendarDays, Music,  Mail } from "lucide-react"
 import { formatDistanceToNow } from "date-fns"
 import { ja } from "date-fns/locale"
-import BackButton from "../BackButton"
+
 
 interface Props {
   user: User
@@ -108,8 +108,7 @@ const ProfileFormView = ({
       </Card>
 
 
-      {/* 戻るボタン */}
-    <BackButton/>
+     
     </div>
   )
 }
