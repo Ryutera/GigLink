@@ -10,9 +10,9 @@ export default async function CreateEvent() {
   if (!userId) {
     return <div>
       <div className="md:flex flex-col justify-between  align-items items-center mb-8 block p-7">
-        <h1 className="text-3xl font-bold ">主催予定のイベントはありません</h1>
+        <h1 className="text-3xl font-bold ">No scheduled events</h1>
         <Button className="bg-blue-500 hover:bg-blue-600 md:block hidden  md:mt-20">
-          <Link href="/create_event">+ 新規イベント作成</Link>
+          <Link href="/create_event">+ Create New Event</Link>
         </Button>
       </div>
 
@@ -63,9 +63,9 @@ export default async function CreateEvent() {
   return (
     <div className="max-w-4xl mx-auto p-7">
       <div className="md:flex justify-between items-center mb-8 block">
-        <h1 className="text-3xl font-bold ">あなたが主催予定のイベント</h1>
+        <h1 className="text-3xl font-bold ">Your Scheduled Events</h1>
         <Button className="bg-blue-500 hover:bg-blue-600 md:block hidden">
-          <Link href="/create_event">+ 新規イベント作成</Link>
+          <Link href="/create_event">+ Create New Event</Link>
         </Button>
       </div>
 
@@ -79,7 +79,7 @@ export default async function CreateEvent() {
         </div>
       ) : (
         <div className="text-center py-8 bg-gray-100 rounded-lg mt-5 flex ">
-          <h2 className="text-xl font-semibold text-gray-600">現在開催予定のイベントはありません</h2>
+          <h2 className="text-xl font-semibold text-gray-600">No upcoming events</h2>
         </div>
       )}
 <FloatingButton href="/create_event" label="+"/>

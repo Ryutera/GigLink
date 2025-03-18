@@ -2,7 +2,6 @@
 import { UserCircle, Users } from "lucide-react";
 import { Home } from 'lucide-react';
 import { auth } from "@clerk/nextjs/server"
-import prisma from "@/lib/prisma"
 import NavCard from "./components/NavCard";
 
 
@@ -41,7 +40,8 @@ export default async function TopPage() {
       description="Manage your account and preferences"
       bgColor="bg-green-200"
       hoverColor="hover:bg-green-300"
-      link={userId ? `/profile/${userId}` : "/sign-in"}
+      
+      link={`/profile/${userId}`}
      
     />
   </div>

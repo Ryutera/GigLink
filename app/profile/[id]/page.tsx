@@ -5,6 +5,7 @@ import { redirect } from "next/navigation"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import ApplicationStatus from "@/app/components/ApplicationStatus"
 import BackButton from "@/app/components/BackButton"
+import Redirect from "@/app/components/Redirect"
 
 export default async function ProfilePage({
   params,
@@ -14,15 +15,17 @@ export default async function ProfilePage({
   const { id } = await params
   const { userId } = await auth()
 
+
+  if ( id === "null") {
+    return <Redirect /> // Redirect コンポーネントを表示
+  }
   const paramsUserID = id
 
-  if (!userId) {
-    redirect("/sign-up")
-  }
+ 
 
   const userInfo = await prisma.user.findUnique({
     where: {
-      id: paramsUserID,
+      id: paramsUserID as string,
     },
   })
 
@@ -33,7 +36,7 @@ export default async function ProfilePage({
 
   const schedules = await prisma.application.findMany({
     where: {
-      userId: userId,
+      userId: userId as string,
       event: {
         startTime: {
           gt: new Date(),

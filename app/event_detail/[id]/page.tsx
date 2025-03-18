@@ -3,6 +3,7 @@ import JoinForm from "../../components/JoinForm"
 import { auth } from "@clerk/nextjs/server"
 import EventInfo from "@/app/components/EventInfo"
 import BackButton from "@/app/components/BackButton"
+import Redirect from "@/app/components/Redirect"
 
 export default async function EventDetail({
   params,
@@ -13,7 +14,7 @@ export default async function EventDetail({
 
   const { userId } = await auth()
   if (!userId) {
-    return <div>ユーザーが見つかりません</div>
+    return <Redirect/>
   }
 
   const event = await prisma.event.findFirst({

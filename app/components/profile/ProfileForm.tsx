@@ -11,7 +11,7 @@ import ProfileFormView from "./ReadOnlyProfile";
 
 interface ProfileFormProps {
   user: User;
-  userId: string;
+  userId: string | null;
   organizedEvents:Event[];
   applications:Application[]
 
