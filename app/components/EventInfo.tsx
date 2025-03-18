@@ -76,7 +76,8 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
         }
       }
     } else {
-      const result = await eventEditAction({ eventId, editData })
+      if(window.confirm("イベント内容を編集しますか")){
+        const result = await eventEditAction({ eventId, editData })
       if (result.success) {
         alert(result.message)
         router.push(`/event_detail/${eventId}`)
@@ -84,6 +85,7 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
         alert(result.message)
       }
     }
+      }
   }
 
   return (
