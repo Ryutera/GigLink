@@ -17,7 +17,7 @@ export default async function ProfilePage({
 
 
   if ( id === "null") {
-    return <Redirect /> // Redirect コンポーネントを表示
+    return <Redirect /> 
   }
   const paramsUserID = id
 
