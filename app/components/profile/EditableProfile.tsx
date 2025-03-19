@@ -29,7 +29,9 @@ const ProfileFormEdit = ({
           <input
             type="text"
             id="username"
-            className="w-full border border-gray-300 rounded-lg p-3 bg-gray-50 text-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+            className="w-full border border-gray-300 rounded-lg p-3 bg-white text-gray-900
+  hover:bg-gray-50 hover:cursor-not-allowed
+  focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
             defaultValue={user.name}
             disabled
           />
