@@ -21,20 +21,25 @@ export function EventCard({ event }: { event: MusicEvent }) {
   const acceptedApplications = filterApplicationByStatus("ACCEPTED");
 
   const onClickApprove = async (application: Application) => {
-    try {
-      await applicationApprove(application);
-      alert("申請を承認しました");
-    } catch (error) {
-      alert("申請の承認に失敗しました");
+    if(window.confirm("申請を認証しますか")){
+      try {
+        await applicationApprove(application);
+        alert("申請を承認しました");
+      } catch (error) {
+        alert("申請の承認に失敗しました");
+      }
     }
+   
   };
   const onClickReject = async (application: Application) => {
-    try {
-      await applicationReject(application);
-      alert("申請を拒否しました");
-    } catch (error) {
-      alert("申請の拒否に失敗しました");
-    }
+    if (window.confirm("申請を拒否しました")) {
+      try {
+        await applicationReject(application);
+        alert("申請を拒否しました");
+      } catch (error) {
+        alert("申請の拒否に失敗しました");
+      }
+    }  
   };
 
   return (
