@@ -9,7 +9,7 @@ interface CustomInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 const CustomInput: React.FC<CustomInputProps> = ({ label, type, isEditable, className, ...props }) => {
   return (
     <div>
-      <label htmlFor={props.id} className="block text-sm font-medium text-gray-700 mb-1">
+      <label htmlFor={props.id} className="block text-sm font-medium text-gray-900 mb-1">
         {label}
       </label>
       <input

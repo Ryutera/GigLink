@@ -103,7 +103,7 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             isEditable={isOrganizer}
-           className="text-gray-900"
+           
           
           />
 
