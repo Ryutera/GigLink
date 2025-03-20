@@ -6,6 +6,7 @@ interface CustomInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   isEditable: boolean
 }
 
+// `React.InputHTMLAttributes<HTMLInputElement>`を継承しているため、`type`や`value`などの標準的なinput要素のプロパティはすべて自動的に含まれている。
 const CustomInput: React.FC<CustomInputProps> = ({ label, type, isEditable, className, ...props }) => {
   return (
     <div>

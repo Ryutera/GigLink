@@ -1,6 +1,8 @@
 import React from "react";
 import { instruments } from "@/app/constants/instruments";
 import { User } from "@prisma/client";
+import ProfileEditButton from "./ProfileEditButton";
+
 
 interface Props {
   user: User;
@@ -10,6 +12,9 @@ interface Props {
   handleBioChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
+
+
+
 const ProfileFormEdit = ({
   user,
   selectedInstruments,
@@ -17,6 +22,7 @@ const ProfileFormEdit = ({
   bio,
   handleBioChange,
 }: Props) => {
+  
   return (
     <div className="bg-white rounded-lg shadow-md p-6 max-w-3xl mx-auto">
      
@@ -87,12 +93,7 @@ const ProfileFormEdit = ({
 
         {/* Submit Button */}
         <div className="pt-4 flex justify-center">
-          <button
-            type="submit"
-            className="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-medium rounded-lg shadow-md hover:from-blue-600 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transform transition hover:-translate-y-0.5 active:translate-y-0"
-          >
-            プロフィールを更新する
-          </button>
+         <ProfileEditButton/>
         </div>
       </div>
     </div>
