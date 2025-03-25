@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation"
 import EventEditForm from "./EventEditForm"
 import CustomInput from "./CustomInput"
 import LocationInput from "./LocationInput"
+import OrganizerDetail from "./OrganizerDetail"
 
 const EventInfo = ({ event, userId, onSubmit }: any) => {
   const [title, setTitle] = useState(event?.title)
@@ -92,10 +93,15 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
   }
 
   return (
-    <div className="space-y-5 w-full mb-8">
+    <div className="space-y-5 w-full mb-8 ">
       <h2 className="text-3xl font-bold">
         {isOrganizer ? `ライブイベント ${event.title} を編集` : `ライブイベント ${event.title} の詳細`}
       </h2>
+      {isOrganizer ||<OrganizerDetail organizerName={event.organizer.name} organizerImg={event.organizer.image} organizerId={event.organizer.id}/> }
+
+      <div className="border-t border-gray-200 pt-4 mb-4">
+      {/* <h3 className="text-xl font-semibold text-gray-800 mb-4">イベント情報</h3> */}
+    </div>
 
       <form action={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -150,7 +156,7 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
                 <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
               </PopoverContent>
             </Popover>: 
-            <div className="flex items-center mt-4">
+            <div className="flex items-center  bg-white p-2">
               <span>
                 {date.slice(0,10)}
               </span>
@@ -206,15 +212,15 @@ htmlFor="instrument"
               ))}
             </>
           ) : (
-            <>
+            <div className="bg-white p-2 ">
               <span>募集楽器: </span>
               {requiredInstrument.map((i: string) => (
-                <span key={i} className="ml-2">
+                <span key={i} className="ml-2 ">
                   {" "}
                   {i}
                 </span>
               ))}
-            </>
+            </div>
           )}
         </div>
 

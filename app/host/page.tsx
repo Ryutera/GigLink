@@ -79,7 +79,7 @@ export default async function CreateEvent() {
         </div>
       ) : (
         <div className="text-center py-8 bg-gray-100 rounded-lg mt-5 flex ">
-          <h2 className="text-xl font-semibold text-gray-600">No upcoming events</h2>
+          <h2 className="text-xl font-semibold text-gray-600 ml-5">No upcoming events</h2>
         </div>
       )}
 <FloatingButton href="/create_event" label="+"/>

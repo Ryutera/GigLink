@@ -43,7 +43,7 @@ export default async function EventDetail({
   })
 
   return (
-    <div className="max-w-2xl mx-auto p-7">
+    <div className="max-w-2xl mx-auto p-7 rounded-lg shadow-md">
       <EventInfo event={event} userId={userId} />
       {event?.organizer.id === userId || <JoinForm eventId={id} hasApplied={hasApplied} userId={userId} />}
       <BackButton />
