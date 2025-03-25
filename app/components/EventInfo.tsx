@@ -66,12 +66,14 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
     }
 
     if (action === "delete") {
+      
       if (window.confirm("本当にこのイベントを削除しますか？")) {
         const result = await eventDeleteAction(eventId)
         if (result.success) {
           alert(result.message)
           router.push("/host")
         } else {
+          
           alert(result.message)
         }
       }
@@ -82,6 +84,7 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
         alert(result.message)
         router.push(`/event_detail/${eventId}`)
       } else {
+      
         alert(result.message)
       }
     }
