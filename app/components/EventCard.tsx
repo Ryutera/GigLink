@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { applicationApprove, applicationReject } from "@/lib/action";
 import { Application, MusicEvent } from "@/types/events";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 
@@ -21,23 +21,23 @@ export function EventCard({ event }: { event: MusicEvent }) {
   const acceptedApplications = filterApplicationByStatus("ACCEPTED");
 
   const onClickApprove = async (application: Application) => {
-    if(window.confirm("申請を認証しますか")){
+    if(window.confirm("Do you want to approve this application?")){
       try {
         await applicationApprove(application);
-        alert("申請を承認しました");
+        alert("Application approved");
       } catch (error) {
-        alert("申請の承認に失敗しました");
+        alert("Failed to approve application");
       }
     }
    
   };
   const onClickReject = async (application: Application) => {
-    if (window.confirm("申請を拒否しました")) {
+    if (window.confirm("Do you want to reject this application?")) {
       try {
         await applicationReject(application);
-        alert("申請を拒否しました");
+        alert("Application rejected");
       } catch (error) {
-        alert("申請の拒否に失敗しました");
+        alert("Failed to reject application");
       }
     }  
   };
@@ -53,11 +53,13 @@ export function EventCard({ event }: { event: MusicEvent }) {
             {event.title}
           </Link>
         </h3>
+
         <p className="text-gray-600 mb-1">
-          <span className="font-medium">場所:</span> {event.location}
+          <span className="font-medium">Location:</span> {event.location}
         </p>
+
         <p className="text-gray-600 mb-1">
-          <span className="font-medium">日時:</span>{" "}
+          <span className="font-medium">Date & Time:</span>{" "}
           {`${event.date.toLocaleDateString()} ${event.startTime.toLocaleTimeString(
             [],
             { hour: "2-digit", minute: "2-digit" }
@@ -67,14 +69,15 @@ export function EventCard({ event }: { event: MusicEvent }) {
           })}`}
         </p>
         <p className="text-gray-600 mb-4">
-          <span className="font-medium">募集楽器:</span>{" "}
+          <span className="font-medium">Instruments Needed:</span>{" "}
           {event.instruments.join(", ")}
         </p>
+        
         <div className="text-gray-600 mb-4">
-          <span>参加予定者:</span>
+          <span>Confirmed Participants:</span>
           <br />
 
-          {/* indexのとこは参加者の間に,を入れる処理 */}
+          {/* This adds commas between participants */}
           {acceptedApplications.length > 0 ? (
             acceptedApplications.map((p: Application, index) => (
               <div className="flex items-center py-2" key={event.id}>
@@ -94,7 +97,7 @@ export function EventCard({ event }: { event: MusicEvent }) {
               </div>
             ))
           ) : (
-            <span>参加者はいません</span>
+            <span>No participants yet</span>
           )}
         </div>
 
@@ -102,7 +105,7 @@ export function EventCard({ event }: { event: MusicEvent }) {
           className="w-full text-left flex justify-between items-center text-black"
           onClick={() => setIsApplicantsVisible(!isApplicantsVisible)}
         >
-          参加希望者を表示 ({pendingApplications.length})
+          Show Applicants ({pendingApplications.length})
           {isApplicantsVisible ? (
             <ChevronUp size={20} />
           ) : (
@@ -112,7 +115,7 @@ export function EventCard({ event }: { event: MusicEvent }) {
       </div>
       {isApplicantsVisible && (
         <div className="bg-gray-50 p-6 border-t">
-          <h4 className="text-lg font-semibold mb-4">参加希望者一覧</h4>
+          <h4 className="text-lg font-semibold mb-4">Applicant List</h4>
           {pendingApplications.length > 0 ? (
             <ul className="space-y-4">
               {pendingApplications.map((application: Application) => (
@@ -140,11 +143,11 @@ export function EventCard({ event }: { event: MusicEvent }) {
                   
 
                   <p className="text-gray-600">
-                    <span className="font-medium">楽器:</span>{" "}
+                    <span className="font-medium">Instrument:</span>{" "}
                     {application.instrument}
                   </p>
                   <p className="text-gray-600">
-                    <span className="font-medium">ステータス:</span>{" "}
+                    <span className="font-medium">Status:</span>{" "}
                     {application.status}
                   </p>
                   <p className="text-gray-600 mt-2">{application.message}</p>
@@ -154,13 +157,13 @@ export function EventCard({ event }: { event: MusicEvent }) {
                         onClick={() => onClickApprove(application)}
                         className="bg-green-500 hover:bg-green-600"
                       >
-                        承認
+                        Approve
                       </Button>
                       <Button
                         onClick={() => onClickReject(application)}
                         className="bg-red-500 hover:bg-red-600"
                       >
-                        拒否
+                        Reject
                       </Button>
                     </div>
                   )}
@@ -168,7 +171,7 @@ export function EventCard({ event }: { event: MusicEvent }) {
               ))}
             </ul>
           ) : (
-            <p className="text-gray-600">まだ参加希望者はいません。</p>
+            <p className="text-gray-600">No applicants yet.</p>
           )}
         </div>
       )}

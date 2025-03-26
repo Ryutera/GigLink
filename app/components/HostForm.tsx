@@ -9,6 +9,7 @@ import FormInput from "./form/FormInput"
 import InstrumentSelector from "./form/InstrumentSelector"
 import FormTextarea from "./form/FormTextarea"
 import { EventFormData } from "@/types/hostform"
+import BackButton from "./BackButton"
 
 
 const HostForm: React.FC = () => {
@@ -103,7 +104,7 @@ const HostForm: React.FC = () => {
   const today = new Date().toISOString().split("T")[0]
 
   return (
-    <div className="max-w-2xl mx-auto p-7">
+    <div className="max-w-2xl mx-auto p-7 shadow-md ">
       <h2 className="text-3xl font-bold mb-6">ライブイベントを作成</h2>
       <form className="space-y-4" action={handleSubmit}>
         <FormInput
@@ -179,6 +180,7 @@ const HostForm: React.FC = () => {
           イベントを作成
         </button>
       </form>
+      <BackButton/>
     </div>
   )
 }
