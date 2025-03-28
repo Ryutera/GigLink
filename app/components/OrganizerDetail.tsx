@@ -3,9 +3,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 
 interface Props {
-  organizerName: string;
-  organizerImg: string;
-  organizerId: string;
+  organizerName: string | undefined;
+  organizerImg: string | undefined;
+  organizerId: string | undefined;
 }
 
 const OrganizerDetail = ({
@@ -24,7 +24,7 @@ const OrganizerDetail = ({
               alt={organizerName}
             />
             <AvatarFallback className="text-lg bg-blue-100 text-blue-800">
-              {organizerName.substring(0, 2).toUpperCase() || "UN"}
+              {organizerName?.substring(0, 2).toUpperCase() || "UN"}
             </AvatarFallback>
           </Avatar>
         </Link>

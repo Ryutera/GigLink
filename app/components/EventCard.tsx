@@ -14,7 +14,8 @@ export function EventCard({ event }: { event: MusicEvent }) {
   const filterApplicationByStatus = (
     status: "PENDING" | "ACCEPTED" | "REJECTED"
   ) => {
-    return event.applications.filter((app) => app.status === status);
+    //applicationがundefinedでfilter使えないのを防ぐ
+    return (event.applications ?? []).filter((app) => app.status === status);
   };
 
   const pendingApplications = filterApplicationByStatus("PENDING");
@@ -60,7 +61,7 @@ export function EventCard({ event }: { event: MusicEvent }) {
 
         <p className="text-gray-600 mb-1">
           <span className="font-medium">Date & Time:</span>{" "}
-          {`${event.date.toLocaleDateString()} ${event.startTime.toLocaleTimeString(
+          {`${event.date} ${event.startTime.toLocaleTimeString(
             [],
             { hour: "2-digit", minute: "2-digit" }
           )} - ${event.endTime.toLocaleTimeString([], {
@@ -72,7 +73,7 @@ export function EventCard({ event }: { event: MusicEvent }) {
           <span className="font-medium">Instruments Needed:</span>{" "}
           {event.instruments.join(", ")}
         </p>
-        
+
         <div className="text-gray-600 mb-4">
           <span>Confirmed Participants:</span>
           <br />
@@ -174,7 +175,8 @@ export function EventCard({ event }: { event: MusicEvent }) {
             <p className="text-gray-600">No applicants yet.</p>
           )}
         </div>
-      )}
+      )
+      }
     </div>
   );
 }

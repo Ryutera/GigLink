@@ -32,7 +32,7 @@ export default async function EventDetail({
   })
 
   if (!event) {
-    return <div className="">イベントがありません</div>
+    return <div className="">No events</div>
   }
 
   const hasApplied = await prisma.application.findMany({

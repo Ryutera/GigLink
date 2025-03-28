@@ -169,7 +169,7 @@ interface EventEditParams {
     title: string;
     description: string;
     instruments: string[];
-    date?: any;// `undefined` の可能性があるので `?` をつける
+    date:Date;// `undefined` の可能性があるので `?` をつける
     startTime: string;
     endTime: string;
     location: string;
@@ -184,6 +184,7 @@ export async function eventEditAction ({ eventId, editData }:EventEditParams):Pr
   success: boolean;
 }> {
 
+  
   try {
 
 // なんかここでtを取らないとinvalidっstartとendがinvalidっていう値になっちゃってた
@@ -192,12 +193,13 @@ export async function eventEditAction ({ eventId, editData }:EventEditParams):Pr
 //00:00の部分を切り取って日付の間にTと最後に表中ん日時を表すZを加える。
 //最後にtoISOstringを使うのはnew Dateを使うとデータがオブジェクトになりprismaについかできなくなるから。尚dateでそれをしないのは既にeventformのページでやってあるから
 
-    const datePart = editData.date.split("T")[0];
+const datePart = editData.date ? editData.date.toISOString().split("T")[0] : null;
+
     await prisma.event.update({
       where: { id: eventId },
       data: {
         title: editData.title,
-        description: editData.description,
+        description: editData.description || "",
         date:  new Date(editData.date),
         startTime:  new Date(`${datePart}T${editData.startTime}:00Z`).toISOString(),
         endTime: new Date(`${datePart}T${editData.endTime}:00Z`).toISOString(),

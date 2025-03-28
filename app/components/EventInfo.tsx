@@ -4,7 +4,7 @@ import { instruments } from "../constants/instruments"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { format } from "date-fns"
-import { CalendarIcon } from "lucide-react"
+import { CalendarIcon } from 'lucide-react'
 import { cn } from "@/lib/utils"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 
@@ -14,21 +14,29 @@ import EventEditForm from "./EventEditForm"
 import CustomInput from "./CustomInput"
 import LocationInput from "./LocationInput"
 import OrganizerDetail from "./OrganizerDetail"
+import { MusicEvent } from "@/types/events"
 
-const EventInfo = ({ event, userId, onSubmit }: any) => {
+// このanyはどうにかすべき
+
+interface Props{
+  event:MusicEvent;
+  userId:string;
+}
+
+const EventInfo = ({ event, userId }: Props) => {
   const [title, setTitle] = useState(event?.title)
   const [description, setDescription] = useState(event?.description)
-  const [date, setDate] = useState(event?.date.toISOString())
+  const [date, setDate] = useState(event?.date)
   const [startTime, setStartTime] = useState(event?.startTime.toISOString().substring(11, 16))
   const [endTime, setEndTime] = useState(event?.endTime.toISOString().substring(11, 16))
   const [location, setLocation] = useState(event?.location)
   const [requiredInstrument, setRequiredInstrument] = useState(event?.instruments || [])
-  const [updateKey, setUpdateKey] = useState(0) // 強制再レンダリングのためのキー
+  const [updateKey, setUpdateKey] = useState(0) // Key for forced re-rendering
   const [latitude, setLatitude] = useState<number | null>(null);
   const [longitude, setLongitude] = useState<number | null>(null);
 
   const router = useRouter()
-  const isOrganizer = event?.organizer.id === userId
+  const isOrganizer = event.organizer?.id === userId
   const eventId = event.id
 
   const setCoordinates = (lat:number, lng:number)=>{
@@ -38,11 +46,12 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
   }
 
 
-  //このようにprevKeyを設定して強制レンダリングを起こさないとなぜかcheckbocの値が即時更新されない(以前の値にチェックが入ってページを読みこまないと正常に表示されない)
+  // Setting prevKey to trigger forced rendering because checkbox values don't update immediately
+  // (previous values remain checked until page reload for proper display)
   const toggleInstrument = useCallback((instrument: string) => {
     setRequiredInstrument((prev: string[]) => {
       const newValue = prev.includes(instrument) ? prev.filter((i: string) => i !== instrument) : [...prev, instrument]
-      setUpdateKey((prevKey) => prevKey + 1) // キーを更新して強制再レンダリング
+      setUpdateKey((prevKey) => prevKey + 1) // Update key to force re-rendering
       return newValue
     })
   }, [])
@@ -57,7 +66,7 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
     const editData = {
       title,
       description,
-      date,
+      date ,
       startTime,
       endTime,
       location,
@@ -68,7 +77,7 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
 
     if (action === "delete") {
       
-      if (window.confirm("本当にこのイベントを削除しますか？")) {
+      if (window.confirm("Are you sure you want to delete this event?")) {
         const result = await eventDeleteAction(eventId)
         if (result.success) {
           alert(result.message)
@@ -79,7 +88,7 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
         }
       }
     } else {
-      if(window.confirm("イベント内容を編集しますか")){
+      if(window.confirm("Do you want to edit this event?")){
         const result = await eventEditAction({ eventId, editData })
       if (result.success) {
         alert(result.message)
@@ -95,29 +104,27 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
   return (
     <div className="space-y-5 w-full mb-8 ">
       <h2 className="text-3xl font-bold">
-        {isOrganizer ? `ライブイベント ${event.title} を編集` : `ライブイベント ${event.title} の詳細`}
+        {isOrganizer ? `Edit Live Event ${event.title}` : `Live Event ${event.title} Details`}
       </h2>
-      {isOrganizer ||<OrganizerDetail organizerName={event.organizer.name} organizerImg={event.organizer.image} organizerId={event.organizer.id}/> }
+      {isOrganizer ||<OrganizerDetail organizerName={event.organizer?.name} organizerImg={event.organizer?.image} organizerId={event.organizer?.id}/> }
 
       <div className="border-t border-gray-200 pt-4 mb-4">
-      {/* <h3 className="text-xl font-semibold text-gray-800 mb-4">イベント情報</h3> */}
+      {/* <h3 className="text-xl font-semibold text-gray-800 mb-4">Event Information</h3> */}
     </div>
 
       <form action={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <CustomInput
-            label="イベントタイトル"
+            label="Event Title"
             id="title"
             name="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            isEditable={isOrganizer}
-           
-          
+            isEditable={isOrganizer}          
           />
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">場所</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
             <LocationInput setPlace={setLocation} setCoordinates={setCoordinates}>
               <input
                 value={location}
@@ -133,7 +140,7 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
 
           <div>
             <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-1">
-              日付
+              Date
             </label>
             {isOrganizer ? <Popover>
               <PopoverTrigger asChild>
@@ -142,32 +149,30 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
                   className={cn(
                     "w-full justify-start text-left font-normal px-3 py-2  h-10 rounded-md shadow-sm border-gray-400",
                     !date && "text-muted-foreground" 
-                  )
-                    
-                  }
+                  )}
 
                   disabled={!isOrganizer}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {date ? format(date, "PPP") : <span>日付を選択</span>}
+                  {date ? format(date, "PPP") : <span>Select date</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0">
-                <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
+                <Calendar mode="single" selected={date} onSelect={setDate} initialFocus required={true} />
               </PopoverContent>
             </Popover>: 
             <div className="flex items-center  bg-white p-2">
               <span>
-                {date.slice(0,10)}
-              </span>
+   {date.toISOString().slice(0, 10)}
+     
+  </span>
             </div>
-            }
-            
+            }       
           </div>
 
           <div className="grid md:grid-cols-2  gap-4">
             <CustomInput
-              label="開始時間"
+              label="Start Time"
               id="startTime"
               name="startTime"
               value={startTime}
@@ -177,7 +182,7 @@ const EventInfo = ({ event, userId, onSubmit }: any) => {
             />
 
             <CustomInput
-              label="終了時間"
+              label="End Time"
               id="endTime"
               name="endTime"
               value={endTime}
@@ -213,7 +218,7 @@ htmlFor="instrument"
             </>
           ) : (
             <div className="bg-white p-2 ">
-              <span>募集楽器: </span>
+              <span>Instruments Needed: </span>
               {requiredInstrument.map((i: string) => (
                 <span key={i} className="ml-2 ">
                   {" "}
@@ -225,7 +230,7 @@ htmlFor="instrument"
         </div>
 
         <CustomInput
-          label="イベント詳細"
+          label="Event Details"
           id="description"
           name="description"
           value={description}
@@ -242,4 +247,3 @@ htmlFor="instrument"
 }
 
 export default React.memo(EventInfo)
-

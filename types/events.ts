@@ -21,7 +21,7 @@ export interface Application {
 export interface MusicEvent {
   id: string
   title: string
-  description?: string
+  description: string
   date: Date
   startTime: Date
   endTime: Date
@@ -32,9 +32,15 @@ export interface MusicEvent {
   organizerId: string
   createdAt?: Date
   updatedAt?: Date
-  organizer?: User
-  applications: Application[]
+  organizer?: {
+    id: string;
+    name?: string;
+    image?: string;
+  };
+  applications?: Application[] 
 }
+
+
 
 
 export interface scheduledProps{
