@@ -38,7 +38,7 @@ const OngoingEventMap = ({ events, userId }: Props) => {
     key: event.id,
     location: { lat: event.latitude, lng: event.longitude },
     isOrganizer: event.organizerId === userId,
-    hasApplied: event.applications.some((app) => app.userId === userId),
+    hasApplied: event.applications.some((app:any) => app.userId === userId),
     title: event.title,
     date: event.date,
     location_name: event.location,

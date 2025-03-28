@@ -5,7 +5,7 @@ import EventsFilter from "./EventsFilter";
 import { MusicEvent } from "@/types/events";
 
 export interface EventListProps {
-  events: MusicEvent[];
+  events: MusicEvent[] ;
   userId: string | null
 }
 
@@ -46,7 +46,7 @@ const OngoingEventList = ({ events, userId }: EventListProps ) => {
                 >
                   Edit
                 </Link>
-              ) : event.applications.some((app) => app.userId === userId) ? (
+              ) : event.applications?.some((app:any) => app.userId === userId) ? (
                 <Link
                   href={`/event_detail/${event.id}`}
                   className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition"
