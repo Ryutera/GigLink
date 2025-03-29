@@ -57,12 +57,27 @@ const EventFilter = ({
         return b.updatedAt.getTime() - a.updatedAt.getTime();
       });
       setFilterredEvents(NewestPosts);
-    }else if (value === "Upcoming Events") {
+    }
+    else if (value === "Oldest Posts") {
+      const OldestPosts = events.slice().sort((a, b) => {
+        return a.updatedAt.getTime() - b.updatedAt.getTime();
+      });
+      setFilterredEvents(OldestPosts);
+    }  
+
+    else if (value === "Upcoming Events") {
       // sliceを挟むことでイベントの元々のデータを変更せずに済む
       const UpcomingEvents = events.slice().sort((a, b) => {
         return  a.startTime.getTime()  - b.startTime.getTime()
       });
       setFilterredEvents(UpcomingEvents);
+    }
+    else if (value === "Future Events") {
+      // sliceを挟むことでイベントの元々のデータを変更せずに済む
+      const FutureEvents = events.slice().sort((a, b) => {
+        return  b.startTime.getTime()  - a.startTime.getTime()
+      });
+      setFilterredEvents(FutureEvents);
     }
   };
 
@@ -77,10 +92,12 @@ const EventFilter = ({
         <SelectGroup>
         <SelectLabel>Sort by: Event Date</SelectLabel>
         <SelectItem value="Newest Posts">Newest Posts</SelectItem>
+        <SelectItem value="Oldest Posts">Oldest Posts</SelectItem>
         <SelectItem value="Upcoming Events">Upcoming Events</SelectItem>
+        <SelectItem value="Future Events">Future Events</SelectItem>
        
         
-        <SelectLabel>Sort by:event's status</SelectLabel>
+        <SelectLabel>Sort by:  Event Status</SelectLabel>
           <SelectItem value="All">All</SelectItem>
           <SelectItem value="join">Join</SelectItem>
           <SelectItem value="Edit">Edit</SelectItem>
