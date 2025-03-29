@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import {  useState } from "react";
 import EventsFilter from "./EventsFilter";
 import { MusicEvent } from "@/types/events";
 
@@ -8,7 +8,7 @@ export interface EventListProps {
   events: MusicEvent[] ;
   userId: string | null
 }
-
+ 
 const OngoingEventList = ({ events, userId }: EventListProps ) => {
   const [filteredEvents, setFilteredEvents] = useState(events);
 

@@ -32,7 +32,7 @@ export interface MusicEvent {
   instruments: string[]
   organizerId: string
   createdAt: Date 
-  updatedAt?: Date
+  updatedAt: Date
   organizer?: {
     id: string;
     name?: string;

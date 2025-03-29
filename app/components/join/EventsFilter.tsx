@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { MusicEvent } from "@/types/events";
+import { Application, MusicEvent } from "@/types/events";
 
 export interface EventFilterProps {
   events: MusicEvent[];
@@ -39,7 +39,7 @@ const EventFilter = ({
       setFilterredEvents(
         toJoinEvent.filter(
           (event) =>
-            !event.applications.some((event: any) => event.userId === userId)
+            !event.applications.some((event: Application) => event.userId === userId)
         )
       );
     } else if (value === "Edit") {
@@ -49,15 +49,20 @@ const EventFilter = ({
     } else if (value === "Applied") {
       setFilterredEvents(
         toJoinEvent.filter((event) =>
-          event.applications.some((event: any) => event.userId === userId)
+          event.applications.some((event:Application) => event.userId === userId)
         )
       );
-    } else if (value === "Latest") {
-      const evetsFilteredByCreatedAt = events.sort((a, b) => {
-        return b.createdAt.getTime() - a.createdAt.getTime();
+    } else if (value === "Newest Posts") {
+      const NewestPosts = events.sort((a, b) => {
+        return b.updatedAt.getTime() - a.updatedAt.getTime();
       });
-
-      setFilterredEvents(evetsFilteredByCreatedAt);
+      setFilterredEvents(NewestPosts);
+    }else if (value === "Upcoming Events") {
+      // sliceを挟むことでイベントの元々のデータを変更せずに済む
+      const UpcomingEvents = events.slice().sort((a, b) => {
+        return  a.startTime.getTime()  - b.startTime.getTime()
+      });
+      setFilterredEvents(UpcomingEvents);
     }
   };
 
@@ -70,9 +75,10 @@ const EventFilter = ({
         </SelectTrigger>
         <SelectContent>
         <SelectGroup>
-        <SelectLabel>Sort by:event's date</SelectLabel>
-        <SelectItem value="Latest">Latest</SelectItem>
-        <SelectItem value="Latest">Latest</SelectItem>
+        <SelectLabel>Sort by: Event Date</SelectLabel>
+        <SelectItem value="Newest Posts">Newest Posts</SelectItem>
+        <SelectItem value="Upcoming Events">Upcoming Events</SelectItem>
+       
         
         <SelectLabel>Sort by:event's status</SelectLabel>
           <SelectItem value="All">All</SelectItem>
