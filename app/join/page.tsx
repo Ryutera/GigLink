@@ -21,7 +21,7 @@ const Join = async () => {
     },
     orderBy: [
       {
-        startTime: "asc",
+        updatedAt: "desc",
       },
     ],
   });

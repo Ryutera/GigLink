@@ -3,6 +3,7 @@ import { useState } from "react";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectLabel,
   SelectTrigger,
@@ -63,16 +64,22 @@ const EventFilter = ({
   return (
     <div className="flex flex-row-reverse mb-4 ">
       <Select onValueChange={handleSelectChange} value={selectedValue}>
+    
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="Select option" />
         </SelectTrigger>
         <SelectContent>
+        <SelectGroup>
+        <SelectLabel>Sort by:event's date</SelectLabel>
+        <SelectItem value="Latest">Latest</SelectItem>
+        <SelectItem value="Latest">Latest</SelectItem>
+        
+        <SelectLabel>Sort by:event's status</SelectLabel>
           <SelectItem value="All">All</SelectItem>
           <SelectItem value="join">Join</SelectItem>
           <SelectItem value="Edit">Edit</SelectItem>
           <SelectItem value="Applied">Applied</SelectItem>
-
-          <SelectItem value="Latest">Latest</SelectItem>
+          </SelectGroup>
         </SelectContent>
       </Select>
     </div>
