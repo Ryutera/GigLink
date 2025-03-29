@@ -31,7 +31,7 @@ export interface MusicEvent {
   longitude: number
   instruments: string[]
   organizerId: string
-  createdAt?: Date
+  createdAt: Date 
   updatedAt?: Date
   organizer?: {
     id: string;
