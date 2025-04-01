@@ -1,33 +1,22 @@
-import React from "react";
-import { instruments } from "@/app/constants/instruments";
-import { User } from "@prisma/client";
-import ProfileEditButton from "./ProfileEditButton";
+"use client"
 
+import type React from "react"
+import { instruments } from "@/app/constants/instruments"
+import type { User } from "@prisma/client"
+import ProfileEditButton from "./ProfileEditButton"
 
 interface Props {
-  user: User;
-  selectedInstruments: string[];
-  handleInstrumentChange: (instrument: string) => void;
-  bio: string;
-  handleBioChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  user: User
+  selectedInstruments: string[]
+  handleInstrumentChange: (instrument: string) => void
+  bio: string
+  handleBioChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
 }
 
-
-
-
-const ProfileFormEdit = ({
-  user,
-  selectedInstruments,
-  handleInstrumentChange,
-  bio,
-  handleBioChange,
-}: Props) => {
-  
+const ProfileFormEdit = ({ user, selectedInstruments, handleInstrumentChange, bio, handleBioChange }: Props) => {
   return (
     <div className="bg-white rounded-lg shadow-md p-6 max-w-3xl mx-auto">
-     
       <div className="space-y-6">
-     
         <div className="transition duration-300 ease-in-out transform hover:scale-[1.01]">
           <label htmlFor="username" className="block text-sm font-semibold text-gray-700 mb-2">
             Username
@@ -41,22 +30,20 @@ const ProfileFormEdit = ({
             defaultValue={user.name}
             disabled
           />
-          <p className="mt-1 text-xs text-gray-500">ユーザー名は変更できません</p>
+          <p className="mt-1 text-xs text-gray-500">Username cannot be changed</p>
         </div>
 
         {/* Instruments Section */}
         <div className="transition duration-300 ease-in-out transform hover:scale-[1.01]">
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
-            演奏できる楽器
-          </label>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">Instruments You Play</label>
           <div className="bg-white p-4 rounded-lg border border-gray-200">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
               {instruments.map((instrument) => (
-                <label 
-                  key={instrument} 
+                <label
+                  key={instrument}
                   className={`flex items-center p-2 rounded-md cursor-pointer transition ${
-                    selectedInstruments.includes(instrument) 
-                      ? "bg-blue-100 border border-blue-300" 
+                    selectedInstruments.includes(instrument)
+                      ? "bg-blue-100 border border-blue-300"
                       : "hover:bg-gray-100"
                   }`}
                 >
@@ -71,33 +58,33 @@ const ProfileFormEdit = ({
               ))}
             </div>
           </div>
-          <p className="mt-1 text-xs text-gray-500">演奏できる楽器をすべて選択してください</p>
+          <p className="mt-1 text-xs text-gray-500">Please select all instruments you can play</p>
         </div>
 
         {/* Bio Section */}
         <div className="transition duration-300 ease-in-out transform hover:scale-[1.01]">
           <label htmlFor="bio" className="block text-sm font-semibold text-gray-700 mb-2">
-            自己紹介
+            About Me
           </label>
           <textarea
             id="bio"
             name="bio"
             rows={5}
             className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-            placeholder="あなたの音楽経験や好きなジャンル、目標などを共有しましょう..."
+            placeholder="Share your musical experience, favorite genres, goals, and more..."
             value={bio}
             onChange={handleBioChange}
           ></textarea>
-          
         </div>
 
         {/* Submit Button */}
         <div className="pt-4 flex justify-center">
-         <ProfileEditButton/>
+          <ProfileEditButton />
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ProfileFormEdit;
+export default ProfileFormEdit
+
