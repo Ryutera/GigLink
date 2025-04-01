@@ -15,7 +15,7 @@ const OrganizerDetail = ({
 }: Props) => {
   return (
     <div className="bg-white p-2 rounded-lg border border-gray-100 mb-6  shadow-sm">
-      <p className="text-sm font-medium text-gray-500 mb-2">主催者</p>
+      <p className="text-sm font-medium text-gray-500 mb-2">Organizer</p>
       <div className="flex items-center gap-3">
         <Link href={`/profile/${organizerId}`}>
           <Avatar className="h-10 w-10 border-2 border-white shadow-sm">
