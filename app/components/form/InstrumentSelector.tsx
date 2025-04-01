@@ -15,7 +15,7 @@ const InstrumentSelector: React.FC<InstrumentSelectorProps> = ({
 }) => {
   return (
     <div>
-      <label className="block mb-1 font-medium">募集楽器パート</label>
+      <label className="block mb-1 font-medium">Instruments Wanted</label>
       <div className="flex flex-wrap gap-2">
         {instruments.map((instrument) => (
           <label key={instrument} className="inline-flex items-center mr-4 mb-2">
