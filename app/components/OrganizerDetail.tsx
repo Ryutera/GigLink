@@ -4,7 +4,7 @@ import Link from "next/link";
 
 interface Props {
   organizerName: string | undefined;
-  organizerImg: string | undefined;
+  organizerImg: string | undefined | null;
   organizerId: string | undefined;
 }
 

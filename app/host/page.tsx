@@ -50,10 +50,11 @@ export default async function CreateEvent() {
         include:{
           user:true
         }
-      }
-      
-     
+      },      
     },
+    orderBy:{
+      createdAt: "desc"
+    }
 
   });
 

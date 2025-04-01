@@ -19,7 +19,7 @@ export interface Application {
 }
 
 export interface MusicEvent {
-  applications: any
+  applications?: any
   id: string
   title: string
   description: string
@@ -36,7 +36,7 @@ export interface MusicEvent {
   organizer?: {
     id: string;
     name?: string;
-    image?: string|null;
+    image?: string|undefined |null;
   } 
   
 }

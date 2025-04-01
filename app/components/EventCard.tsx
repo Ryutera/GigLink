@@ -15,7 +15,7 @@ export function EventCard({ event }: { event: MusicEvent }) {
     status: "PENDING" | "ACCEPTED" | "REJECTED"
   ) => {
     //applicationがundefinedでfilter使えないのを防ぐ
-    return (event.applications ?? []).filter((app) => app.status === status);
+    return (event.applications ?? []).filter((app:Application) => app.status === status);
   };
 
   const pendingApplications = filterApplicationByStatus("PENDING");
@@ -61,7 +61,7 @@ export function EventCard({ event }: { event: MusicEvent }) {
 
         <p className="text-gray-600 mb-1">
           <span className="font-medium">Date & Time:</span>{" "}
-          {`${event.date} ${event.startTime.toLocaleTimeString(
+          {`${event.date.toISOString().slice(0,10)} ${event.startTime.toLocaleTimeString(
             [],
             { hour: "2-digit", minute: "2-digit" }
           )} - ${event.endTime.toLocaleTimeString([], {
@@ -80,7 +80,7 @@ export function EventCard({ event }: { event: MusicEvent }) {
 
           {/* This adds commas between participants */}
           {acceptedApplications.length > 0 ? (
-            acceptedApplications.map((p: Application, index) => (
+            acceptedApplications.map((p: Application, index: number) => (
               <div className="flex items-center py-2" key={event.id}>
                 <Link href={`/profile/${p.user?.id}`}>
                   <Avatar className="h-8 w-8 border-2 border-gray-200 flex">

@@ -16,7 +16,7 @@ import LocationInput from "./LocationInput"
 import OrganizerDetail from "./OrganizerDetail"
 import { MusicEvent } from "@/types/events"
 
-// このanyはどうにかすべき
+
 
 interface Props{
   event:MusicEvent;
@@ -81,6 +81,7 @@ const EventInfo = ({ event, userId }: Props) => {
         const result = await eventDeleteAction(eventId)
         if (result.success) {
           alert(result.message)
+         
           router.push("/host")
         } else {
           
