@@ -54,6 +54,7 @@ const OngoingEventMap = ({ events, userId }: Props) => {
   return (
     <APIProvider
       apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string}
+      language="en"
       onLoad={() => console.log("Maps API has loaded.")}
     >
       <div className="flex w-screen h-screen ">
