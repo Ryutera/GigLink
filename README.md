@@ -4,7 +4,7 @@ https://gig-link-navy.vercel.app/
 
 👤 Test account  
 Email: `testuser@example.com`  
-Password: `test1234`
+Password: `Giglink_test`
 
 ## Overview
 GigLink is a platform where musicians can post and join small live music events. It provides an easy way to create events, manage participants, and view profiles—all in one place. This portfolio demonstrates my front-end development skills using modern web technologies.
