@@ -46,10 +46,10 @@ export async function EventCreate(hostData: {
     endTime: string
     selectedInstruments: string[]
     latitude: number | null
-longitude: number | null
-  }): Promise<{ success: boolean; message: string }>{
+    longitude: number | null
+  }): Promise<{ success: boolean; message: string }> {
 
-   
+    
     
     const { userId } = await auth();
 
@@ -61,7 +61,7 @@ longitude: number | null
 
     if (!hostData || typeof hostData !== 'object') {
         console.error("Invalid hostData:", hostData);
-        return { success: false, message: "無効なデータが提供されました" };
+        return { success: false, message: "Invalid data provided" };
     }
     try {
         
@@ -70,8 +70,8 @@ longitude: number | null
             data: {
                 title: hostData.title,
                 description: hostData.detail,
-                date: new Date(hostData.date),  //渡されたデータはstringだけどprismaschemaの値はDateTimeなので統一するためにこう書く
-                startTime:  new Date(`${hostData.date}T${hostData.startTime}:00Z`),//yyyy//mm//ddの形にするためにhost.dataをyyyyに持ってくる
+                date: new Date(hostData.date),  // The provided data is a string but the prisma schema expects DateTime, so we convert it
+                startTime:  new Date(`${hostData.date}T${hostData.startTime}:00Z`), // Combine date and time strings into ISO format
                 endTime:new Date(`${hostData.date}T${hostData.endTime}:00Z`),  
                 location: hostData.place,
                 organizerId: userId,
@@ -81,13 +81,13 @@ longitude: number | null
             },
         });
         
-       
         
-        return { success: true, message: "イベントが作成されました" }
+        
+        return { success: true, message: "Event successfully created" }
        
     } catch (error) {
-        console.log("イベントの作成ができません", error);
-        return { success: false, message: "イベントの作成中にエラーが発生しました" };
+        console.log("Failed to create event", error);
+        return { success: false, message: "An error occurred while creating the event" };
     }
 }
 
@@ -115,11 +115,11 @@ export async function applicationCreate (formData: FormData, eventId: string,) :
         
         })
         revalidatePath(`/join/${eventId}`);
-        return { success: true, message: "参加応募に成功しました" };
+        return { success: true, message: "Application submitted successfully" };
 
     } catch (error) {
-        console.log("イベントの作成ができません", error);
-        return { success: false, message: "参加応募に失敗しました" };
+        console.log("Failed to create application", error);
+        return { success: false, message: "Application submission failed" };
     }
 }
 
@@ -169,7 +169,7 @@ interface EventEditParams {
     title: string;
     description: string;
     instruments: string[];
-    date:Date;// `undefined` の可能性があるので `?` をつける
+    date:Date;
     startTime: string;
     endTime: string;
     location: string;
@@ -187,11 +187,6 @@ export async function eventEditAction ({ eventId, editData }:EventEditParams):Pr
   
   try {
 
-// なんかここでtを取らないとinvalidっstartとendがinvalidっていう値になっちゃってた
-//supabaseにあるdataがyyyy-mm-dd 00:00:00というIOSの値、そこにstartやeditのデータをそのままくっつけようとしたから形式が合わずにエラーになってた
-//split（T)でTの前後を分割して配列にしている、その上で配列の一難最初のみを取得
-//00:00の部分を切り取って日付の間にTと最後に表中ん日時を表すZを加える。
-//最後にtoISOstringを使うのはnew Dateを使うとデータがオブジェクトになりprismaについかできなくなるから。尚dateでそれをしないのは既にeventformのページでやってあるから
 
 const datePart = editData.date ? editData.date.toISOString().split("T")[0] : null;
 
@@ -212,18 +207,17 @@ const datePart = editData.date ? editData.date.toISOString().split("T")[0] : nul
 
     }
   )
-  // なんか動かない
 revalidatePath("/")
 
-  console.log("✅ revalidatePath 実行後");
+  console.log("✅ revalidatePath executed");
  
  
-    return {message:"イベント内容を編集しました", success:true}
+    return {message:"Event updated successfully", success:true}
     
 
   } catch (error) {
-    console.error("エラー:", error)
-    return {message:"イベント内容の編集ができませんでした", success:false}
+    console.error("Error", error)
+    return {message:"Failed to update event", success:false}
     
   }
   
@@ -235,11 +229,11 @@ export async function eventDeleteAction (eventId:string) {
   where:{id:eventId}
  })
 
-    return {message:"イベントを削除しました", success:true}
+    return {message:"Event deleted successfully", success:true}
 
   } catch (error) {
     
-    return {message:"イベントの削除に失敗しました", success:false}
+    return {message:"Failed to delete event", success:false}
   }
   
 }
@@ -253,12 +247,11 @@ try {
   })
   revalidatePath("/")
 
-  return {message:"応募申請の取り消しに成功しました",success:true}
+  return {message:"Application withdrawal successful",success:true}
  
 } catch (error) {
   console.log(error)
-  return {message:"応募申請の取り消しに失敗しました", success:false}
+  return {message:"Application withdrawal failed", success:false}
 }
 
 }
-
