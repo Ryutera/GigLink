@@ -11,7 +11,7 @@ const EventEditForm = () => {
           value="edit"
           className="bg-green-400 hover:bg-green-500  text-white px-4 py-2 rounded  "
         >
-          編集する
+          Edit
         </button>
 
         <button
@@ -20,7 +20,7 @@ const EventEditForm = () => {
           value="delete"
           className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 "
         >
-          削除する
+          Delete
         </button>
       </div>
       

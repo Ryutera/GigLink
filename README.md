@@ -3,7 +3,7 @@
 https://gig-link-navy.vercel.app/
 
 👤 Test account  
-Email: `testuser@example.com`  
+Email: `giglinktest@example.com`  
 Password: `Giglink_test`
 
 ## Overview
