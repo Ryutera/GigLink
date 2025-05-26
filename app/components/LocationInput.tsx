@@ -7,7 +7,7 @@ interface LocationInputProps {
   children: React.ReactNode;
 }
 
-const libraries: "places"[] = ["places"];
+const libraries: ('places')[] = ['places'];
 
 const LocationInput: React.FC<LocationInputProps> = ({ children, setPlace, setCoordinates }) => {
   const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
@@ -15,7 +15,7 @@ const LocationInput: React.FC<LocationInputProps> = ({ children, setPlace, setCo
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string,
-    libraries,
+    libraries ,
   });
 
   
