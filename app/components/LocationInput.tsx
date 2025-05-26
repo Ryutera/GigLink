@@ -17,7 +17,6 @@ const LocationInput: React.FC<LocationInputProps> = ({ children, setPlace, setCo
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string,
     libraries ,
   });
-
   
 
   const handleOnPlacesChanged = () => {
