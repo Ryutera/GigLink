@@ -1,7 +1,7 @@
 "use client"
 import type React from "react"
 import { useState } from "react"
-import { redirect, useRouter } from "next/navigation"
+import {  useRouter } from "next/navigation"
 import { instruments } from "../constants/instruments"
 import { EventCreate } from "@/lib/action"
 import LocationInput from "./LocationInput"
@@ -11,11 +11,12 @@ import FormTextarea from "./form/FormTextarea"
 import type { EventFormData } from "@/types/hostform"
 import BackButton from "./BackButton"
 import { useUser } from "@clerk/nextjs"
+import Redirect from "./Redirect"
 
 const HostForm: React.FC = () => {
   const router = useRouter()
   const {isSignedIn} = useUser()
-
+  const [showRedirect, setShowRedirect] = useState(false)
 
   // Manage state with a single object
   const [formData, setFormData] = useState<EventFormData>({
@@ -71,8 +72,9 @@ const HostForm: React.FC = () => {
   const handleSubmit = async (formDataSubmit: FormData) => {
 
     if (!isSignedIn) {
-      router.push('/sign-up');
-      return
+      // It is not allowed to return tsx in handlesubmit
+      setShowRedirect(true)
+      return 
     }
 
     try {
@@ -111,6 +113,8 @@ const HostForm: React.FC = () => {
   const today = new Date().toISOString().split("T")[0]
 
   return (
+    <>
+     {showRedirect && <Redirect />}
     <div className="max-w-2xl mx-auto p-7 shadow-md ">
       <h2 className="text-3xl font-bold mb-6">Create Live Event</h2>
       <form className="space-y-4" action={handleSubmit}>
@@ -197,7 +201,9 @@ const HostForm: React.FC = () => {
       </form>
       <BackButton />
     </div>
+    </>
   )
+  
 }
 
 export default HostForm
