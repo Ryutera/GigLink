@@ -1,7 +1,7 @@
 "use client"
 import type React from "react"
 import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { redirect, useRouter } from "next/navigation"
 import { instruments } from "../constants/instruments"
 import { EventCreate } from "@/lib/action"
 import LocationInput from "./LocationInput"
@@ -10,9 +10,12 @@ import InstrumentSelector from "./form/InstrumentSelector"
 import FormTextarea from "./form/FormTextarea"
 import type { EventFormData } from "@/types/hostform"
 import BackButton from "./BackButton"
+import { useUser } from "@clerk/nextjs"
 
 const HostForm: React.FC = () => {
   const router = useRouter()
+  const {isSignedIn} = useUser()
+
 
   // Manage state with a single object
   const [formData, setFormData] = useState<EventFormData>({
@@ -66,11 +69,19 @@ const HostForm: React.FC = () => {
 
   // Form submission handler
   const handleSubmit = async (formDataSubmit: FormData) => {
+
+    if (!isSignedIn) {
+      router.push('/sign-up');
+      return
+    }
+
     try {
       const result = await EventCreate({
         ...formData,
         // Not used from FormData object, but needed for type consistency
       })
+      
+    
 
       if (result.success) {
         alert(result.message)
