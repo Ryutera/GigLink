@@ -1,22 +1,25 @@
 "use client"
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader } from '@/components/ui/dialog'
+import { Dialog, DialogContent,  DialogFooter, DialogHeader } from '@/components/ui/dialog'
 import { DialogTitle } from '@radix-ui/react-dialog'
-import { tree } from 'next/dist/build/templates/app-page'
 import { redirect, useRouter } from 'next/navigation'
 import { useState } from 'react'
 
+interface RedirectProps {
+  onClose?: () => void
+}
 
-const Redirect = () => {
+const Redirect = ({ onClose }: RedirectProps) => {
     const router = useRouter()
     const [open, setOpen ] = useState(true)
 
-    const onClose = ()=>{
+    const handleClose = ()=>{
         setOpen((prev)=>!prev)
+        onClose?.()
     }
     
   return (
-    <Dialog open={open} onOpenChange={onClose}>
+    <Dialog open={open} onOpenChange={handleClose}>
     <DialogContent className="sm:max-w-[425px]">
       <DialogHeader>
         <DialogTitle>Login Required</DialogTitle>

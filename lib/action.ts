@@ -96,7 +96,7 @@ export async function applicationCreate (formData: FormData, eventId: string,) :
     const {userId} = await auth()
   
   if (!userId) {
-    throw new Error("Unauthorized");
+    return { success: false, message: "You must be signed in to apply." };
   }
     
     try {

@@ -38,7 +38,7 @@ const OngoingEventList = ({ events, userId }: EventListProps ) => {
                 Looking for: {event.instruments.join(", ")}
               </p>
 
-              {/* イベントの開催者が自分なら Edit、そうでないなら Join を表示 */}
+          {/* Show "Edit" if the user is the event host; otherwise show "Join" */}
               {event.organizer?.id === userId ? (
                 <Link
                   href={`/event_detail/${event.id}`}

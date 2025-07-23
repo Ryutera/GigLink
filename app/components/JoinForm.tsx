@@ -1,13 +1,15 @@
 "use client"
 import { applicationCreate, deleteApplication } from "@/lib/action"
-import { type ChangeEvent, useState } from "react"
+import { type ChangeEvent, useEffect, useState } from "react"
 import { instruments } from "../constants/instruments"
 import { useFormStatus } from "react-dom"
+import Redirect from "./Redirect"
 
 interface JoinFormProps {
   eventId: string
   hasApplied: any
-  userId: string
+  userId: string | null
+  isAuthenticated: boolean
 }
 
 function FormJoinButton() {
@@ -23,14 +25,23 @@ function FormJoinButton() {
   )
 }
 
-const JoinForm = ({ eventId, hasApplied, userId }: JoinFormProps) => {
+
+
+const JoinForm = ({ eventId, hasApplied, userId,isAuthenticated }: JoinFormProps) => {
   const [message, setMessage] = useState("")
+  const [showRedirect, setShowRedirect] = useState(false)
+
 
   const onChangeMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value)
   }
 
   const handleSubmit = async (formData: FormData) => {
+    if (!isAuthenticated || !userId) {
+      setShowRedirect(true)
+      return
+
+    }
     try {
       const result = await applicationCreate(formData, eventId)
       if (result.success) {
@@ -45,6 +56,11 @@ const JoinForm = ({ eventId, hasApplied, userId }: JoinFormProps) => {
   }
 
   const onClickDelete = async () => {
+    if (!isAuthenticated || !userId) {
+    
+      return
+    }
+
     try {
       if (window.confirm("Are you sure you want to cancel your application?")) {
         const result = await deleteApplication(eventId, userId)
@@ -59,8 +75,13 @@ const JoinForm = ({ eventId, hasApplied, userId }: JoinFormProps) => {
     }
   }
 
+  const handleRedirectClose = () => {
+    setShowRedirect(false)
+  }
+
   return (
     <form className="space-y-4" action={handleSubmit}>
+     {showRedirect && <Redirect onClose={handleRedirectClose} />}
       <div>
         <label htmlFor="instrument" className=" mb-1 font-medium">
           Instrument

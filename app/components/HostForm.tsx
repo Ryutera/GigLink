@@ -112,9 +112,14 @@ const HostForm: React.FC = () => {
 
   const today = new Date().toISOString().split("T")[0]
 
+  const handleRedirectClose = () => {
+    setShowRedirect(false)
+  }
+
+
   return (
     <>
-     {showRedirect && <Redirect />}
+     {showRedirect && <Redirect onClose={handleRedirectClose}/>}
     <div className="max-w-2xl mx-auto p-7 shadow-md ">
       <h2 className="text-3xl font-bold mb-6">Create Live Event</h2>
       <form className="space-y-4" action={handleSubmit}>

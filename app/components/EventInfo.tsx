@@ -20,7 +20,7 @@ import { MusicEvent } from "@/types/events"
 
 interface Props{
   event:MusicEvent;
-  userId:string;
+  userId:string | null;
 }
 
 const EventInfo = ({ event, userId }: Props) => {

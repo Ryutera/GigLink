@@ -13,9 +13,7 @@ export default async function EventDetail({
   const { id } = await params
 
   const { userId } = await auth()
-  if (!userId) {
-    return <Redirect/>
-  }
+  
 
   const event = await prisma.event.findFirst({
     where: {
@@ -35,17 +33,19 @@ export default async function EventDetail({
     return <div className="">No events</div>
   }
 
-  const hasApplied = await prisma.application.findMany({
+  let hasApplied: Awaited<ReturnType<typeof prisma.application.findMany>> = []
+if (userId) {
+  hasApplied = await prisma.application.findMany({
     where: {
       eventId: id,
       userId: userId,
     },
   })
-
+}
   return (
     <div className="max-w-2xl mx-auto p-7 rounded-lg shadow-md">
       <EventInfo event={event} userId={userId} />
-      {event?.organizer.id === userId || <JoinForm eventId={id} hasApplied={hasApplied} userId={userId} />}
+      {event?.organizer.id === userId || <JoinForm eventId={id} hasApplied={hasApplied} userId={userId} isAuthenticated={!!userId}  />}
       <BackButton />
     </div>
   )
