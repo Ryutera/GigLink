@@ -14,6 +14,7 @@ export default async function ProfilePage({
 }) {
   const { id } = await params
   const { userId } = await auth()
+  if (!userId) redirect("/sign-in");     
 
 
   if ( id === "null") {

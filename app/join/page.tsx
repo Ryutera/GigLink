@@ -9,6 +9,9 @@ import OngoingEventMap from "../components/join/OngoingEventMap";
 const Join = async () => {
   const { userId } = await auth();
 
+
+
+
   const events = await prisma.event.findMany({
     where: {
       startTime: {
