@@ -30,7 +30,7 @@ interface LocationProps {
 
 const OngoingEventMap = ({ events, userId }: Props) => {
   const [selectedEvent, setSelectedEvent] = useState<LocationProps | null>(null)
-  console.log(selectedEvent, "pin clicked")
+
 
   // Sample locations
 
@@ -56,6 +56,7 @@ const OngoingEventMap = ({ events, userId }: Props) => {
       apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string}
       language="en"
       onLoad={() => console.log("Maps API has loaded.")}
+       libraries={['places']}   
     >
       <div className="flex w-screen h-screen ">
         <Map
@@ -96,7 +97,7 @@ const OngoingEventMap = ({ events, userId }: Props) => {
                   {selectedEvent.isOrganizer ? "Organizer" : selectedEvent.hasApplied ? "Applied" : "Not Applied"}
                 </p>
                 <Link
-                  href={`/event_detail/${selectedEvent.key}`}
+                  href={`/event_detail/${selectedEvent?.key}`}
                   className="block text-center bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded text-sm mt-2"
                 >
                   <p>View Details</p>

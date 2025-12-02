@@ -57,7 +57,7 @@ const EventInfo = ({ event, userId }: Props) => {
   }, [])
 
   useEffect(() => {
-    console.log("requiredInstrument changed:", requiredInstrument)
+
   }, [requiredInstrument])
 
   const handleSubmit = async (formData: FormData) => {

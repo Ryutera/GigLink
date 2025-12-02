@@ -21,12 +21,12 @@ const LocationInput: React.FC<LocationInputProps> = ({ children, setPlace, setCo
 
   const handleOnPlacesChanged = () => {
     const place = autocompleteRef.current?.getPlace();
-     console.log(place);
+
     if (place) {
       setPlace(place.formatted_address || "");
 
       if (place.geometry?.location) {
-        console.log(place.geometry.location.lat())
+      
         setCoordinates(place.geometry.location.lat(), place.geometry.location.lng());
       }
     }
@@ -34,7 +34,7 @@ const LocationInput: React.FC<LocationInputProps> = ({ children, setPlace, setCo
 
   return (
     <div>
-      {isLoaded && (
+      {isLoaded ? (
         <Autocomplete
           onLoad={(ref) => {
             autocompleteRef.current = ref;
@@ -44,7 +44,7 @@ const LocationInput: React.FC<LocationInputProps> = ({ children, setPlace, setCo
         >
           {children}
         </Autocomplete>
-      )}
+      ): <></>}
     </div>
   );
 };

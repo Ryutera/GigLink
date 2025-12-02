@@ -87,7 +87,7 @@ const HostForm: React.FC = () => {
 
       if (result.success) {
         alert(result.message)
-        console.log("form data is", FormData)
+
         // Reset form
         setFormData({
           title: "",

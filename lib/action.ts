@@ -11,7 +11,7 @@ export async function ProfileUpdate(formData: FormData) {
     throw new Error("Unauthorized");
   }
 
-  console.log(formData)
+
 
   
   const bio = formData.get("bio") as string;

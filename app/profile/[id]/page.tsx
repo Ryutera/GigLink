@@ -33,7 +33,7 @@ export default async function ProfilePage({
   if (!userInfo) {
     return
   }
-  console.log(paramsUserID, userId)
+
 
   const schedules = await prisma.application.findMany({
     where: {
